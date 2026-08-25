@@ -117,6 +117,10 @@
 - [ ] Rotina de manutenção (atualizar no staging → produção).
 - [ ] Documentar como fazer backup e restaurar.
 
+### Backlog (fases futuras)
+- [ ] **Painel de Associados** (feature novo): login + área restrita de membros, do zero (não existe hoje).
+- [ ] Decidir destino de `OLD/`, `associa/` e `sistema/` (apps legados).
+
 ---
 
 ## Pré-requisitos do cliente

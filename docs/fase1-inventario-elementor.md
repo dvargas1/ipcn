@@ -26,10 +26,10 @@ Os widgets `eael-*` são do plugin **Essential Addons for Elementor (EAEL)**, qu
 
 Ou seja, a área de login/painel de associados já estava quebrada antes da migração.
 
-## Decisões pendentes
+## Decisões (resolvido)
 
-1. A área de associados ainda é usada? Existe um app separado em `associa/` (Yii, 1.9GB) que pode ser o portal real — ou a versão WP (`Painel de Associados` + CPT `exclusivo_associados`) é a pretendida.
-2. Como recriar o login/painel no Divi (formulário de login + listagem de posts)?
+- O **Painel de Associados é um feature futuro** (ainda não existe). As páginas `Entrar` (2957) e `Painel de Associados do IPCN` (3027) são placeholders antigos/quebrados — serão **despublicadas** (rascunho) e recriadas de forma correta no futuro.
+- `login-page` (template 3166) é redundante.
 
 ## Escopo da migração
 
