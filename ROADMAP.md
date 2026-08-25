@@ -78,10 +78,11 @@
 ## Roadmap por fases
 
 ### Fase 0 — Versionamento + Estabilização (começar aqui)
-- [ ] Criar repositório **privado** no GitHub e clonar localmente.
-- [ ] Adicionar `.gitignore` (WordPress) e commit inicial (roadmap + docs).
-- [ ] Backup completo via SSH: `wp db export` + tar dos arquivos (excluindo backups), guardado fora do webroot.
-- [ ] Baixar e **remover os 6GB** de `wp-content/ai1wm-backups`.
+- [x] Criar repositório **privado** no GitHub e clonar localmente.
+- [x] Adicionar `.gitignore` (WordPress) e commit inicial (roadmap + docs).
+- [x] Backup completo via SSH (interno, em `~/backups/ipcn-2026-08-25/`): `mysqldump` (23MB) + tar dos arquivos (6.2GB).
+- [x] Baixar e **remover os 6GB** de `wp-content/ai1wm-backups` (wp-content: 9GB → 3GB).
+- [x] Remover **malware** (`filter.php`) + `monarx-analyzer.php` e varredura completa (core/plugins/uploads/snippets/HFCM limpos).
 - [ ] Corrigir erro `Commands out of sync` e cron: usar cron real (Hostinger) + desativar cache de features do Divi no shutdown.
 - [ ] Criar **staging** no hPanel (clone da produção).
 - [ ] Versionar o child theme / mu-plugins no GitHub.
@@ -129,3 +130,5 @@
 - **Remover Elementor pode quebrar páginas** → inventariar antes (Fase 1, tarefa 1).
 - **Atualizar Divi pode mudar layout** → fazer no staging e validar.
 - **Nunca** commitar `wp-config.php`, chaves de API ou backups.
+- **Site já foi comprometido** (malware `filter.php` de set/2024, já removido) → **rotacionar todas as senhas** (WP, banco, SSH/FTP, e-mails).
+- `OLD/`, `associa/` e `sistema/` **não foram varridos** (apps separados, mantidos a pedido do cliente).
