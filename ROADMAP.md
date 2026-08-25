@@ -83,7 +83,7 @@
 - [x] Backup completo via SSH (interno, em `~/backups/ipcn-2026-08-25/`): `mysqldump` (23MB) + tar dos arquivos (6.2GB).
 - [x] Baixar e **remover os 6GB** de `wp-content/ai1wm-backups` (wp-content: 9GB → 3GB).
 - [x] Remover **malware** (`filter.php`) + `monarx-analyzer.php` e varredura completa (core/plugins/uploads/snippets/HFCM limpos).
-- [ ] Corrigir erro `Commands out of sync` e cron: usar cron real (Hostinger) + desativar cache de features do Divi no shutdown.
+- [x] Corrigir erro `Commands out of sync` e cron: mu-plugin desativa cache de features do Divi + `DISABLE_WP_CRON` + cron real no hPanel (`/usr/bin/php .../wp-cron.php` a cada 10min).
 - [ ] Criar **staging** no hPanel (clone da produção).
 - [ ] Versionar o child theme / mu-plugins no GitHub.
 
