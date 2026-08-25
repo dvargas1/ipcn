@@ -1,0 +1,37 @@
+# ===== Segredos / config (NUNCA versionar) =====
+wp-config.php
+wp-config-*.php
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+
+# ===== Mídia e backups (grandes, fora do git) =====
+wp-content/uploads/
+wp-content/upgrade/
+wp-content/ai1wm-backups/
+wp-content/backups/
+wp-content/backup-db/
+wp-content/updraft/
+
+# ===== Cache / temporários =====
+wp-content/cache/
+wp-content/et-cache/
+wp-content/w3tc-config/
+wp-content/object-cache.php
+wp-content/advanced-cache.php
+wp-content/upgrade-temp-backup/
+
+# ===== Logs =====
+*.log
+error_log
+logs/
+wp-content/debug.log
+
+# ===== Sistema operacional / editores =====
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
