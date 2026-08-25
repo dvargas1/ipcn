@@ -88,11 +88,12 @@
 - [ ] Versionar o child theme / mu-plugins no GitHub.
 
 ### Fase 1 — Consolidar Divi (remover Elementor)
-- [ ] Inventariar páginas construídas em Elementor (`_elementor_edit_mode` + `elementor_library`).
-- [ ] Reconstruir/adaptar essas páginas no Divi.
-- [ ] Desativar e remover Elementor + Elementor Pro.
+- [x] Inventariar páginas construídas em Elementor (`_elementor_edit_mode` + `elementor_library`) → ver `docs/fase1-inventario-elementor.md`.
+- [x] Reconstruir/adaptar no Divi: `Merendas e Afetos` (virou post com galeria nativa), `Quem Somos` (já era Divi, só limpou flag).
+- [x] Desativar e remover Elementor + Elementor Pro + dados órfãos (options, CPTs).
+- [x] Despublicar placeholders quebrados (`Entrar`, `Painel de Associados`) e apagar rascunhos antigos.
 - [ ] Atualizar Divi 4.20.2 → versão atual (exige chave Elegant Themes).
-- [ ] Validar no staging antes de publicar.
+- [ ] Validar no staging antes de publicar (deploy para produção).
 
 ### Fase 2 — Cargos e fluxo editorial (PublishPress)
 - [ ] Remover contas de teste/e-mails falsos e reatribuir posts.
