@@ -92,6 +92,7 @@
 - [x] Reconstruir/adaptar no Divi: `Merendas e Afetos` (virou post com galeria nativa), `Quem Somos` (já era Divi, só limpou flag).
 - [x] Desativar e remover Elementor + Elementor Pro + dados órfãos (options, CPTs).
 - [x] Despublicar placeholders quebrados (`Entrar`, `Painel de Associados`) e apagar rascunhos antigos.
+- [x] Remover 18 plugins inativos (WooCommerce/Give e sobras). Mantidos: Yoast, All-in-One WP Migration, Better Search Replace.
 - [ ] Atualizar Divi 4.20.2 → versão atual (exige chave Elegant Themes).
 - [ ] Validar no staging antes de publicar (deploy para produção).
 
