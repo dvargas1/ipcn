@@ -124,7 +124,7 @@
 - [ ] (Opcional) trocar URL de login.
 
 ### Fase 4 — Consolidação visual (NÃO é redesign)
-- [x] **Footer reformulado**: o footer ativo (`et_footer_layout` 3384) tinha 4 colunas, sendo uma "Saiba Mais" com 7 links que **duplicavam o menu do header**, e crédito "FEITO POR ON1" (quem usou plugin pirata). Edição cirúrgica: removida só a coluna "Saiba Mais" (preservados logo `ipcn-sem-fundo.png`, fundo `#2a2A2A` e texto branco) e "FEITO POR ON1" → **"Criado com amor pelo Núcleo de Tecnologia do IPCN"** (sem link externo). Footer agora: identidade+logo, contatos, barra de créditos. Backup em `/tmp/footer_3384_*.txt`.
+- [x] **Footer reformulado + compactado**: removida a coluna "Saiba Mais" (redundante c/ menu) e "FEITO POR ON1" → "Criado com amor pelo Núcleo de Tecnologia do IPCN" (preservados logo/fundo/cor). Padding da section reduzido 76px→30px, conteúdo centralizado (colunas 1_2/1_2 + text_align center).
 - [x] **Correção da fonte de ícones (ETmodules)**: o tema Divi 4.20.2 veio **sem os arquivos de fonte** → menu mobile virava "A" e setas do slider viravam "4"/"5". Restaurados os arquivos `ETmodules.*` + injetado `@font-face` via mu-plugin. (Ver `docs/fase4-etmodules-fix.md`.)
 - [ ] **Validar na tela real** (mobile/devtools) que hambúrguer e setas renderizam como ícones.
 - [ ] **Decisão de tema** (licenciar Divi vs migrar) — ver `docs/plano-tema-divi.md`. Travar antes de redesign profundo.
