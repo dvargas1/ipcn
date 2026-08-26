@@ -84,6 +84,7 @@
 - [x] Baixar e **remover os 6GB** de `wp-content/ai1wm-backups` (wp-content: 9GB → 3GB).
 - [x] Remover **malware** (`filter.php`) + `monarx-analyzer.php` e varredura completa (core/plugins/uploads/snippets/HFCM limpos).
 - [x] Corrigir erro `Commands out of sync` e cron: mu-plugin desativa cache de features do Divi + `DISABLE_WP_CRON` + cron real no hPanel (`/usr/bin/php .../wp-cron.php` a cada 10min).
+- [x] **Corrigir bug de permalinks 404 (pré-existente):** os blocos de redirect do Really Simple SSL no `.htaccess` quebravam o rewrite do WordPress na origem (IPv4). Removidos os blocos + plugin desativado (HTTPS já é forçado pela Hostinger).
 - [ ] Criar **staging** no hPanel (clone da produção).
 - [ ] Versionar o child theme / mu-plugins no GitHub.
 
