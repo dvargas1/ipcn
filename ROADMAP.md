@@ -124,7 +124,7 @@
 - [ ] (Opcional) trocar URL de login.
 
 ### Fase 4 — Consolidação visual (NÃO é redesign)
-- [x] **Menu enxuto**: "Home" removido (redundante — logo leva pra home) + todos os submenus removidos. De 14 → **9 itens** de 1º nível: Quem Somos, Projetos, Editorial, Notícias, Agenda IPCN, Drops Antirracista, Associe-se, Apoia-se, Contato.
+- [x] **Section de grid (The Post Grid) reestruturada**: o grid da home (`post-grid-home`, ID 2748, via Code Module na `et_pb_section_1`) tinha **8 botões de filtro** (Últimas/Agenda IPCN/Colunistas/Destaques/Diáspora/Editorial/Notas/Notícias) — todos **redundantes com o menu do header**. Desligado o filtro isotop + reduzido de **6 → 4 posts**. Section agora é uma vitrine limpa de "últimas atualizações".
 - [x] **Correção da fonte de ícones (ETmodules)**: o tema Divi 4.20.2 veio **sem os arquivos de fonte** → menu mobile virava "A" e setas do slider viravam "4"/"5". Restaurados os arquivos `ETmodules.*` + injetado `@font-face` via mu-plugin. (Ver `docs/fase4-etmodules-fix.md`.)
 - [ ] **Validar na tela real** (mobile/devtools) que hambúrguer e setas renderizam como ícones.
 - [ ] **Decisão de tema** (licenciar Divi vs migrar) — ver `docs/plano-tema-divi.md`. Travar antes de redesign profundo.
