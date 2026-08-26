@@ -124,7 +124,7 @@
 - [ ] (Opcional) trocar URL de login.
 
 ### Fase 4 — Consolidação visual (NÃO é redesign)
-- [x] **Header original restaurado**: voltou ao centralizado com menu embaixo (revertido meu próprio erro de reestruturação — peço desculpas).
+- [x] **Menu enxuto**: "Home" removido (redundante — logo leva pra home) + todos os submenus removidos. De 14 → **9 itens** de 1º nível: Quem Somos, Projetos, Editorial, Notícias, Agenda IPCN, Drops Antirracista, Associe-se, Apoia-se, Contato.
 - [x] **Correção da fonte de ícones (ETmodules)**: o tema Divi 4.20.2 veio **sem os arquivos de fonte** → menu mobile virava "A" e setas do slider viravam "4"/"5". Restaurados os arquivos `ETmodules.*` + injetado `@font-face` via mu-plugin. (Ver `docs/fase4-etmodules-fix.md`.)
 - [ ] **Validar na tela real** (mobile/devtools) que hambúrguer e setas renderizam como ícones.
 - [ ] **Decisão de tema** (licenciar Divi vs migrar) — ver `docs/plano-tema-divi.md`. Travar antes de redesign profundo.
