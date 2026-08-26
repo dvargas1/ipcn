@@ -124,7 +124,7 @@
 - [ ] (Opcional) trocar URL de login.
 
 ### Fase 4 — Consolidação visual (NÃO é redesign)
-- [x] **Páginas consertadas (smart_post_show ausente)**: Editorial (grid 5338, 6), Notícias (grid 5340, 81, paginado), Agenda IPCN (grid 5342, 52, paginado). Todas usavam `[smart_post_show]` (plugin ausente) → substituído por grid TPG via `post__in`. Backups em `/tmp/*_backup_*.txt`.
+- [x] **Páginas Apoia-se e Associe-se recriadas**: Apoia-se (2382) reconstruída sem o `give_form` quebrado → info de PIX (chave `contato@ipcnbrasil.org` + espaço reservado para QR). Associe-se (2188) trocou o iframe do Google Forms por form do Divi nativo (Nome/Email/Telefone/Mensagem) enviando para `contato@ipcnbrasil.org`. Backups em `/tmp/apoia_2382_*` e `/tmp/associe_2188_*`.
 - [x] **Correção da fonte de ícones (ETmodules)**: o tema Divi 4.20.2 veio **sem os arquivos de fonte** → menu mobile virava "A" e setas do slider viravam "4"/"5". Restaurados os arquivos `ETmodules.*` + injetado `@font-face` via mu-plugin. (Ver `docs/fase4-etmodules-fix.md`.)
 - [ ] **Validar na tela real** (mobile/devtools) que hambúrguer e setas renderizam como ícones.
 - [ ] **Decisão de tema** (licenciar Divi vs migrar) — ver `docs/plano-tema-divi.md`. Travar antes de redesign profundo.
