@@ -125,8 +125,10 @@
 
 ### Fase 4 — Consolidação visual (NÃO é redesign)
 > Decisão (26/08/2026): o objetivo agora é **deixar tudo funcional e consistente com o que já existe** (reorganizar menus, acertar páginas quebradas, consistência de cores/tipografia). O **redesign profundo fica para depois**, em reunião com a contratante para definir direção de marca.
+- [x] **Menus separados**: Menu Principal (7 itens) + Menu Rodapé (8 itens) — antes era 1 menu de 14 itens repetido em 3 locais.
+- [x] **Header do Divi reestruturado**: logo à esquerda + menu à direita (era logo+menu centralizados em rows separadas).
+- [x] **Slider da home reduzido**: 14 → 4 slides.
 - [ ] Auditar consistência (cor navy `0d176b`, fontes, logo 3161) entre páginas.
-- [ ] Reorganizar menus de navegação (primário/secundário).
 - [ ] Acertar páginas com problemas conhecidos (placeholders quebrados: Entrar, Painel de Associados).
 - [ ] Documentar mini-guia de marca para a equipe (a partir do que já existe).
 - [ ] (Futuro, pós-contratante) Redesign: novas cores/tipografia/layout.
