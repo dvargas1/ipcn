@@ -11,7 +11,14 @@ Repositório do projeto de estabilização e manutenção do site do **Instituto
 - ✅ **Menus corrigidos** (bug de permalinks 404 do Really Simple SSL).
 - 🔄 **Fase 2 — Cargos + PublishPress**: limpeza + PublishPress no staging. Falta lista de usuários reais e publicação.
 - ✅ **Fase 3 — SEO + Performance + Segurança** (staging): Yoast/robots/sitemap, LiteSpeed Cache (TTFB 2.2s→16ms), Wordfence (XML-RPC 403, 2FA admin/editor). Falta publicar + purgar CDN.
-- 🔄 **Fase 4 — Consolidação visual** (sem redesign): header original restaurado (centralizado + menu embaixo); **fonte de ícones do Divi corrigida** (ETmodules ausente → menu virava "A", setas viravam "4/5"). Falta validar na tela + decidir tema (licenciar Divi vs migrar).
+- 🔄 **Fase 4 — Consolidação visual** (no staging, sem redesign):
+  - Header mantido original (centralizado + menu embaixo) a pedido da contratante.
+  - Menu reduzido 14 → 9 itens; grid da home reestruturado (sem filtros, 4 posts); home enxuta (3 sections).
+  - Footer reformulado/compactado/centralizado (sem "Saiba Mais" nem "ON1" → "Núcleo de Tecnologia do IPCN").
+  - **Páginas vazias consertadas** (plugin `smart_post_show` ausente → The Post Grid): Editorial, Notícias (81, paginado), Agenda IPCN (52, paginado).
+  - **Apoia-se** (PIX `contato@ipcnbrasil.org`) e **Associe-se** (form Divi estilizado Nome/E-mail/Telefone → `contato@ipcnbrasil.org`) recriadas.
+  - Fonte de ícones do Divi (ETmodules) corrigida.
+  - **Pendente:** varredura das demais páginas (Destaques, Diáspora, Colunistas, Notas, Drops) + validação na tela + publicação em produção (manual, pela contratante, após aprovação).
 - 📋 **Plano de tema** criado (`docs/plano-tema-divi.md`) para a contratante decidir antes de redesign.
 
 ## Decisão sobre o Divi (nulled)

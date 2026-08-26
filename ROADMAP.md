@@ -124,12 +124,25 @@
 - [ ] (Opcional) trocar URL de login.
 
 ### Fase 4 — Consolidação visual (NÃO é redesign)
-- [x] **Páginas Apoia-se e Associe-se recriadas**: Apoia-se (2382) reconstruída sem o `give_form` quebrado → info de PIX (chave `contato@ipcnbrasil.org` + espaço reservado para QR). Associe-se (2188) trocou o iframe do Google Forms por form do Divi nativo (Nome/Email/Telefone/Mensagem) enviando para `contato@ipcnbrasil.org`. Backups em `/tmp/apoia_2382_*` e `/tmp/associe_2188_*`.
+- [x] **Header mantido original** (centralizado + menu embaixo) — decisão da contratante: "gosto do header assim". Revertida reestruturação que eu havia feito (logo esquerda/menu direita).
+- [x] **Menu reduzido 14 → 9 itens** (removidos Home + submenus; logo já leva pra home).
+- [x] **Grid da home reestruturado** (The Post Grid 2748): removidos os 8 botões de filtro redundantes com o menu; posts 6→4.
+- [x] **Home enxuta** (3 sections): removidas as sections "Anuncie aqui" (4), "Pesquisa discriminação" (5) e "Nossa Agenda" (redundante com o menu Agenda IPCN — só repetia link + evento hardcoded de 2021). Backup em `/tmp/home_1906_backup_*.txt`.
+- [x] **Footer reformulado + compactado + centralizado**: removida a coluna "Saiba Mais" (7 links que duplicavam o menu do header) e "FEITO POR ON1" → "Criado com amor pelo Núcleo de Tecnologia do IPCN" (logo/fundo `#2a2A2A`/texto branco preservados). Estrutura: 2 colunas `1_2/1_2` (identidade+logo | contatos) + créditos em linha cheia `4_4`, padding 76px→30px. Sem espaço vazio à direita.
+- [x] **Páginas consertadas (plugin `smart_post_show` ausente)** — substituído por grid do The Post Grid via `post__in`:
+  - Editorial (grid 5338, 6 posts)
+  - Notícias (grid 5340, 81 posts, paginado)
+  - Agenda IPCN (grid 5342, 52 posts, paginado)
+  - Backups em `/tmp/*_backup_*.txt`.
+- [x] **Páginas Apoia-se e Associe-se recriadas**:
+  - Apoia-se (2382): sem o `give_form` quebrado → info de PIX (chave `contato@ipcnbrasil.org` + espaço reservado para QR Code).
+  - Associe-se (2188): trocou iframe do Google Forms por form do Divi estilizado (hero navy `#0d176b` + card) com campos Nome/E-mail/Telefone enviando para `contato@ipcnbrasil.org` (campo "Mensagem" removido a pedido). CSS de form no mu-plugin `ipcn-optimizations.php` (estilo reutilizável p/ qualquer form do Divi).
 - [x] **Correção da fonte de ícones (ETmodules)**: o tema Divi 4.20.2 veio **sem os arquivos de fonte** → menu mobile virava "A" e setas do slider viravam "4"/"5". Restaurados os arquivos `ETmodules.*` + injetado `@font-face` via mu-plugin. (Ver `docs/fase4-etmodules-fix.md`.)
-- [ ] **Validar na tela real** (mobile/devtools) que hambúrguer e setas renderizam como ícones.
+- [x] **Decisão de email**: todo contato do site usa `contato@ipcnbrasil.org` (institucional).
+- [ ] **Ainda pendente (varredura)**: páginas Destaques, Diáspora, Colunistas, Notas, Drops Antirracista provavelmente com o mesmo `smart_post_show` ausente — varredura em lote não feita (aguardando aprovação da contratante ou aponte página a página).
+- [ ] **Validar na tela real** (mobile/devtools) que hambúrguer e setas renderizam como ícones + conferir visual das páginas novas.
 - [ ] **Decisão de tema** (licenciar Divi vs migrar) — ver `docs/plano-tema-divi.md`. Travar antes de redesign profundo.
 - [ ] Auditar consistência (cor navy `0d176b`, fontes, logo 3161) entre páginas.
-- [ ] Acertar páginas com problemas conhecidos (placeholders quebrados: Entrar, Painel de Associados).
 - [ ] (Futuro, pós-contratante) Redesign: novas cores/tipografia/layout.
 
 ### Fase 5 — Treinamento e documentação
