@@ -124,7 +124,7 @@
 - [ ] (Opcional) trocar URL de login.
 
 ### Fase 4 — Consolidação visual (NÃO é redesign)
-- [x] **Home enxuta (sections 4 e 5 removidas)**: removidas da home as sections "Anuncie aqui seu negócio" e "Pesquisa rápida de percepção sobre discriminação racial" (conteúdo apagado, backup em `/tmp/home_1906_backup_*.txt` no servidor). Home agora: slider (1) + grid (2) + Quem Somos (3, mantida) + Agenda (6). De 6 → 4 sections no body.
+- [x] **Home enxuta**: removidas as sections "Anuncie aqui" (4), "Pesquisa discriminação" (5) e **"Nossa Agenda"** (redundante com o menu Agenda IPCN — só repetia o link + evento hardcoded de 2021). Home agora: slider (1) + grid de posts (2) + Quem Somos (3). De 6 → 3 sections no body. Backup do conteúdo em `/tmp/home_1906_backup_*.txt`.
 - [x] **Correção da fonte de ícones (ETmodules)**: o tema Divi 4.20.2 veio **sem os arquivos de fonte** → menu mobile virava "A" e setas do slider viravam "4"/"5". Restaurados os arquivos `ETmodules.*` + injetado `@font-face` via mu-plugin. (Ver `docs/fase4-etmodules-fix.md`.)
 - [ ] **Validar na tela real** (mobile/devtools) que hambúrguer e setas renderizam como ícones.
 - [ ] **Decisão de tema** (licenciar Divi vs migrar) — ver `docs/plano-tema-divi.md`. Travar antes de redesign profundo.
