@@ -55,3 +55,56 @@ add_action( 'wp_head', function () {
 	$font_url = get_template_directory_uri() . '/core/admin/fonts/ETmodules';
 	echo "<style id=\"ipcn-etmodules-fix\">@font-face{font-family:'ETmodules';src:url('" . esc_url( $font_url . '.eot' ) . "');src:url('" . esc_url( $font_url . '.eot' ) . "#iefix') format('embedded-opentype'),url('" . esc_url( $font_url . '.woff' ) . "') format('woff'),url('" . esc_url( $font_url . '.ttf' ) . "') format('truetype'),url('" . esc_url( $font_url . '.svg#ETmodules' ) . "') format('svg');font-weight:normal;font-style:normal}</style>\n";
 }, 1 );
+
+/**
+ * Estilização profissional dos formulários de contato do Divi (páginas Associe-se, etc).
+ * Inputs com borda suave, foco na cor navy do IPCN, labels legíveis e botão com hover.
+ */
+add_action( 'wp_head', function () {
+	$css = '
+	.et_pb_contact_form_container .input,
+	.et_pb_contact_form_container input[type="text"],
+	.et_pb_contact_form_container input[type="email"],
+	.et_pb_contact_form_container textarea {
+		border: 1px solid #d4d9e3 !important;
+		border-radius: 8px !important;
+		padding: 14px 16px !important;
+		font-size: 16px !important;
+		background: #fff !important;
+		color: #1a1a2e !important;
+		transition: border-color .2s, box-shadow .2s;
+		width: 100% !important;
+		box-sizing: border-box;
+	}
+	.et_pb_contact_form_container .input:focus,
+	.et_pb_contact_form_container input:focus,
+	.et_pb_contact_form_container textarea:focus {
+		border-color: #0d176b !important;
+		box-shadow: 0 0 0 3px rgba(13,23,107,.12) !important;
+		outline: none !important;
+	}
+	.et_pb_contact_form_container label {
+		font-weight: 600 !important;
+		color: #0d176b !important;
+		font-size: 14px !important;
+		margin-bottom: 6px !important;
+		display: block;
+	}
+	.et_pb_contact_form_container .et_contact_bottom_container {
+		margin-top: 18px !important;
+	}
+	.et_pb_contact_form_container .et_pb_contact_submit {
+		background: #0d176b !important;
+		border-radius: 8px !important;
+		padding: 14px 32px !important;
+		font-weight: 700 !important;
+		letter-spacing: 1px !important;
+		transition: background .2s, transform .1s;
+	}
+	.et_pb_contact_form_container .et_pb_contact_submit:hover {
+		background: #1a2a9e !important;
+		transform: translateY(-1px);
+	}
+	';
+	echo "<style id=\"ipcn-form-style\">" . $css . "</style>\n";
+}, 2 );
