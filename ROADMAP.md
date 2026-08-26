@@ -115,15 +115,19 @@
 - [ ] Criar/ajustar usuários reais com os cargos corretos. *(pendente: lista de nomes/e-mails da contratante)*
 
 ### Fase 3 — SEO, performance e segurança
-- [ ] Reativar **Yoast SEO** → gerar `robots.txt` e sitemap corretos.
-- [ ] Instalar e configurar **LiteSpeed Cache** + HCDN.
-- [ ] Instalar **Wordfence**, bloquear XML-RPC, esconder versão, ativar **2FA**.
+- [x] **SEO (Yoast) no staging**: plugin reativado, `robots.txt` + sitemap corrigidos (estavam 404), templates de title/metadesc/Open Graph configurados, breadcrumbs ligados. *Falta publicar em produção + purgar cache do CDN (HCDN).*
+- [x] **Typo corrigido**: nome do site "Culturas Negra" → "Culturas Negras" (staging).
+- [ ] **Performance**: instalar e configurar **LiteSpeed Cache** + HCDN.
+- [ ] **Segurança**: instalar **Wordfence**, bloquear XML-RPC, esconder versão, ativar **2FA**.
 - [ ] (Opcional) trocar URL de login.
 
-### Fase 4 — Identidade visual (polimento no staging)
-- [ ] Ajustar cores, tipografia, logo e espaçamentos.
-- [ ] Garantir consistência entre páginas.
-- [ ] Documentar mini-guia de marca para a equipe.
+### Fase 4 — Consolidação visual (NÃO é redesign)
+> Decisão (26/08/2026): o objetivo agora é **deixar tudo funcional e consistente com o que já existe** (reorganizar menus, acertar páginas quebradas, consistência de cores/tipografia). O **redesign profundo fica para depois**, em reunião com a contratante para definir direção de marca.
+- [ ] Auditar consistência (cor navy `0d176b`, fontes, logo 3161) entre páginas.
+- [ ] Reorganizar menus de navegação (primário/secundário).
+- [ ] Acertar páginas com problemas conhecidos (placeholders quebrados: Entrar, Painel de Associados).
+- [ ] Documentar mini-guia de marca para a equipe (a partir do que já existe).
+- [ ] (Futuro, pós-contratante) Redesign: novas cores/tipografia/layout.
 
 ### Fase 5 — Treinamento e documentação
 - [ ] Guia curto "como postar" por cargo + fluxo de aprovação.
