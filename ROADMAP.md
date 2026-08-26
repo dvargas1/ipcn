@@ -124,7 +124,7 @@
 - [ ] (Opcional) trocar URL de login.
 
 ### Fase 4 — Consolidação visual (NÃO é redesign)
-- [x] **Footer reformulado + compactado**: removida a coluna "Saiba Mais" (redundante c/ menu) e "FEITO POR ON1" → "Criado com amor pelo Núcleo de Tecnologia do IPCN" (preservados logo/fundo/cor). Padding da section reduzido 76px→30px, conteúdo centralizado (colunas 1_2/1_2 + text_align center).
+- [x] **Footer reformulado + compactado + centralizado**: removida a coluna "Saiba Mais" e "FEITO POR ON1" → "Criado com amor pelo Núcleo de Tecnologia do IPCN" (preservados logo/fundo `#2a2A2A`/texto branco). Estrutura: 2 colunas `1_2/1_2` (identidade+logo | contatos) + créditos em linha cheia `4_4`, tudo centralizado. Padding 76px→30px. Sem espaço vazio à direita.
 - [x] **Correção da fonte de ícones (ETmodules)**: o tema Divi 4.20.2 veio **sem os arquivos de fonte** → menu mobile virava "A" e setas do slider viravam "4"/"5". Restaurados os arquivos `ETmodules.*` + injetado `@font-face` via mu-plugin. (Ver `docs/fase4-etmodules-fix.md`.)
 - [ ] **Validar na tela real** (mobile/devtools) que hambúrguer e setas renderizam como ícones.
 - [ ] **Decisão de tema** (licenciar Divi vs migrar) — ver `docs/plano-tema-divi.md`. Travar antes de redesign profundo.
