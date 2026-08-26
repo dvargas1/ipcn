@@ -41,3 +41,17 @@ add_filter( 'wp_headers', function ( $headers ) {
 	unset( $headers['X-Pingback'] );
 	return $headers;
 } );
+
+/**
+ * Corrige a fonte de ícones do Divi (ETmodules) que está ausente no tema.
+ *
+ * O pacote do tema (Divi 4.20.2) veio sem os arquivos ETmodules.* e sem o
+ * @font-face correspondente. Sem eles, o hambúrguer do menu mobile vira a
+ * letra "A" e as setas do slider viram "4"/"5" (caracteres crus da tabela
+ * de ícones). Os arquivos ETmodules.{woff,ttf,eot,svg} foram restaurados na
+ * pasta core/admin/fonts/ e injetamos o @font-face aqui (reversível, versionado).
+ */
+add_action( 'wp_head', function () {
+	$font_url = get_template_directory_uri() . '/core/admin/fonts/ETmodules';
+	echo "<style id=\"ipcn-etmodules-fix\">@font-face{font-family:'ETmodules';src:url('" . esc_url( $font_url . '.eot' ) . "');src:url('" . esc_url( $font_url . '.eot' ) . "#iefix') format('embedded-opentype'),url('" . esc_url( $font_url . '.woff' ) . "') format('woff'),url('" . esc_url( $font_url . '.ttf' ) . "') format('truetype'),url('" . esc_url( $font_url . '.svg#ETmodules' ) . "') format('svg');font-weight:normal;font-style:normal}</style>\n";
+}, 1 );

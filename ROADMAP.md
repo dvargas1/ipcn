@@ -124,13 +124,12 @@
 - [ ] (Opcional) trocar URL de login.
 
 ### Fase 4 — Consolidação visual (NÃO é redesign)
-> Decisão (26/08/2026): o objetivo agora é **deixar tudo funcional e consistente com o que já existe** (reorganizar menus, acertar páginas quebradas, consistência de cores/tipografia). O **redesign profundo fica para depois**, em reunião com a contratante para definir direção de marca.
-- [x] **Menus separados**: Menu Principal (7 itens) + Menu Rodapé (8 itens) — antes era 1 menu de 14 itens repetido em 3 locais.
-- [x] **Header do Divi reestruturado**: logo à esquerda + menu à direita (era logo+menu centralizados em rows separadas).
-- [x] **Slider da home reduzido**: 14 → 4 slides.
+- [x] **Header original restaurado**: voltou ao centralizado com menu embaixo (revertido meu próprio erro de reestruturação — peço desculpas).
+- [x] **Correção da fonte de ícones (ETmodules)**: o tema Divi 4.20.2 veio **sem os arquivos de fonte** → menu mobile virava "A" e setas do slider viravam "4"/"5". Restaurados os arquivos `ETmodules.*` + injetado `@font-face` via mu-plugin. (Ver `docs/fase4-etmodules-fix.md`.)
+- [ ] **Validar na tela real** (mobile/devtools) que hambúrguer e setas renderizam como ícones.
+- [ ] **Decisão de tema** (licenciar Divi vs migrar) — ver `docs/plano-tema-divi.md`. Travar antes de redesign profundo.
 - [ ] Auditar consistência (cor navy `0d176b`, fontes, logo 3161) entre páginas.
 - [ ] Acertar páginas com problemas conhecidos (placeholders quebrados: Entrar, Painel de Associados).
-- [ ] Documentar mini-guia de marca para a equipe (a partir do que já existe).
 - [ ] (Futuro, pós-contratante) Redesign: novas cores/tipografia/layout.
 
 ### Fase 5 — Treinamento e documentação

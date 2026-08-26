@@ -11,8 +11,8 @@ Repositório do projeto de estabilização e manutenção do site do **Instituto
 - ✅ **Menus corrigidos** (bug de permalinks 404 do Really Simple SSL).
 - 🔄 **Fase 2 — Cargos + PublishPress**: limpeza + PublishPress no staging. Falta lista de usuários reais e publicação.
 - ✅ **Fase 3 — SEO + Performance + Segurança** (staging): Yoast/robots/sitemap, LiteSpeed Cache (TTFB 2.2s→16ms), Wordfence (XML-RPC 403, 2FA admin/editor). Falta publicar + purgar CDN.
-- 🔄 **Fase 4 — Consolidação visual** (sem redesign): menus separados (Principal 7 / Rodapé 8), header com logo esquerda + menu direita, slider 14→4. Falta publicar + ajustes finos de CSS.
-- ⏳ **Próximo**: publicação das Fases 2/3/4 ou ajustes finos após validação da contratante.
+- 🔄 **Fase 4 — Consolidação visual** (sem redesign): header original restaurado (centralizado + menu embaixo); **fonte de ícones do Divi corrigida** (ETmodules ausente → menu virava "A", setas viravam "4/5"). Falta validar na tela + decidir tema (licenciar Divi vs migrar).
+- 📋 **Plano de tema** criado (`docs/plano-tema-divi.md`) para a contratante decidir antes de redesign.
 
 ## Decisão sobre o Divi (nulled)
 
