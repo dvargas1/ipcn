@@ -19,3 +19,25 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 add_filter( 'et_builder_post_feature_cache_enabled', '__return_false' );
 add_filter( 'et_builder_global_feature_cache_enabled', '__return_false' );
+
+/**
+ * Segurança — esconde a versão do WordPress.
+ *
+ * O Wordfence (hideWPVersion) não remove o <meta name="generator"> injetado
+ * pelo tema/plugins. Removemos explicitamente para não expor a versão do core.
+ */
+add_filter( 'the_generator', '__return_empty_string' );
+
+/**
+ * Segurança — bloqueia XML-RPC.
+ *
+ * O endpoint xmlrpc.php é vetor comum de ataques de força bruta e brute-force
+ * de credenciais. Como o site não usa pingbacks/apps externas, desligamos.
+ */
+add_filter( 'xmlrpc_enabled', '__return_false' );
+
+// Remove o header X-Pingback existente.
+add_filter( 'wp_headers', function ( $headers ) {
+	unset( $headers['X-Pingback'] );
+	return $headers;
+} );

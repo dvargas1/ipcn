@@ -115,10 +115,12 @@
 - [ ] Criar/ajustar usuários reais com os cargos corretos. *(pendente: lista de nomes/e-mails da contratante)*
 
 ### Fase 3 — SEO, performance e segurança
-- [x] **SEO (Yoast) no staging**: plugin reativado, `robots.txt` + sitemap corrigidos (estavam 404), templates de title/metadesc/Open Graph configurados, breadcrumbs ligados. *Falta publicar em produção + purgar cache do CDN (HCDN).*
-- [x] **Typo corrigido**: nome do site "Culturas Negra" → "Culturas Negras" (staging).
-- [ ] **Performance**: instalar e configurar **LiteSpeed Cache** + HCDN.
-- [ ] **Segurança**: instalar **Wordfence**, bloquear XML-RPC, esconder versão, ativar **2FA**.
+- [x] **SEO (Yoast)**: reativado, `robots.txt` + sitemap corrigidos (estavam 404), templates de title/metadesc/Open Graph, breadcrumbs. *Falta publicar + purgar cache do CDN.*
+- [x] **Typo corrigido**: "Culturas Negra" → "Culturas Negras" (staging).
+- [x] **Performance (LiteSpeed Cache)**: instalado, cache de página + CDN (HCDN) ligados. TTFB ~2.2s → **16ms** (hit). Object cache off (sem Redis na Hostinger).
+- [x] **Segurança (Wordfence)**: instalado; firewall ligado (learning mode), XML-RPC bloqueado (403), versão do WP escondida, live traffic off.
+- [x] **2FA**: obrigatório para `administrator` e `editor` (cada usuário ativa no próprio perfil com app TOTP).
+- [x] **Really Simple SSL desativado** no staging (redundante; Hostinger já força HTTPS — foi a causa do bug de permalinks 404 na Fase 0).
 - [ ] (Opcional) trocar URL de login.
 
 ### Fase 4 — Consolidação visual (NÃO é redesign)

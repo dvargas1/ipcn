@@ -6,13 +6,13 @@ Repositório do projeto de estabilização e manutenção do site do **Instituto
 
 ## Onde estamos
 
-- ✅ **Fase 0 — Estabilização**: backup, remoção de 6GB de backups velhos, remoção de malware, correção de cron e do erro `Commands out of sync`.
-- ✅ **Fase 1 — Consolidar Divi**: Elementor removido, conteúdo migrado para Divi, limpeza de 18 plugins inativos, deploy staging → produção.
-- ✅ **Menus corrigidos** (bug pré-existente de permalinks 404 causado pelo Really Simple SSL).
-- 🔄 **Fase 2 — Cargos + PublishPress**: limpeza de contas/cargos + PublishPress instalados **no staging** (`staging.ipcnbrasil.org`). Falta lista de usuários reais e publicação manual.
-- 🔄 **Fase 3 (SEO) — quase pronta no staging**: Yoast reativado, robots.txt + sitemap corrigidos (estavam 404), typo do nome corrigido. Falta publicar + purgar cache do CDN. Performance/segurança ainda pendentes.
-- 🟡 **Fase 4 — Consolidação visual** (sem redesign): auditar/ajustar menus e páginas com o que já existe; redesign fica para reunião com a contratante.
-- ⏳ **Próximo**: Fase 3 performance/segurança, ou Fase 4 (consolidação visual).
+- ✅ **Fase 0 — Estabilização**: backup, remoção de 6GB, malware, cron, `Commands out of sync`.
+- ✅ **Fase 1 — Consolidar Divi**: Elementor removido, 18 plugins limpos, deploy staging.
+- ✅ **Menus corrigidos** (bug de permalinks 404 do Really Simple SSL).
+- 🔄 **Fase 2 — Cargos + PublishPress**: limpeza + PublishPress no staging. Falta lista de usuários reais e publicação.
+- ✅ **Fase 3 — SEO + Performance + Segurança** (staging): Yoast/robots/sitemap, LiteSpeed Cache (TTFB 2.2s→16ms), Wordfence (XML-RPC 403, 2FA admin/editor). Falta publicar + purgar CDN.
+- 🟡 **Fase 4 — Consolidação visual** (sem redesign): pendente.
+- ⏳ **Próximo**: Fase 4 (consolidação visual) ou publicação das Fases 2/3.
 
 ## Decisão sobre o Divi (nulled)
 
