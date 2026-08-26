@@ -7,12 +7,14 @@
 - ✅ **Fase 0 concluída**: backup interno, remoção de 6GB de backups velhos, remoção de malware (`filter.php` + `monarx-analyzer.php`), correção do erro `Commands out of sync` + cron real.
 - ✅ **Fase 1 concluída**: Elementor removido, conteúdo migrado para Divi, 18 plugins inativos removidos, deploy staging → produção feito.
 - ✅ **Menus corrigidos (grande vitória)**: bug pré-existente de permalinks 404 causado pelo Really Simple SSL no `.htaccess` — resolvido removendo os blocos de redirect e desativando o plugin.
+- 🔄 **Fase 2 em andamento (no staging)**: contas-fake de "seções" removidas (20 posts reatribuídos), cargos órfãos WooCommerce/Give limpos, PublishPress (Planner + Statuses) instalado. Falta definir usuários reais e publicar → ver `docs/fase2-cargos-publishpress.md`.
 - ⏸️ **Divi**: mantido **nulled (pirata, sem licença)** por enquanto — decisão de comprar licença ou migrar será levada à contratante. Risco de segurança documentado abaixo.
 
 ## Contexto
 
 - **Cliente:** Instituto de Pesquisas das Culturas Negras (IPCN) — `ipcnbrasil.org`
 - **Hospedagem:** Hostinger compartilhado (server952, Brasil), LiteSpeed + HCDN
+- **Staging:** `https://staging.ipcnbrasil.org` — install separado (`public_html/staging`, banco próprio). Trabalho feito no staging; **publicação em produção é manual via hPanel** (feita pela contratante quando aprovado).
 - **Stack:** WordPress 7.1 · PHP 8.2.31 · WP-CLI 2.12 · SSH disponível (porta 65002)
 - **Objetivo do cliente:** publicar notícias/artigos com facilidade, cargos de quem posta e quem aprova, identidade visual melhorada e site fácil de manter.
 
@@ -93,8 +95,8 @@
 - [x] Remover **malware** (`filter.php`) + `monarx-analyzer.php` e varredura completa (core/plugins/uploads/snippets/HFCM limpos).
 - [x] Corrigir erro `Commands out of sync` e cron: mu-plugin desativa cache de features do Divi + `DISABLE_WP_CRON` + cron real no hPanel (`/usr/bin/php .../wp-cron.php` a cada 10min).
 - [x] **Corrigir bug de permalinks 404 (pré-existente):** os blocos de redirect do Really Simple SSL no `.htaccess` quebravam o rewrite do WordPress na origem (IPv4). Removidos os blocos + plugin desativado (HTTPS já é forçado pela Hostinger).
-- [ ] Criar **staging** no hPanel (clone da produção).
-- [ ] Versionar o child theme / mu-plugins no GitHub.
+- [ ] Criar **staging** no hPanel (clone da produção). → ✅ criado pela contratante (`staging.ipcnbrasil.org`)
+- [ ] Versionar o child theme / mu-plugins no GitHub. → ✅ mu-plugins versionado (`ipcn-optimizations.php`); **child theme não existe** (Divi usado direto)
 
 ### Fase 1 — Consolidar Divi (remover Elementor)
 - [x] Inventariar páginas construídas em Elementor (`_elementor_edit_mode` + `elementor_library`) → ver `docs/fase1-inventario-elementor.md`.
@@ -106,11 +108,11 @@
 - [ ] Validar no staging antes de publicar (deploy para produção).
 
 ### Fase 2 — Cargos e fluxo editorial (PublishPress)
-- [ ] Remover contas de teste/e-mails falsos e reatribuir posts.
-- [ ] Remover cargos órfãos (`customer`, `give_donor`).
-- [ ] Definir cargos: Redator (escreve) → Revisor/Editor (aprova) → Admin.
-- [ ] Instalar e configurar **PublishPress** (status customizados + calendário editorial).
-- [ ] Criar/ajustar usuários reais com os cargos corretos.
+- [x] Remover contas de teste/e-mails falsos e reatribuir posts. *(staging: 5 contas-fake removidas, 20 posts → `admin`)*
+- [x] Remover cargos órfãos (`customer`, `give_donor`). *(staging: + `shop_manager`, `give_*`; addon Give removido)*
+- [x] Definir cargos: Redator (escreve) → Revisor/Editor (aprova) → Admin. *(cargos nativos limpos: 2 autores, 2 editores, 1 admin)*
+- [x] Instalar e configurar **PublishPress** (status customizados + calendário editorial). *(Planner 4.8.0 + Statuses 1.3.4 instalados; tradução/ajuste fino pendente)*
+- [ ] Criar/ajustar usuários reais com os cargos corretos. *(pendente: lista de nomes/e-mails da contratante)*
 
 ### Fase 3 — SEO, performance e segurança
 - [ ] Reativar **Yoast SEO** → gerar `robots.txt` e sitemap corretos.

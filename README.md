@@ -9,7 +9,8 @@ Repositório do projeto de estabilização e manutenção do site do **Instituto
 - ✅ **Fase 0 — Estabilização**: backup, remoção de 6GB de backups velhos, remoção de malware, correção de cron e do erro `Commands out of sync`.
 - ✅ **Fase 1 — Consolidar Divi**: Elementor removido, conteúdo migrado para Divi, limpeza de 18 plugins inativos, deploy staging → produção.
 - ✅ **Menus corrigidos** (bug pré-existente de permalinks 404 causado pelo Really Simple SSL).
-- ⏳ **Próximo**: Fase 2 (cargos + PublishPress) e Fase 3 (SEO/cache/segurança).
+- 🔄 **Fase 2 — Cargos + PublishPress**: limpeza de contas/cargos + PublishPress instalados **no staging** (`staging.ipcnbrasil.org`). Falta lista de usuários reais e publicação manual.
+- ⏳ **Próximo**: Fase 3 (SEO/cache/segurança) e Fase 4 (identidade visual).
 
 ## Decisão sobre o Divi (nulled)
 
