@@ -2,6 +2,13 @@
 
 > Plano de estabilização, manutenção e evolução do site WordPress hospedado na Hostinger.
 
+## Status atual (resumo)
+
+- ✅ **Fase 0 concluída**: backup interno, remoção de 6GB de backups velhos, remoção de malware (`filter.php` + `monarx-analyzer.php`), correção do erro `Commands out of sync` + cron real.
+- ✅ **Fase 1 concluída**: Elementor removido, conteúdo migrado para Divi, 18 plugins inativos removidos, deploy staging → produção feito.
+- ✅ **Menus corrigidos (grande vitória)**: bug pré-existente de permalinks 404 causado pelo Really Simple SSL no `.htaccess` — resolvido removendo os blocos de redirect e desativando o plugin.
+- ⏸️ **Divi**: mantido **nulled (pirata, sem licença)** por enquanto — decisão de comprar licença ou migrar será levada à contratante. Risco de segurança documentado abaixo.
+
 ## Contexto
 
 - **Cliente:** Instituto de Pesquisas das Culturas Negras (IPCN) — `ipcnbrasil.org`
@@ -18,6 +25,7 @@
 | Ordem de execução | **Estabilizar primeiro**, depois visual e cargos |
 | Forma de trabalho | Staging + Git (SSH), não editar produção direto |
 | Manutenção pós-entrega | **Misto**: cliente posta conteúdo, nós cuidamos da técnica |
+| Tema (Divi) | **Manter o Divi nulled por enquanto** (sem licença). Decisão de comprar licença ou migrar será levada à contratante. |
 
 ---
 
@@ -94,7 +102,7 @@
 - [x] Desativar e remover Elementor + Elementor Pro + dados órfãos (options, CPTs).
 - [x] Despublicar placeholders quebrados (`Entrar`, `Painel de Associados`) e apagar rascunhos antigos.
 - [x] Remover 18 plugins inativos (WooCommerce/Give e sobras). Mantidos: Yoast, All-in-One WP Migration, Better Search Replace.
-- [ ] Atualizar Divi 4.20.2 → versão atual (exige chave Elegant Themes).
+- [ ] Atualizar Divi 4.20.2 → versão atual (**BLOQUEADO**: tema é nulled/sem licença — pendente decisão da contratante).
 - [ ] Validar no staging antes de publicar (deploy para produção).
 
 ### Fase 2 — Cargos e fluxo editorial (PublishPress)
@@ -128,12 +136,13 @@
 
 ## Pré-requisitos do cliente
 
-- [ ] **Licença do Divi (Elegant Themes):** login/chave para atualizar o tema.
+- [ ] **Licença do Divi (Elegant Themes):** o tema atual é **nulled (pirata)**. Pendente decisão da contratante: comprar licença (~US$ 89/ano) ou migrar pra tema gratuito.
 - [ ] **Rotacionar senha SSH/FTP** após o trabalho (foi compartilhada em texto).
 - [ ] Confirmar quem serão os usuários (nomes + e-mails reais) e seus cargos.
 
 ## Riscos e cuidados
 
+- **Divi nulled (pirata)**: não atualiza e é o vetor provável do malware já encontrado (`filter.php`). Pode conter backdoors. **Prioridade alta** resolver (licença ou migração). Mitigação até lá: Wordfence (Fase 3) + rotacionar senhas.
 - **Remover Elementor pode quebrar páginas** → inventariar antes (Fase 1, tarefa 1).
 - **Atualizar Divi pode mudar layout** → fazer no staging e validar.
 - **Nunca** commitar `wp-config.php`, chaves de API ou backups.
