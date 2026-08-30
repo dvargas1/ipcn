@@ -167,3 +167,40 @@ add_action( 'wp_head', function () {
 	';
 	echo "<style id=\"ipcn-form-style\">" . $css . "</style>\n";
 }, 2 );
+
+/**
+ * Footer — logotipo gigante no mobile.
+ * Imagem original 472x787 sem constraint vira 80vw de altura no celular.
+ * Limita para 180px desktop / 140px mobile, centraliza.
+ */
+add_action( 'wp_head', function () {
+	$css = '
+	.et-l--footer .et_pb_image_0_tb_footer img {
+		max-width: 180px !important;
+		width: 100% !important;
+		height: auto !important;
+		display: block;
+	}
+	.et-l--footer .et_pb_image_0_tb_footer .et_pb_image_wrap {
+		display: inline-block;
+	}
+	@media (max-width: 767px) {
+		.et-l--footer .et_pb_row_0_tb_footer {
+			text-align: center !important;
+		}
+		.et-l--footer .et_pb_image_0_tb_footer {
+			text-align: center !important;
+			margin-bottom: 16px !important;
+		}
+		.et-l--footer .et_pb_image_0_tb_footer img {
+			max-width: 140px !important;
+			margin: 0 auto !important;
+		}
+		.et-l--footer .et_pb_column_0_tb_footer,
+		.et-l--footer .et_pb_column_1_tb_footer {
+			text-align: center !important;
+		}
+	}
+	';
+	echo "<style id=\"ipcn-footer-logo-fix\">" . $css . "</style>\n";
+}, 3 );
