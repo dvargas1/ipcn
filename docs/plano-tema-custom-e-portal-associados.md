@@ -127,7 +127,145 @@ Regra de acesso v1 (manual, sem paywall complexo):
 
 > Quando `stagingredesign` estiver no ar, subo um `sketch` (2 variações: 1) Museu Afro puro branco/ocre, 2) Amistad com bloco alternado) para você escolher antes de codar.
 
-## 7. Histórico de correções já entregues (base para o tema novo)
+## 7. Plano exaustivo por tasks — com gates de validação e pivôs
+
+> Ambiente: tudo no `stagingredesign` (Hostinger, subdomínio a criar no hPanel). `staging` da Fase 4 fica congelado como backup. Deploy prod continua manual via hPanel por você.
+
+### Como ler
+
+* **GATE:** momento em que você precisa ver e dizer "segue" ou "pivota". Sem gate não avanço.
+* **PIVÔ:** alternativa se você não curtir o gate — o que muda sem jogar fora.
+* **DON:** critério de pronto (provável com `curl ?nocache + x-hcdn-cache-status: MISS` e teste mobile 375px).
+
+---
+
+### FASE 0 — Fundação (sem risco)
+
+**T0.1 — Clonar produção para stagingredesign**
+Trabalho: duplicar `domains/ipcnbrasil.org/public_html` → `domains/ipcnbrasil.org/public_html/stagingredesign` via hPanel, criar subdomínio `stagingredesign.ipcnbrasil.org`, apontar DB separado, copiar `mu-plugin`.
+DON: `stagingredesign.ipcnbrasil.org/?t=xxx` responde com `x-litespeed-cache: miss` e admin loga.
+PIVÔ: se clonagem ficar pesada, fazer fresh install + importar `wp_posts` via `wp export/import`.
+
+**T0.2 — Repo e CI do tema**
+Trabalho: `themes/ipcn-fse/` no git (`/home/ubuntu/ipcn` já é repo), `main` protegido, `theme.json` vazio commitado.
+DON: `git log --oneline -1` mostra `feat(fse): scaffold vazio`.
+GATE 0: você confirma que `stagingredesign` está no ar (me manda URL). Sem isso não codamos.
+
+### FASE 1 — Design System (tokens antes de pixel)
+
+**T1.1 — theme.json + style.css base**
+Trabalho: paleta `navy/ink/muted/ocre/base` da §6.5, fonts `Oswald` + `Inter`, `blockGap 1.5rem`, `radius 14px`, sombra `0 6px 20px rgba(13,23,107,.08)`.
+DON: `wp-admin → Aparência → Editor` mostra cores e fontes.
+
+**T1.2 — Sketch 1: Museu Afro puro (branco + ocre)**
+Trabalho: `sketch` HTML estático (sem WP) com home tipográfica + cards 3 colunas + footer 180px — 2 breakpoints (1440/375).
+DON: arquivo `docs/sketches/museu-afro.html` abre no navegador, LCP <1.5s local.
+**GATE 1A:** você no celular (375px) aprova ou pede ajuste.
+PIVÔ 1A: se achar frio demais, pivota para Amistad sem refazer tokens — só troca `ocre` por `terracota #a85a32` e adiciona blocos alternados.
+
+**T1.3 — Sketch 2: Amistad narrativo (blocos alternados imagem-texto)**
+Trabalho: mesmo conteúdo do T1.2 mas com seção "Herança → Visão" e cards com metadata.
+DON: `docs/sketches/amistad.html`.
+**GATE 1B:** você escolhe **um** dos dois sketches. O não escolhido vira `archive-acervo` alternativo (não é lixo).
+PIVÔ 1B: se nenhum agradar, pivota para híbrido (hero Museu + blocos Amistad) — custo +1 dia, sem refazer CPT.
+
+### FASE 2 — Shell do tema (header/footer/templates vazios)
+
+**T2.1 — parts/header.html + parts/footer.html**
+Trabalho: header `logo 160px` + menu 9 itens em linha, sticky + blur, footer 2 colunas (logo 180/140px já validado `ipcn-footer-logo-fix` vira nativo), `wp_nav_menu`.
+DON: toda página mostra header/footer novo, `curl` sem `et_pb_*`.
+**GATE 2:** você valida no celular que logo não está gigante e menu cabe (hambúrguer ≤768px).
+PIVÔ 2: se 9 itens não couberem, pivota para menu com `Mais ▾` (dropdown) sem mudar hierarquia.
+
+**T2.2 — templates/page.html + single.html + 404.html**
+Trabalho: wrappers tipográficos (título `Oswald 32/48px`, corpo 18px `#475569`, max-width `720px` para texto, `1100px` para grid).
+DON: página "Quem Somos" (39KB antiga) reimportada como blocos nativos com 2 seções (sem `min_height:493px`).
+
+**T2.3 — front-page.html (home tipográfica)**
+Trabalho: hero `80px` padding navy (mesmo do `Associe-se` aprovado) + 3 queries (`Destaques 4`, `Acervo 6`, `Agenda 3`) usando `Query Loop` nativo ou `rttpg` via shortcode.
+DON: home carrega ≤800KB, `lighthouse mobile ≥90`.
+**GATE 3:** você aprova home no `stagingredesign/?nocache=xxx` vs `staging` antigo lado a lado.
+PIVÔ 3: se quiser manter foto grande, pivota para hero com `cover 16:9 recortada` (não esticada) sem voltar ao `scale 1.12`.
+
+### FASE 3 — Acervo (CPT novo, do zero)
+
+**T3.1 — Registrar CPT acervo_ipcn + tax tema_acervo**
+Trabalho: `register_post_type acervo_ipcn` (supports title/editor/thumbnail), `register_taxonomy tema_acervo`, flush permalinks.
+DON: `WP Admin → Acervo` aparece, criar 3 itens fake funciona.
+
+**T3.2 — archive-acervo_ipcn.html + single-acervo_ipcn.html**
+Trabalho: archive com filtros visíveis (tema + ano, inspiração NYPL), grid 3/2/1 colunas, card 14px; single com metadata + CTA de associado.
+DON: `stagingredesign/acervo/?nocache` lista 3 fakes com filtros operacionais.
+**GATE 4:** você aprova layout do acervo vazio (sem conteúdo real).
+PIVÔ 4: se filtros ficarem complexos, pivota para filtro mínimo (só `tema_acervo` dropdown) e deixa data para v2.
+
+### FASE 4 — Portal de Associados (6 roles, fluxo manual v1)
+
+**T4.1 — Roles + capabilities**
+Trabalho: `Members` plugin (free), criar `nao_associado`, `associado`, `publicador`, `coordenador`, `diretoria` (manter `administrator` = você), `map_meta_cap` para `read_acervo_completo / edit_acervo / publish_acervo`.
+DON: `wp user list --role=nao_associado` retorna teste criado.
+**GATE 5:** você e a diretoria validam nomes dos cargos (pode renomear sem quebrar cap).
+
+**T4.2 — /associados/cadastro (cria não associado)**
+Trabalho: form público (6 campos da Q4: Nome/Email/Telefone/CPF opcional/Núcleo/Como contribuir) → `wp_create_user` com `role nao_associado` + `user_meta`, email para `contato@ipcnbrasil.org` via `wp_mail/hSendmail` já validado `bool(true)`.
+DON: cadastro fake cria usuário e log em `wp_mail` não quebra; diretoria recebe email.
+PIVÔ 4.2: se LGPD apertar, pivota para CPF removido e consent checkbox obrigatório.
+
+**T4.3 — /associados/entrar + /associados/painel**
+Trabalho: `wp_login_form` custom em `/entrar`, redirect por role; `/painel` com lista: associado vê "Meu acervo", diretoria vê "Pendentes (nao_associado)".
+DON: logar como `nao_associado` mostra painel restrito; `associado` mostra acervo.
+**GATE 6:** você testa login no celular e logout.
+
+**T4.4 — Ativação manual nao_associado → associado**
+Trabalho: no `WP Admin → Usuários`, diretoria muda role + dispara `wp_mail` "bem-vindo" (sem automação extra).
+DON: mudar role libera acesso ao acervo completo (T4.5).
+PIVÔ 4.4: se diretoria achar confuso, pivota para tela dedicada `/associados/aprovar` com botão "Aprovar" (1 dia extra).
+
+**T4.5 — Paywall do acervo (últimos 10)**
+Trabalho: `pre_get_posts` no archive + `template_redirect` no single: `associado+` vê tudo; `nao_associado` logado vê últimos 10 (ou 30 dias) + CTA "Torne-se associado"; deslogado vê CTA para `/cadastro`.
+DON: teste com 15 itens fake: `nao_associado` abre 11º → `403 + CTA` (validado com `curl -b cookie`).
+**GATE 7:** você decide se "últimos 10" está bom ou quer 20/30 dias — ajuste é 1 linha em `pre_get_posts`.
+
+### FASE 5 — Editorial (publicador/coordenador)
+
+**T5.1 — Fluxo pending → publicado**
+Trabalho: `publicador` cria `acervo_ipcn` como `pending`; `coordenador/diretoria` vê em `WP Admin → Acervo → Pendentes` e publica. `coordenador` publica direto em tudo; `publicador` só no acervo.
+DON: 1 rascunho de `publicador` aparece como pendente para `coordenador`.
+GATE 8: cliente confirma que `publicador só no acervo` está ok (se quiser liberar depois, é só cap).
+
+### FASE 6 — Conteúdo, SEO e performance
+
+**T6.1 — Migração leve (sem arrastar Divi)**
+Trabalho: copiar texto de páginas legado (ex: `Quem Somos` 8 sections) para blocos nativos — sem importer `et_pb_*`.
+DON: validator `grep -r et_pb_ stagingredesign/wp-content/themes/ipcn-fse` retorna 0.
+
+**T6.2 — SEO/performance**
+Trabalho: `Yoast` continua, `Litespeed` purge, imagens `webp` 180w/472w como `ipcn-sem-fundo`, `lighthouse ≥90 mobile`.
+DON: `curl -I .../acervo/?nocache | grep x-litespeed-cache: miss → hit` após reload.
+GATE 9: você valida `lighthouse` e teste real no celular (footer, hero, grid).
+
+**T6.3 — LGPD**
+Trabalho: `Politica de Privacidade` + checkbox no cadastro + `user_meta` só visível para `diretoria/admin`.
+DON: criar usuário fake com CPF vazio não quebra; admin vê, associado não.
+
+### FASE 7 — Validação final e deploy manual (seu hPanel)
+
+**T7.1 — Checklist de aceite (você assina)**
+Trabalho: rodar todos os GATES 0–9 em `stagingredesign` com `?nocache` + mobile 375/768/1440.
+DON: planilha `docs/aceite-stagingredesign.md` com screenshots.
+
+**T7.2 — Handoff para produção**
+Trabalho: export do tema `ipcn-fse.zip` + instruções hPanel (você faz o deploy, como combinado "pare de perguntar" — documentado, não automatizado).
+DON: produção em `ipcnbrasil.org` roda tema novo, `staging` antigo mantido 30 dias como rollback.
+
+### Cronograma e pivôs globais
+
+* **Ordem travada:** Fase 1 (tokens) → Gate 1B → Fase 2 (shell) → Fase 3 (acervo) → Fase 4 (portal) — não inverta, pois `roles` dependem de saber o que é acervo.
+* **Pivôs rápidos (≤1 dia):** paleta `ocre → terracota`, hero tipográfico → com foto, filtros completos → mínimo, `Members → User Role Editor`.
+* **Pivôs caros (pausa e regrill):** mudar para `GeneratePress child` no meio da Fase 2 (joga fora FSE), escopo `coordenador por núcleo` no meio da Fase 4 (cria taxonomia `nucleo` e `pre_get_posts` escopado).
+* **Sem sprint fechado:** você valida cada GATE no Telegram (foto do celular já serve) e eu só avanço após "segue".
+
+## 8. Histórico de correções já entregues (base para o tema novo)
 
 * `Associe-se` premium (hero navy 80px + card 720px/14px/sombra, inputs `input` single-line, botão navy hover, teste POST com nonce `Recebemos seu cadastro...` e `wp_mail true`)
 * 4 páginas vazias corrigidas de `smart_post_show` para `rttpg` (Destaques 46, Diáspora 1, Colunistas 7, Notas 15) + remoção de sticky `5289` que contaminava todos os grids
