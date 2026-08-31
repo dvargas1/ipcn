@@ -66,7 +66,68 @@ Regra de acesso v1 (manual, sem paywall complexo):
 * [ ] Teste mobile (logo 140px), `Litespeed purge all` + `?nocache` + `x-hcdn-cache-status`
 * [ ] LGPD: página de consentimento no cadastro + `politica-de-privacidade`
 
-## 6. Histórico de correções já entregues (base para o tema novo)
+## 6. Direção de design — reestrutura (clean com identidade, alternativa A)
+
+> Atualizado em 31/08/2026 — cliente confirmou: site atual muito antigo/feio, quer **clean mas com identidade** (alternativa A). Referências aprovadas: **Museu Afro Brasil** (principal), **Amistad Research Center** e **NYPL Events**. Ambiente futuro: `stagingredesign` (a ser criado no hPanel, separado do `staging` da Fase 4).
+
+### 6.1 Diagnóstico do feio atual (o que dói)
+
+* Header com imagem 1920×700 esticada (`transform scale 1.12`) + menu centralizado embaixo sem hierarquia — pesa no mobile, sem respiro.
+* Grids `The Post Grid` sem card consistente (borda/sombra/hover diferentes por página), tipografia `Open Sans` sem escala, navy `#0d176b` usado só em botão.
+* Footer com logo `ipcn-sem-fundo.png` 472×787 sem constraint (vira 600px de altura no celular — já corrigido para 180/140px via `ipcn-footer-logo-fix`, mas no tema novo vira nativo).
+* Páginas internas (`Quem Somos` 39KB/8 sections) com `background_size: contain` e `min_height:493px` — HTML verboso herdado do Divi (`et_pb_*`).
+
+### 6.2 Referências — o que roubar
+
+* **Museu Afro Brasil (museuafrobrasil.org.br):** branco dominante, respiro grande, hero tipográfico (título serif grande + foto recortada, não esticada), cards de exposição com borda 1px + metadata discreta, navegação por tipo (Longa duração / Temporária) — traduz para IPCN como **nav por Eixo (Destaques/Diáspora/Colunistas/Notas)** + acervo em grid limpo. Paleta: branco + preto + detalhe dourado/ocre — daria para trazer um **ocre #c9a86a** como acento ao lado do navy.
+* **Amistad (amistadresearchcenter.org):** narrativa "Where Heritage Meets Vision", blocos alternados imagem-texto com muito whitespace, archive como protagonista (Amistad traz `American Missionary Association archives` com peso). Para IPCN: **página /acervo como landing protagonista**, não subpágina escondida; cards com data + tag de núcleo.
+* **NYPL Events (nypl.org/events):** sistema de filtros visíveis (tipo, data, local) + cards com imagem 16:9 + badge. Para IPCN: filtros do `rttpg`/archive por `tema_acervo` e por data, sem esconder paginação.
+
+### 6.3 Princípios travados (para o tema custom)
+
+1. **Clean institucional, não editorial vibrante** — alternativa A confirmada.
+2. **Tipografia como identidade:** `Oswald` para títulos (já em uso, manter), `Inter` ou `Open Sans` para corpo com escala 16/18/24/32/48 — nada de 12 variações.
+3. **Paleta:** base `branco #fff` + `navy #0d176b` (primária) + `ink #0f172a` (texto) + `muted #e2e8f0` (borda) + acento `ocre #c9a86a` opcional para hover/badges (referência Museu Afro).
+4. **Cards:** branco, `radius 14px`, `shadow 0 6px 20px rgba(13,23,107,.08)`, `border 1px #e2e8f0`, hover `translateY(-2px)` + sombra maior — mesmo padrão já validado no `Associe-se`.
+5. **Header novo:** logo 160px + menu 9 itens em linha única (sem foto gigante), sticky leve com `backdrop-blur` no FSE.
+6. **Hero tipográfico:** sem imagem esticada — título 48px + subtítulo 18px `#475569` + CTA navy (padrão hero do `Associe-se` já aprovado `80px` padding).
+7. **Mobile-first:** logo 140px, grid 1 coluna, filtros em drawer.
+
+### 6.4 Estrutura de páginas (mapa para `stagingredesign`)
+
+* `/` — hero tipográfico + 3 blocos (Destaques 4 posts, Acervo em destaque 6, Agenda 3) + CTA Apoia-se/Associe-se.
+* `/acervo` (CPT) — archive protagonista com filtros (tema, ano), paywall: `associado` vê tudo, `não associado` logado vê últimos 10 + CTA, deslogado vê CTA para `/associados/cadastro`.
+* Páginas legado (`/destaques`, `/diaspora`, etc.) — manter como redirects ou índices leves para o novo `tema_acervo`; conteúdo velho não migra para o acervo.
+* `/associados/*` — conforme seção 3 (cadastro/entrar/painel).
+
+### 6.5 Tokens para `theme.json` (pronto pra codar)
+
+```json
+{
+  "settings": {
+    "color": {
+      "palette": [
+        {"slug": "navy", "color": "#0d176b", "name": "Navy IPCN"},
+        {"slug": "ink", "color": "#0f172a", "name": "Ink"},
+        {"slug": "muted", "color": "#e2e8f0", "name": "Muted"},
+        {"slug": "ocre", "color": "#c9a86a", "name": "Ocre Afro"},
+        {"slug": "base", "color": "#ffffff", "name": "Base"}
+      ]
+    },
+    "typography": {
+      "fontFamilies": [
+        {"fontFamily": "\"Oswald\", sans-serif", "slug": "oswald", "name": "Oswald"},
+        {"fontFamily": "\"Inter\", \"Open Sans\", sans-serif", "slug": "body", "name": "Body"}
+      ]
+    },
+    "spacing": {"units": ["px", "rem"], "blockGap": "1.5rem"}
+  }
+}
+```
+
+> Quando `stagingredesign` estiver no ar, subo um `sketch` (2 variações: 1) Museu Afro puro branco/ocre, 2) Amistad com bloco alternado) para você escolher antes de codar.
+
+## 7. Histórico de correções já entregues (base para o tema novo)
 
 * `Associe-se` premium (hero navy 80px + card 720px/14px/sombra, inputs `input` single-line, botão navy hover, teste POST com nonce `Recebemos seu cadastro...` e `wp_mail true`)
 * 4 páginas vazias corrigidas de `smart_post_show` para `rttpg` (Destaques 46, Diáspora 1, Colunistas 7, Notas 15) + remoção de sticky `5289` que contaminava todos os grids
