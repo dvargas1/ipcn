@@ -15,8 +15,10 @@ Text Domain: ipcn-fse
 a { text-underline-offset: 3px; }
 
 /* ——— Header profissional (espelho do sketch museu-afro) ——— */
-.wp-block-site-logo img { height: 36px !important; width: auto !important; }
+.wp-block-site-logo img { height: 28px !important; width: auto !important; }
 .wp-block-navigation a { letter-spacing: .06em; }
+/* footer logo menor (era 120px, tava gigante) */
+footer .wp-block-site-logo img { height: 48px !important; width: auto !important; }
 
 /* ——— Cards do Query Loop (grid profissional) ——— */
 .wp-block-post-template.is-layout-grid {
