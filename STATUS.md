@@ -34,6 +34,13 @@ Causa raiz recorrente: shortcode `[smart_post_show id="X"]` (plugin "Smart Post 
 - Validação na tela (mobile/desktop).
 - Deploy produção (manual, pela contratante).
 
+## Pausa redesign 01/09/2026 — onde paramos (mobile)
+- **Stagingredesign** clonado do `staging` da Fase 4 (152 posts, The Post Grid, Yoast, LiteSpeed) para `u654777386_DbbDB` em `https://stagingredesign.ipcnbrasil.org` — tema `ipcn-fse` FSE ativo (block theme do zero, `theme.json` com paleta navy #0d176b / ocre #c9a86a / ink / muted, fonts Oswald+Inter, radius 14px, shadow). `staging` congelado como backup.
+- **Sketches** validados no desktop: `docs/sketches/museu-afro.html` (branco/ocre) e `amistad.html` (blocos alternados) com 5 imagens Unsplash, hambúrguer mobile (checkbox hack), logo 36px ao lado do IPCN. URLs ao vivo: `/museu-afro.html` e `/amistad.html`. Usuário gostou das duas ideias (híbrido).
+- **Tema ao vivo** portado para híbrido: `parts/header.html` (site-logo 28px + site-title 16px + navigation ref 5358 MENU PRIMÁRIO 9 itens, flex nowrap), `templates/front-page.html` (hero navy 80px com título/sub branco + CTAs ocre/branco + grids 4/3 com cards radius 14px/borda muted/shadow), `style.css` com header/footer/cards. `custom_logo` 573 (`ipcn-sem-fundo.png` 472x787) setado via `theme_mods_ipcn-fse`.
+- **Pendente mobile:** logo vertical `472x787` mesmo com `28px` ainda fica gigante no celular e desalinha o menu (header estoura). Footer logo 120px → 48px ainda grande. Hero teve fix de contraste (h1/p de ink → base branco sobre navy). Usuário vai identificar **assets horizontais/SVG** para header (logo retangular para fundo claro) antes de retomar. **Gate 2/3 não assinado** — retomar Fase 2/3 quando tiver assets.
+- Commits até aqui: `e2b1e9b fix(live): logo 28px + footer 48px + hero texto base branco`, `abfedb5 fix(live): header ref 5358 + front-page hybrid`, `5623de3 feat(sketches): logo header`, `d1f958f feat(mobile): hamburguer`.
+
 ## Referências
 - ROADMAP.md e README.md no repo (atualizados até Fase 4).
 - mu-plugin: wp-content/mu-plugins/ipcn-optimizations.php (ETmodules fix + estilo de form).
