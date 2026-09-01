@@ -9,20 +9,6 @@
 :root{--navy:#0d176b;--ink:#0f172a;--muted:#e2e8f0;--ocre:#c9a86a;--terracota:#a85a32;--base:#fff;--subtle:#f8fafc;--body:#475569;--radius:14px;--shadow:0 6px 20px rgba(13,23,107,.08)}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:"Inter",sans-serif;color:var(--ink);background:var(--base);line-height:1.6}
-.nav-toggle{display:none}
-.hamburger{display:none;font-size:22px;line-height:1;cursor:pointer;padding:6px 10px;border:1px solid var(--muted);border-radius:10px;background:#fff}
-@media(max-width:768px){
-  .header-inner{flex-wrap:nowrap;position:relative}
-  .hamburger{display:block}
-  .nav{position:absolute;top:100%;left:0;right:0;background:#fff;border-bottom:1px solid var(--muted);flex-direction:column;gap:0;padding:8px 20px 12px;display:none;box-shadow:0 12px 24px rgba(15,23,42,.08)}
-  .nav a{padding:12px 0;border-bottom:1px solid var(--subtle)}
-  .nav a:last-child{border:0}
-  .nav-toggle:checked + .header .nav{display:flex}
-  .hero{grid-template-columns:1fr;padding:24px 16px;gap:16px}
-  .hero p{font-size:16px}
-  .block{padding:24px 16px;gap:16px}
-  .grid3{padding:0 16px 24px}
-}
 .header{position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--muted);z-index:10}
 .header-inner{max-width:1100px;margin:0 auto;padding:12px 20px;display:flex;justify-content:space-between;align-items:center}
 .logo{font-family:"Oswald",sans-serif;font-weight:700;font-size:18px}
@@ -44,6 +30,19 @@ body{font-family:"Inter",sans-serif;color:var(--ink);background:var(--base);line
 @media(max-width:860px){.grid3{grid-template-columns:1fr}}
 .tag{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--subtle);border:1px solid var(--muted);padding:3px 8px;border-radius:999px}
 .footer{background:var(--ink);color:#fff;padding:28px 20px}
+.nav-toggle{display:none}
+.hamburger{display:none;font-size:22px;line-height:1;cursor:pointer;padding:6px 10px;border:1px solid var(--muted);border-radius:10px;background:#fff;user-select:none}
+@media(max-width:768px){
+  .hamburger{display:block}
+  .nav{position:absolute;top:100%;left:0;right:0;background:#fff;border-bottom:1px solid var(--muted);flex-direction:column;gap:0;padding:8px 20px 12px;display:none;box-shadow:0 12px 24px rgba(15,23,42,.08)}
+  .nav a{padding:12px 0;border-bottom:1px solid var(--subtle)}
+  .nav a:last-child{border:0}
+  .nav-toggle:checked ~ .header .nav{display:flex}
+  .hero{grid-template-columns:1fr;padding:24px 16px;gap:16px}
+  .hero p{font-size:16px}
+  .block{padding:24px 16px;gap:16px}
+  .grid3{padding:0 16px 24px}
+}
 </style>
 </head>
 <body>
@@ -55,9 +54,9 @@ body{font-family:"Inter",sans-serif;color:var(--ink);background:var(--base);line
     <div class="kicker">Onde herança encontra visão — Amistad</div>
     <h1>Herança viva, pesquisa aberta</h1>
     <p>Do arquivo à sala de aula: o IPCN transforma memória negra em material vivo para estudo, ensino e ação.</p>
-    <div style="margin-top:18px;display:flex;gap:12px"><a style="background:var(--navy);color:#fff;padding:12px 20px;border-radius:999px;font-weight:700;font-size:14px">Entrar no acervo</a><a style="border:1px solid var(--muted);padding:12px 20px;border-radius:999px;font-weight:700;font-size:14px">Como se associar</a></div>
+    <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap"><a style="background:var(--navy);color:#fff;padding:12px 20px;border-radius:999px;font-weight:700;font-size:14px">Entrar no acervo</a><a style="border:1px solid var(--muted);padding:12px 20px;border-radius:999px;font-weight:700;font-size:14px">Como se associar</a></div>
   </div>
-  <img loading="lazy" alt="Acervo IPCN" src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=800&q=80&auto=format&fit=crop" alt="acervo">
+  <img loading="lazy" alt="Acervo IPCN - herança viva" src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=800&q=80&auto=format&fit=crop">
 </section>
 
 <section class="block">
@@ -82,7 +81,7 @@ body{font-family:"Inter",sans-serif;color:var(--ink);background:var(--base);line
 <div class="grid3">
   <article class="card"><img loading="lazy" alt="Acervo IPCN" src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80&auto=format&fit=crop"><div class="card-body"><span class="tag">História · 2024</span><h3 style="margin:6px 0">Cartas e travessias</h3><p style="color:var(--body);font-size:14px">Novas leituras da diáspora.</p></div></article>
   <article class="card"><img loading="lazy" alt="Acervo IPCN" src="https://images.unsplash.com/photo-1492538368677-f6e0afe31dcc?w=800&q=80&auto=format&fit=crop"><div class="card-body"><span class="tag">Educação · Guia</span><h3 style="margin:6px 0">Cadernos antirracistas</h3><p style="color:var(--body);font-size:14px">Material pronto para uso.</p></div></article>
-  <article class="card"><img loading="lazy" alt="Acervo IPCN" src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=800&q=80&auto=format&fit=crop"><div class="card-body"><span class="tag">Arte · Ensaio</span><h3 style="margin:6px 0">Estéticas da presença</h3><p style="color:var(--body);font-size:14px">Imagem, corpo e território.</p></div></article>
+  <article class="card"><img loading="lazy" alt="Acervo IPCN" src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=800&q=80&auto=format&fit=crop"><div class="card-body"><span class="tag">Arte · Ensaio</span><h3 style="margin:6px 0">Estéticas da presença</h3><p style="color:var(--body);font-size:14px\">Imagem, corpo e território.</p></div></article>
 </div>
 
 <footer class="footer"><div style="max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap"><div style="font-size:12px;opacity:.9">Instituto de Pesquisas das Culturas Negras — contato@ipcnbrasil.org</div><div style="font-size:12px;opacity:.7">Sketch Amistad · terracota #a85a32 como pivô do ocre · blocos alternados</div></div></footer>
