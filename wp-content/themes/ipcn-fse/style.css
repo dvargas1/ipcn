@@ -1,0 +1,17 @@
+/*
+Theme Name: IPCN FSE
+Theme URI: https://ipcnbrasil.org
+Author: IPCN / dvargas1
+Description: Block Theme FSE do zero para o IPCN — clean com identidade (Museu Afro). Sem Divi.
+Version: 0.1.0
+Requires at least: 6.4
+Tested up to: 6.6
+Requires PHP: 8.1
+License: GPLv2 or later
+Text Domain: ipcn-fse
+*/
+
+* { box-sizing: border-box; }
+
+/* base já vem do theme.json, aqui só refinamentos */
+a { text-underline-offset: 3px; }
