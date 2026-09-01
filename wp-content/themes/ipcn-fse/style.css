@@ -12,6 +12,36 @@ Text Domain: ipcn-fse
 */
 
 * { box-sizing: border-box; }
-
-/* base já vem do theme.json, aqui só refinamentos */
 a { text-underline-offset: 3px; }
+
+/* ——— Header profissional (espelho do sketch museu-afro) ——— */
+.wp-block-site-logo img { height: 36px !important; width: auto !important; }
+.wp-block-navigation a { letter-spacing: .06em; }
+
+/* ——— Cards do Query Loop (grid profissional) ——— */
+.wp-block-post-template.is-layout-grid {
+  gap: 16px;
+}
+.wp-block-post-template.is-layout-grid .wp-block-group.has-background {
+  border: 1px solid var(--wp--preset--color--muted) !important;
+  border-radius: 14px !important;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(13,23,107,.08);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.wp-block-post-template.is-layout-grid .wp-block-group.has-background:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(13,23,107,.14);
+}
+.wp-block-post-featured-image img {
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  border-radius: 10px;
+}
+/* hero já vem do template, garante contraste */
+.has-navy-background-color a { color: #fff; text-decoration: underline; }
+
+/* mobile: garante padding e grid 1 col */
+@media (max-width: 768px) {
+  .wp-block-post-template.is-layout-grid { grid-template-columns: 1fr !important; }
+}
