@@ -9,6 +9,20 @@
 :root{--navy:#0d176b;--ink:#0f172a;--muted:#e2e8f0;--ocre:#c9a86a;--terracota:#a85a32;--base:#fff;--subtle:#f8fafc;--body:#475569;--radius:14px;--shadow:0 6px 20px rgba(13,23,107,.08)}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:"Inter",sans-serif;color:var(--ink);background:var(--base);line-height:1.6}
+.nav-toggle{display:none}
+.hamburger{display:none;font-size:22px;line-height:1;cursor:pointer;padding:6px 10px;border:1px solid var(--muted);border-radius:10px;background:#fff}
+@media(max-width:768px){
+  .header-inner{flex-wrap:nowrap;position:relative}
+  .hamburger{display:block}
+  .nav{position:absolute;top:100%;left:0;right:0;background:#fff;border-bottom:1px solid var(--muted);flex-direction:column;gap:0;padding:8px 20px 12px;display:none;box-shadow:0 12px 24px rgba(15,23,42,.08)}
+  .nav a{padding:12px 0;border-bottom:1px solid var(--subtle)}
+  .nav a:last-child{border:0}
+  .nav-toggle:checked + .header .nav{display:flex}
+  .hero{grid-template-columns:1fr;padding:24px 16px;gap:16px}
+  .hero p{font-size:16px}
+  .block{padding:24px 16px;gap:16px}
+  .grid3{padding:0 16px 24px}
+}
 .header{position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--muted);z-index:10}
 .header-inner{max-width:1100px;margin:0 auto;padding:12px 20px;display:flex;justify-content:space-between;align-items:center}
 .logo{font-family:"Oswald",sans-serif;font-weight:700;font-size:18px}
@@ -33,7 +47,8 @@ body{font-family:"Inter",sans-serif;color:var(--ink);background:var(--base);line
 </style>
 </head>
 <body>
-<header class="header"><div class="header-inner"><div class="logo">IPCN</div><nav class="nav"><a>Destaques</a><a>Acervo</a><a>Agenda</a><a>Apoia-se</a><a>Associe-se</a></nav></div></header>
+<input type="checkbox" id="nav-toggle2" class="nav-toggle">
+<header class="header"><div class="header-inner"><div class="logo">IPCN</div><label for="nav-toggle2" class="hamburger" aria-label="Abrir menu">☰</label><nav class="nav"><a>Destaques</a><a>Acervo</a><a>Agenda</a><a>Apoia-se</a><a>Associe-se</a></nav></div></header>
 
 <section class="hero">
   <div>

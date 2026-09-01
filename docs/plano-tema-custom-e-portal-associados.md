@@ -91,7 +91,7 @@ Regra de acesso v1 (manual, sem paywall complexo):
 4. **Cards:** branco, `radius 14px`, `shadow 0 6px 20px rgba(13,23,107,.08)`, `border 1px #e2e8f0`, hover `translateY(-2px)` + sombra maior — mesmo padrão já validado no `Associe-se`.
 5. **Header novo:** logo 160px + menu 9 itens em linha única (sem foto gigante), sticky leve com `backdrop-blur` no FSE.
 6. **Hero tipográfico:** sem imagem esticada — título 48px + subtítulo 18px `#475569` + CTA navy (padrão hero do `Associe-se` já aprovado `80px` padding).
-7. **Mobile-first:** logo 140px, grid 1 coluna, filtros em drawer.
+7. **Mobile-first (375px base):** logo 140px, grid 1 coluna, header com hambúrguer `☰` (checkbox hack sem JS) que desdobra 9 itens em lista vertical com `padding 12px` e `border-bottom subtle`; hero `80px → 48px` no mobile, `font 18→16px`, botões `100% width` empilhados; cards `1 coluna + gap 16px + padding 16px`; filtros em drawer (v2). Tudo desenhado mobile-first, validado 375/768/1100 — desktop só expande colunas (4→2→1).
 
 ### 6.4 Estrutura de páginas (mapa para `stagingredesign`)
 

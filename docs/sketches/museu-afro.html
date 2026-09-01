@@ -30,7 +30,23 @@ a{color:var(--navy);text-decoration:none}
 .grid-4{grid-template-columns:repeat(4,1fr)}
 .grid-3{grid-template-columns:repeat(3,1fr)}
 @media(max-width:1024px){.grid-4{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:640px){.grid-4,.grid-3{grid-template-columns:1fr}.header-inner{flex-wrap:wrap}.nav{gap:12px}}
+/* MOBILE FIRST — 375px base, hambúrguer sem JS */
+.nav-toggle{display:none}
+.hamburger{display:none;font-size:22px;line-height:1;cursor:pointer;padding:6px 10px;border:1px solid var(--muted);border-radius:10px;background:#fff}
+@media(max-width:768px){
+  .header-inner{flex-wrap:nowrap}
+  .hamburger{display:block}
+  .nav{position:absolute;top:100%;left:0;right:0;background:#fff;border-bottom:1px solid var(--muted);flex-direction:column;gap:0;padding:8px 20px 12px;display:none;box-shadow:0 12px 24px rgba(15,23,42,.08)}
+  .nav a{padding:12px 0;border-bottom:1px solid var(--subtle);font-size:13px}
+  .nav a:last-child{border:0}
+  .nav-toggle:checked + .header-inner .nav{display:flex}
+  .hero{padding:48px 16px}
+  .hero p{font-size:16px}
+  .section{padding:24px 16px}
+  .btn{width:100%;text-align:center}
+  .btns{flex-direction:column}
+}
+@media(max-width:640px){.grid-4,.grid-3{grid-template-columns:1fr}}
 .card{background:#fff;border:1px solid var(--muted);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);transition:transform .18s,box-shadow .18s}
 .card:hover{transform:translateY(-2px);box-shadow:var(--shadow2)}
 .card img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
@@ -45,8 +61,10 @@ a{color:var(--navy);text-decoration:none}
 </style>
 </head>
 <body>
+<input type="checkbox" id="nav-toggle" class="nav-toggle">
 <header class="header"><div class="header-inner">
   <div class="logo">IPCN</div>
+  <label for="nav-toggle" class="hamburger" aria-label="Abrir menu">☰</label>
   <nav class="nav"><a>Destaques</a><a>Diáspora</a><a>Colunistas</a><a>Notas</a><a>Agenda</a><a>Acervo</a><a>Apoia-se</a><a>Associe-se</a><a>Quem Somos</a></nav>
 </div></header>
 
