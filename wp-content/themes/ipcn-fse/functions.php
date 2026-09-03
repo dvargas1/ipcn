@@ -8,6 +8,42 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Fontes Google (Oswald + Inter) com display=swap, preconnect antes.
+ * Era buraco: theme.json declarava as fontes mas nada as baixava —
+ * o site inteiro renderizava no fallback sans-serif.
+ */
+add_action(
+	'wp_enqueue_scripts',
+	function () {
+		wp_enqueue_style(
+			'ipcn-fse-fonts',
+			'https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap',
+			array(),
+			null
+		);
+	}
+);
+
+/**
+ * Preconnect pro Google Fonts (menoslatência no carregamento das fontes).
+ */
+add_filter(
+	'wp_resource_hints',
+	function ( $urls, $relation_type ) {
+		if ( 'preconnect' === $relation_type ) {
+			$urls[] = array(
+				'href'        => 'https://fonts.googleapis.com',
+				'crossorigin' => 'anonymous',
+			);
+			$urls[] = 'https://fonts.gstatic.com';
+		}
+		return $urls;
+	},
+	10,
+	2
+);
+
+/**
  * Enfileira o style.css do tema (fixes visuais: logo, cards, footer, mobile).
  * Block themes não carregam style.css sozinhos no frontend.
  */
@@ -76,6 +112,44 @@ function ipcn_fse_handle_assoc() {
 	$sent = wp_mail( $to, $subject, $body, $headers );
 
 	wp_safe_redirect( add_query_arg( 'cadastro', $sent ? 'ok' : 'erro', $redirect ) );
+	exit;
+}
+
+/**
+ * Form nativo de Fale Conosco: nome, e-mail e mensagem -> contato@ipcnbrasil.org.
+ */
+add_action( 'admin_post_ipcn_contact', 'ipcn_fse_handle_contact' );
+add_action( 'admin_post_nopriv_ipcn_contact', 'ipcn_fse_handle_contact' );
+
+function ipcn_fse_handle_contact() {
+	$redirect = home_url( '/fale-conosco/' );
+
+	if ( ! empty( $_POST['ipcn_hp'] ) ) {
+		wp_safe_redirect( add_query_arg( 'contato', 'erro', $redirect ) );
+		exit;
+	}
+
+	$nome  = isset( $_POST['ipcn_nome'] ) ? sanitize_text_field( wp_unslash( $_POST['ipcn_nome'] ) ) : '';
+	$email = isset( $_POST['ipcn_email'] ) ? sanitize_email( wp_unslash( $_POST['ipcn_email'] ) ) : '';
+	$msg   = isset( $_POST['ipcn_msg'] ) ? sanitize_textarea_field( wp_unslash( $_POST['ipcn_msg'] ) ) : '';
+
+	if ( empty( $nome ) || empty( $email ) || ! is_email( $email ) || empty( $msg ) ) {
+		wp_safe_redirect( add_query_arg( 'contato', 'erro', $redirect ) );
+		exit;
+	}
+
+	$to      = 'contato@ipcnbrasil.org';
+	$subject = 'Mensagem pelo site - IPCN';
+	$body    = "Mensagem enviada pelo Fale Conosco:\n\n"
+		. "Nome: {$nome}\n"
+		. "E-mail: {$email}\n\n"
+		. $msg . "\n\n"
+		. 'Enviado em ' . current_time( 'd/m/Y H:i' );
+	$headers = array( 'Reply-To: ' . $nome . ' <' . $email . '>' );
+
+	$sent = wp_mail( $to, $subject, $body, $headers );
+
+	wp_safe_redirect( add_query_arg( 'contato', $sent ? 'ok' : 'erro', $redirect ) );
 	exit;
 }
 
@@ -168,44 +242,6 @@ add_shortcode(
 			. '</form></div>';
 	}
 );
-
-/**
- * Form nativo de Fale Conosco: nome, e-mail e mensagem -> contato@ipcnbrasil.org.
- */
-add_action( 'admin_post_ipcn_contact', 'ipcn_fse_handle_contact' );
-add_action( 'admin_post_nopriv_ipcn_contact', 'ipcn_fse_handle_contact' );
-
-function ipcn_fse_handle_contact() {
-	$redirect = home_url( '/fale-conosco/' );
-
-	if ( ! empty( $_POST['ipcn_hp'] ) ) {
-		wp_safe_redirect( add_query_arg( 'contato', 'erro', $redirect ) );
-		exit;
-	}
-
-	$nome  = isset( $_POST['ipcn_nome'] ) ? sanitize_text_field( wp_unslash( $_POST['ipcn_nome'] ) ) : '';
-	$email = isset( $_POST['ipcn_email'] ) ? sanitize_email( wp_unslash( $_POST['ipcn_email'] ) ) : '';
-	$msg   = isset( $_POST['ipcn_msg'] ) ? sanitize_textarea_field( wp_unslash( $_POST['ipcn_msg'] ) ) : '';
-
-	if ( empty( $nome ) || empty( $email ) || ! is_email( $email ) || empty( $msg ) ) {
-		wp_safe_redirect( add_query_arg( 'contato', 'erro', $redirect ) );
-		exit;
-	}
-
-	$to      = 'contato@ipcnbrasil.org';
-	$subject = 'Mensagem pelo site - IPCN';
-	$body    = "Mensagem enviada pelo Fale Conosco:\n\n"
-		. "Nome: {$nome}\n"
-		. "E-mail: {$email}\n\n"
-		. $msg . "\n\n"
-		. 'Enviado em ' . current_time( 'd/m/Y H:i' );
-	$headers = array( 'Reply-To: ' . $nome . ' <' . $email . '>' );
-
-	$sent = wp_mail( $to, $subject, $body, $headers );
-
-	wp_safe_redirect( add_query_arg( 'contato', $sent ? 'ok' : 'erro', $redirect ) );
-	exit;
-}
 
 /**
  * Form de Fale Conosco (usado na pagina /fale-conosco).

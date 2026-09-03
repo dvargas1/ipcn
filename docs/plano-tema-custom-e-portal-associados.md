@@ -169,23 +169,22 @@ DON: `docs/sketches/amistad.html`.
 **GATE 1B:** você escolhe **um** dos dois sketches. O não escolhido vira `archive-acervo` alternativo (não é lixo).
 PIVÔ 1B: se nenhum agradar, pivota para híbrido (hero Museu + blocos Amistad) — custo +1 dia, sem refazer CPT.
 
-### FASE 2 — Shell do tema (header/footer/templates vazios)
+### FASE 2 — Shell do tema (header/footer/templates vazios) — ✅ FECHADA 03/09/2026
 
-**T2.1 — parts/header.html + parts/footer.html**
-Trabalho: header `logo 160px` + menu 9 itens em linha, sticky + blur, footer 2 colunas (logo 180/140px já validado `ipcn-footer-logo-fix` vira nativo), `wp_nav_menu`.
-DON: toda página mostra header/footer novo, `curl` sem `et_pb_*`.
-**GATE 2:** você valida no celular que logo não está gigante e menu cabe (hambúrguer ≤768px).
-PIVÔ 2: se 9 itens não couberem, pivota para menu com `Mais ▾` (dropdown) sem mudar hierarquia.
+**GATE 2 e GATE 3 assinados pelo Daniel em 03/09/2026 ("MUITO bom, absurdamente melhor").**
 
-**T2.2 — templates/page.html + single.html + 404.html**
-Trabalho: wrappers tipográficos (título `Oswald 32/48px`, corpo 18px `#475569`, max-width `720px` para texto, `1100px` para grid).
-DON: página "Quem Somos" (39KB antiga) reimportada como blocos nativos com 2 seções (sem `min_height:493px`).
+O que fechou a fase (commits `4d7c3b2`, `524a405` + fix de fontes):
+* `functions.php` agora enfileira o `style.css` (antes vazio = nenhum fix visual carregava) e as fontes Oswald+Inter via Google Fonts (antes só declaradas no theme.json, nunca baixadas — site inteiro no fallback sans-serif).
+* Header novo: logo 56px + wordmark "IPCN" ao lado (padrão sketch aprovado), menu à direita, overlay mobile estilizado.
+* Footer novo: fundo navy com logo RETRO-AZUL 48px (resolve "preto sobre azul escuro" — o logo `ipcn-sem-fundo.png` é preto e sumia no fundo ink).
+* Root padding 20px (`useRootPaddingAwareAlignments`) + `alignfull` no hero/footer — conteúdo nunca cola na borda no mobile.
+* Páginas internas refeitas em blocos nativos (T6.1 antecipada): Quem Somos (texto real extraído do Divi), Projetos, Editorial, Notícias, Agenda, Drops, Associe-se, Apoia-se (PIX), Fale Conosco — shell `ipcn_page_shell` (hero navy kicker + título) + shortcode `[ipcn_query_posts category="..." per_page="N"]` com cards no padrão da home e paginação `/page/N/`.
+* Forms nativos sem Divi: Associe-se e Fale Conosco (`admin_post` + honeypot, sem nonce por causa do LiteSpeed) — testados com wp_mail real pro `contato@ipcnbrasil.org` (log confirma).
+* CTA da home `/acervo` (404) → `/noticias` (provisório até a Fase 3 criar o acervo de verdade).
+* `custom_logo` segue 573 (preto) no header sobre fundo branco — visível. Footer usa attachment 4459 (RETRO-AZUL).
+* **Lição registrada (pitfall FSE):** block theme não carrega `style.css` sozinho no frontend; sem `wp_enqueue_style` no functions.php, todo CSS do tema é morto. Foi isso que fez a pausa de 01/09 parecer insolúvel ("logo gigante mesmo com 28px").
 
-**T2.3 — front-page.html (home tipográfica)**
-Trabalho: hero `80px` padding navy (mesmo do `Associe-se` aprovado) + 3 queries (`Destaques 4`, `Acervo 6`, `Agenda 3`) usando `Query Loop` nativo ou `rttpg` via shortcode.
-DON: home carrega ≤800KB, `lighthouse mobile ≥90`.
-**GATE 3:** você aprova home no `stagingredesign/?nocache=xxx` vs `staging` antigo lado a lado.
-PIVÔ 3: se quiser manter foto grande, pivota para hero com `cover 16:9 recortada` (não esticada) sem voltar ao `scale 1.12`.
+**Pendente visual menor:** logo do footer (4459) é vertical 1200x1600 — se o Daniel achar estranho no celular, substituir por asset horizontal/SVG (cliente ia fornecer).
 
 ### FASE 3 — Acervo (CPT novo, do zero)
 
