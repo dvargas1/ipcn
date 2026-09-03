@@ -3,7 +3,7 @@ Theme Name: IPCN FSE
 Theme URI: https://ipcnbrasil.org
 Author: IPCN / dvargas1
 Description: Block Theme FSE do zero para o IPCN — clean com identidade (Museu Afro). Sem Divi.
-Version: 0.1.0
+Version: 0.2.0
 Requires at least: 6.4
 Tested up to: 6.6
 Requires PHP: 8.1
@@ -14,36 +14,307 @@ Text Domain: ipcn-fse
 * { box-sizing: border-box; }
 a { text-underline-offset: 3px; }
 
-/* ——— Header profissional (espelho do sketch museu-afro) ——— */
-.wp-block-site-logo img { height: 28px !important; width: auto !important; }
-.wp-block-navigation a { letter-spacing: .06em; }
-/* footer logo menor (era 120px, tava gigante) */
-footer .wp-block-site-logo img { height: 48px !important; width: auto !important; }
+/* ——— Salvaguarda global: nenhuma imagem estoura o container ——— */
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+/* ——— Header ——— */
+.wp-site-blocks > header .wp-block-group {
+	align-items: center;
+}
+header .ipcn-brand {
+	flex-wrap: nowrap;
+	gap: 10px;
+	min-width: 0;
+}
+header .ipcn-wordmark {
+	margin: 0;
+	white-space: nowrap;
+}
+/* logo do site no header: 56px de altura, nunca gigante */
+header .wp-block-site-logo img {
+	width: auto !important;
+	height: 56px !important;
+	max-height: 56px;
+}
+@media (max-width: 480px) {
+	header .wp-block-site-logo img { height: 44px !important; max-height: 44px; }
+}
+
+/* nav: alinhada a direita, sem quebrar feio */
+header .wp-block-navigation {
+	justify-content: flex-end;
+}
+header .wp-block-navigation .wp-block-navigation-item__content {
+	padding: 6px 2px;
+}
+header .wp-block-navigation a:hover {
+	color: var(--wp--preset--color--ocre);
+}
+
+/* hamburger e painel do menu mobile */
+header .wp-block-navigation__responsive-container-open {
+	padding: 8px;
+	border: 1px solid var(--wp--preset--color--muted);
+	border-radius: 10px;
+}
+header .wp-block-navigation__responsive-container.is-menu-open {
+	background-color: var(--wp--preset--color--base);
+	padding: 24px;
+	border-radius: 0 0 14px 14px;
+	box-shadow: 0 18px 40px rgba(13, 23, 107, 0.14);
+}
+header .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item__content {
+	padding: 12px 4px;
+	font-size: 15px;
+}
 
 /* ——— Cards do Query Loop (grid profissional) ——— */
 .wp-block-post-template.is-layout-grid {
-  gap: 16px;
+	gap: 16px;
 }
 .wp-block-post-template.is-layout-grid .wp-block-group.has-background {
-  border: 1px solid var(--wp--preset--color--muted) !important;
-  border-radius: 14px !important;
-  overflow: hidden;
-  box-shadow: 0 6px 20px rgba(13,23,107,.08);
-  transition: transform .18s ease, box-shadow .18s ease;
+	border: 1px solid var(--wp--preset--color--muted) !important;
+	border-radius: 14px !important;
+	overflow: hidden;
+	box-shadow: 0 6px 20px rgba(13, 23, 107, 0.08);
+	transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 .wp-block-post-template.is-layout-grid .wp-block-group.has-background:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(13,23,107,.14);
+	transform: translateY(-2px);
+	box-shadow: 0 12px 32px rgba(13, 23, 107, 0.14);
 }
 .wp-block-post-featured-image img {
-  aspect-ratio: 16/9;
-  object-fit: cover;
-  border-radius: 10px;
+	aspect-ratio: 16 / 9;
+	object-fit: cover;
+	border-radius: 10px;
 }
-/* hero já vem do template, garante contraste */
-.has-navy-background-color a { color: #fff; text-decoration: underline; }
 
-/* mobile: garante padding e grid 1 col */
+/* mobile: grid 1 coluna */
 @media (max-width: 768px) {
-  .wp-block-post-template.is-layout-grid { grid-template-columns: 1fr !important; }
+	.wp-block-post-template.is-layout-grid {
+		grid-template-columns: 1fr !important;
+	}
+}
+
+/* ——— Hero ——— */
+.has-navy-background-color a {
+	color: #fff;
+	text-decoration: underline;
+}
+
+/* ——— Footer ——— */
+footer .wp-block-image img {
+	width: 48px;
+	height: auto;
+	border-radius: 8px;
+}
+footer .wp-block-columns {
+	align-items: flex-start;
+}
+footer .wp-block-list {
+	list-style: none;
+	padding-left: 0;
+	margin: 0;
+}
+footer .wp-block-list li {
+	margin-bottom: 6px;
+}
+@media (max-width: 781px) {
+	footer .wp-block-column { margin-bottom: 20px; }
+}
+
+/* ——— Formulário Associe-se (nativo) ——— */
+.ipcn-form-card {
+	background: #fff;
+	border: 1px solid var(--wp--preset--color--muted);
+	border-radius: 14px;
+	padding: 32px;
+	box-shadow: 0 12px 34px rgba(13, 23, 107, 0.10);
+	max-width: 640px;
+	margin: 0 auto;
+}
+.ipcn-form label {
+	display: block;
+	font-weight: 700;
+	font-size: 13px;
+	letter-spacing: 0.02em;
+	color: var(--wp--preset--color--navy);
+	margin-bottom: 16px;
+}
+.ipcn-form input,
+.ipcn-form textarea {
+	display: block;
+	width: 100%;
+	margin-top: 8px;
+	padding: 14px 16px;
+	font-size: 16px;
+	line-height: 1.45;
+	border: 1.5px solid var(--wp--preset--color--muted);
+	border-radius: 10px;
+	background: #fff;
+	color: #1e293b;
+	transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+.ipcn-form textarea {
+	font-family: inherit;
+	resize: vertical;
+	min-height: 130px;
+}
+.ipcn-form input::placeholder,
+.ipcn-form textarea::placeholder { color: #94a3b8; opacity: 1; }
+.ipcn-form input:focus,
+.ipcn-form textarea:focus {
+	border-color: var(--wp--preset--color--navy);
+	box-shadow: 0 0 0 4px rgba(13, 23, 107, 0.10);
+	outline: none;
+}
+.ipcn-form-submit {
+	display: inline-block;
+	background: var(--wp--preset--color--navy);
+	color: #fff;
+	border: 0;
+	border-radius: 10px;
+	padding: 15px 34px;
+	font-weight: 700;
+	font-size: 15px;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	cursor: pointer;
+	box-shadow: 0 8px 20px rgba(13, 23, 107, 0.18);
+	transition: background 0.18s ease, transform 0.12s ease;
+}
+.ipcn-form-submit:hover {
+	background: #1a2a9e;
+	transform: translateY(-1px);
+}
+.ipcn-form-success {
+	background: #f0fdf4;
+	border: 1px solid #bbf7d0;
+	color: #166534;
+	border-radius: 10px;
+	padding: 14px 16px;
+	font-size: 15px;
+}
+.ipcn-form-error {
+	background: #fef2f2;
+	border: 1px solid #fecaca;
+	color: #991b1b;
+	border-radius: 10px;
+	padding: 12px 16px;
+	font-size: 14px;
+	margin-bottom: 16px;
+}
+@media (max-width: 480px) {
+	.ipcn-form-card { padding: 20px; }
+	.ipcn-form-submit { width: 100%; }
+}
+
+/* ——— Paginação ——— */
+.wp-block-query-pagination {
+	gap: 8px;
+	justify-content: center;
+	margin-top: 24px;
+}
+.wp-block-query-pagination-numbers .page-numbers {
+	padding: 6px 12px;
+	border: 1px solid var(--wp--preset--color--muted);
+	border-radius: 8px;
+	text-decoration: none;
+}
+.wp-block-query-pagination-numbers .current {
+	background: var(--wp--preset--color--navy);
+	color: #fff;
+	border-color: var(--wp--preset--color--navy);
+}
+
+/* ——— Grid de cards via shortcode (paginas de categoria) ——— */
+.ipcn-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 16px;
+}
+@media (max-width: 900px) {
+	.ipcn-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+	.ipcn-grid { grid-template-columns: 1fr; }
+}
+.ipcn-card {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	background: #fff;
+	border: 1px solid var(--wp--preset--color--muted);
+	border-radius: 14px;
+	overflow: hidden;
+	text-decoration: none;
+	box-shadow: 0 6px 20px rgba(13, 23, 107, 0.08);
+	transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.ipcn-card:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 12px 32px rgba(13, 23, 107, 0.14);
+}
+.ipcn-card-media {
+	display: block;
+	line-height: 0;
+}
+.ipcn-card-media img {
+	width: 100%;
+	aspect-ratio: 16 / 9;
+	object-fit: cover;
+}
+.ipcn-card-noimg {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	aspect-ratio: 16 / 9;
+	background: var(--wp--preset--color--navy);
+	color: var(--wp--preset--color--ocre);
+	font-family: var(--wp--preset--font-family--oswald);
+	font-size: 22px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+}
+.ipcn-card-title {
+	color: var(--wp--preset--color--ink);
+	font-weight: 600;
+	font-size: 15px;
+	line-height: 1.35;
+	padding: 0 14px;
+}
+.ipcn-card-date {
+	color: var(--wp--preset--color--body);
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	padding: 0 14px 14px;
+}
+
+/* ——— Paginacao do grid shortcode ——— */
+.ipcn-pagination {
+	display: flex;
+	justify-content: center;
+	gap: 8px;
+	margin-top: 28px;
+}
+.ipcn-page {
+	padding: 7px 13px;
+	border: 1px solid var(--wp--preset--color--muted);
+	border-radius: 8px;
+	font-size: 14px;
+	font-weight: 600;
+	color: var(--wp--preset--color--navy);
+	text-decoration: none;
+}
+.ipcn-page.current {
+	background: var(--wp--preset--color--navy);
+	color: #fff;
+	border-color: var(--wp--preset--color--navy);
+}
+.ipcn-page:hover {
+	border-color: var(--wp--preset--color--navy);
 }

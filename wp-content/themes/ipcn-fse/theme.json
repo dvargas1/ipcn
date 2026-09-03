@@ -2,6 +2,7 @@
   "version": 2,
   "settings": {
     "appearanceTools": true,
+    "useRootPaddingAwareAlignments": true,
     "color": {
       "palette": [
         { "slug": "navy", "color": "#0d176b", "name": "Navy IPCN" },
@@ -9,6 +10,7 @@
         { "slug": "muted", "color": "#e2e8f0", "name": "Muted" },
         { "slug": "ocre", "color": "#c9a86a", "name": "Ocre Afro" },
         { "slug": "base", "color": "#ffffff", "name": "Base" },
+        { "slug": "navy-soft", "color": "#8e9bd0", "name": "Navy Soft" },
         { "slug": "subtle", "color": "#f8fafc", "name": "Subtle" },
         { "slug": "body", "color": "#475569", "name": "Body" }
       ]
@@ -42,6 +44,12 @@
   },
   "styles": {
     "color": { "background": "var(--wp--preset--color--base)", "text": "var(--wp--preset--color--ink)" },
+    "spacing": {
+      "padding": {
+        "left": "20px",
+        "right": "20px"
+      }
+    },
     "typography": { "fontFamily": "var(--wp--preset--font-family--body)", "fontSize": "18px", "lineHeight": "1.6" },
     "elements": {
       "heading": { "typography": { "fontFamily": "var(--wp--preset--font-family--oswald)", "fontWeight": "600" }, "color": { "text": "var(--wp--preset--color--ink)" } },
