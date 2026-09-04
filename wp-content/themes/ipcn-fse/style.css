@@ -202,6 +202,25 @@ footer .wp-block-list li {
 @media (max-width: 781px) {
 	footer .wp-block-column { margin-bottom: 20px; }
 }
+/* rodape: logo branco puro (ipcn-sem-fundo) sem borda, e links discretos */
+.ipcn-footer .wp-block-image.ipcn-footer-mark,
+.ipcn-footer figure.wp-block-image {
+	border: 0;
+	background: none;
+}
+.ipcn-footer img.ipcn-footer-mark {
+	width: 64px !important;
+	height: auto !important;
+	border-radius: 0;
+	filter: brightness(0) invert(1);
+	opacity: 0.95;
+}
+.ipcn-footer a {
+	text-decoration: none;
+}
+.ipcn-footer a:hover {
+	color: var(--wp--preset--color--ocre) !important;
+}
 
 /* ——— Formulário Associe-se (nativo) ——— */
 .ipcn-form-card {
