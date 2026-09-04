@@ -64,12 +64,12 @@ header .ipcn-header-cta .wp-block-button__link {
 	border-radius: 999px;
 	transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
-header .ipcn-header-cta .associe {
+header .ipcn-header-cta .associe .wp-block-button__link {
 	background: var(--wp--preset--color--ocre);
 	color: var(--wp--preset--color--ink);
-	border: 1.5px solid var(--wp--preset--color--ocre);
+	border: 2px solid var(--wp--preset--color--ocre);
 }
-header .ipcn-header-cta .apoie {
+header .ipcn-header-cta .apoie .wp-block-button__link {
 	background: transparent;
 	color: var(--wp--preset--color--navy);
 	border: 1.5px solid var(--wp--preset--color--ocre);
