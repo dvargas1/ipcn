@@ -198,6 +198,17 @@ DON: `stagingredesign/acervo/?nocache` lista 3 fakes com filtros operacionais.
 **GATE 4:** você aprova layout do acervo vazio (sem conteúdo real).
 PIVÔ 4: se filtros ficarem complexos, pivota para filtro mínimo (só `tema_acervo` dropdown) e deixa data para v2.
 
+### FASE 3 — Acervo (CPT novo, do zero) — ✅ PRONTA PRA GATE 4 (04/09/2026, commit 5c738ac)
+
+T3.1 e T3.2 feitas e validadas via curl no staging:
+* CPT `acervo_ipcn` (archive em `/acervo/`, capability_type `acervo` já provisionado pra Fase 4) + taxonomia `tema_acervo`.
+* Templates: `archive-acervo_ipcn.html` (hero navy + grid 3 colunas + paginação), `single-acervo_ipcn.html` (hero navy + CTA de associado → /associe-se), `taxonomy-tema_acervo.html` (grid filtrada por tema).
+* 3 itens fake + 3 temas de teste criados (Entrevista/Fotografia/Carta de fundação), vinculados aos temas.
+* **Bug corrigido:** slug da taxonomia `acervo/tema` colidia com a rewrite de attachment do CPT (`acervo/[^/]+/([^/]+)` batia primeiro → 404 no arquivo do tema). Solução: slug top-level `/temas/`. Lição: slug de taxonomia aninhado no slug do CPT quebra quando o CPT não é hierarchical — a regra de attachment captura antes.
+* Validado: /acervo lista os 3 (200), /temas/fotografia e /temas/memoria-oral filtram certo, single 200 com CTA.
+
+**GATE 4 pendente:** Daniel validar layout do acervo vazio/de fakes (mobile-first).
+
 ### FASE 4 — Portal de Associados (6 roles, fluxo manual v1)
 
 **T4.1 — Roles + capabilities**
