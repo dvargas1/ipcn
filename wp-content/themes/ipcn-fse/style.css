@@ -202,18 +202,24 @@ footer .wp-block-list li {
 @media (max-width: 781px) {
 	footer .wp-block-column { margin-bottom: 20px; }
 }
-/* rodape: logo branco puro (ipcn-sem-fundo) sem borda, e links discretos */
-.ipcn-footer .wp-block-image.ipcn-footer-mark,
-.ipcn-footer figure.wp-block-image {
-	border: 0;
-	background: none;
+/* rodape: marca em linha (simbolo + nome lado a lado), simbolo branco */
+.ipcn-footer .ipcn-footer-brand {
+	align-items: center;
 }
 .ipcn-footer img.ipcn-footer-mark {
-	width: 64px !important;
+	width: 38px !important;
 	height: auto !important;
 	border-radius: 0;
 	filter: brightness(0) invert(1);
 	opacity: 0.95;
+}
+.ipcn-footer .ipcn-footer-brand p {
+	margin: 0;
+}
+@media (max-width: 781px) {
+	.ipcn-footer .ipcn-footer-brand {
+		flex-wrap: wrap;
+	}
 }
 .ipcn-footer a {
 	text-decoration: none;
