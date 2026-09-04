@@ -315,6 +315,8 @@ footer .wp-block-list li {
 }
 
 /* ——— Paginação ——— */
+/* paginas internas: quando o post-title fica sozinho no template (pagina sem hero navy), some */
+.wp-block-post-title.ipcn-hero-alone { display: none; }
 .wp-block-query-pagination {
 	gap: 8px;
 	justify-content: center;
