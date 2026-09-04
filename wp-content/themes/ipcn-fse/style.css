@@ -143,6 +143,44 @@ header .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigat
 	color: #fff;
 	text-decoration: underline;
 }
+/* hero da home: imagem real do IPCN por trás do gradiente navy */
+.ipcn-hero {
+	position: relative;
+	overflow: hidden;
+	isolation: isolate;
+}
+.ipcn-hero::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -2;
+	background: url("https://stagingredesign.ipcnbrasil.org/wp-content/uploads/2025/03/1001617239-1080x675.jpg") center 32% / cover no-repeat;
+}
+.ipcn-hero::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background: linear-gradient(180deg, rgba(13,23,107,0.82) 0%, rgba(13,23,107,0.68) 45%, rgba(13,23,107,0.88) 100%);
+}
+@media (max-width: 600px) {
+	.ipcn-hero::before { background-position: center 28%; }
+	.ipcn-hero { padding-top: 72px !important; padding-bottom: 72px !important; }
+}
+/* botões dentro do hero: sem sublinhado (regra do navy mancha links comuns, não CTA) */
+.ipcn-hero .wp-block-button__link,
+.ipcn-hero .wp-block-button__link:hover,
+.ipcn-hero .wp-block-button__link:focus {
+	text-decoration: none !important;
+	border-radius: 999px;
+	padding: 13px 26px;
+	font-size: 14px;
+}
+.ipcn-hero .wp-block-button__link:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 8px 22px rgba(0, 0, 0, 0.30);
+	transition: transform .15s ease, box-shadow .15s ease;
+}
 
 /* ——— Footer ——— */
 footer .wp-block-image img {
