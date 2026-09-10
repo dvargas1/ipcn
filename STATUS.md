@@ -30,7 +30,7 @@ Causa raiz recorrente: shortcode `[smart_post_show id="X"]` (plugin "Smart Post 
 
 ## Pendências conhecidas
 - Varredura das páginas restantes (Destaques, Diáspora, Colunistas, Notas, Drops Antirracista) — provável mesmo problema smart_post_show.
-- QR Code PIX da Apoia-se (se a contratante tiver a imagem).
+- QR Code PIX da Apoia-se: FEITO 10/09 (PagSeguro dinâmico, attachment 5358) — venceu 08/09, trocar por estático ou novo com a cliente.
 - Validação na tela (mobile/desktop).
 - Deploy produção (manual, pela contratante).
 
