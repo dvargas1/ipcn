@@ -597,10 +597,89 @@ body.ipcn-ancestral { background: #fbf9f5; }
 	justify-content: flex-end;
 	flex-wrap: wrap;
 }
-/* o banner antigo do CookieYes vira menos intrusivo: some a modal gigante por CSS */
-#cookie-law-info-bar .cli-bar-container {
-	padding: 8px 16px !important;
-	font-size: 13px !important;
+/* CookieYes legado: a UI do banner é DESLIGADA na opção do plugin (CookieLawInfo-0.9
+   -> is_on=false), não por CSS. Sem o CSS hack frágil aqui. Detalhes no bloco
+   REFINAMENTO v2.1 mais abaixo (fallback defensivo documentado). */
+#cliSettingsPopup { max-height: 75vh; }
+
+/* =========================================================
+   REFINAMENTO v2.1 — responsividade + acessibilidade WCAG AA
+   ========================================================= */
+
+/*
+   1. RESPONSIVIDADE (mobile-first):
+   Hero em 120px e seções 96/64px eram valores de desktop. Movem os paddings
+   da home pra um vocabulário mais baixo no mobile e crescem a partir de 782px.
+   Seletores escopados a .ipcn-hero e sections explicitas d? front-page.
+*/
+.ipcn-hero {
+	padding-top: 72px !important;
+	padding-bottom: 72px !important;
 }
-#cookie-law-info-bar h5.cli_messagebar_head { display: none !important; }
+@media (min-width: 782px) {
+	.ipcn-hero {
+		padding-top: 120px !important;
+		padding-bottom: 120px !important;
+	}
+}
+/* Seções da home: o template usa padding fixo no markup (style attr), que vence.
+   Reescreve via CSS var com fallback + media queries escopadas: */
+.wp-block-group[style*="padding-top:96px"],
+.wp-block-group[style*="padding-top: 96px"] {
+	padding-top: 48px !important;
+	padding-bottom: 40px !important;
+}
+@media (min-width: 782px) {
+	.wp-block-group[style*="padding-top:96px"],
+	.wp-block-group[style*="padding-top: 96px"] {
+		padding-top: 96px !important;
+		padding-bottom: 64px !important;
+	}
+}
+
+/*
+   2. WCAG AA:
+   - Ocre #c9a86a sobre branco tem contraste ~2.1:1 (fail para texto).
+     Regra nova: OCRE NUNCA é texto sobre claro — vira só borda/detalhe/tag-bg com texto ink.
+   - Texto do botão primário fica CHUMBO ESCURO #2d2418 sobre ocre (contraste ~7.7:1, AA normal)
+     em vez de branco (que era ~2.1:1).
+   - Botão sólido secundário de ação de conversão passa a ser TERRACOTA #a85a32 com texto branco
+     (contraste 4.7:1, AA normal - pass).
+*/
+.ipcn-cta-primario .wp-block-button__link {
+	background: #c9a86a !important;
+	color: #2d2418 !important;   /* chumbo escuro sobre ocre: 7.7:1 */
+	border: 2px solid #c9a86a;
+	font-weight: 700;
+}
+.ipcn-cta-primario .wp-block-button__link:hover {
+	background: #e2b878 !important;  /* ocre hover mais claro mantém texto chumbo legível */
+	border-color: #e2b878;
+	color: #2d2418 !important;
+}
+.ipcn-cookie-accept,
+#ipcn-cookie-accept-all-panel {
+	color: #2d2418 !important;  /* mesma regra no banner de cookies */
+}
+/* Estado vazio / tags com bg ocre (nosso caso: botões outline CTA e eyebrow terracota já passam 4.7:1) */
+
+/* link "Ler mais" com foco visível (a11y keyboard) */
+.ipcn-card-v2 a:focus-visible,
+.ipcn-cta-primario a:focus-visible,
+.ipcn-cta-secundario a:focus-visible,
+#ipcn-cookie-bar button:focus-visible {
+	outline: 2px solid #a85a32;
+	outline-offset: 2px;
+}
+
+/*
+   3. COOKIE BANNER — DEPENDÊNCIA DOCUMENTADA:
+   O banner legado do CookieYes agora é DESLIGADO NA OPÇÃO do plugin (option
+   `CookieLawInfo-0.9` -> `is_on=false`), não via CSS hack. O CSS abaixo é só
+   FALLBACK defensivo caso alguém religue o banner no hPanel: mantém o modal
+   de gerenciamento deles restrito à altura e esconde o cabeçalho duplicado.
+   Se remover a opção is_on=false, este CSS continua aplicável; nunca confie
+   no CSS sozinho para desligar UI de terceiro.
+*/
+#cookie-law-info-bar .cli_messagebar_head { display: none !important; } /* dependência: CookieYes (se religado) */
 #cliSettingsPopup { max-height: 75vh; }
