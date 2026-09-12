@@ -1,88 +1,132 @@
 <!-- wp:template-part {"slug":"header"} /-->
 
-<!-- wp:group {"align":"full","className":"ipcn-hero","style":{"spacing":{"padding":{"top":"96px","bottom":"96px"}}},"backgroundColor":"navy","textColor":"base","layout":{"type":"constrained","contentSize":"720px"}} -->
-<div class="wp-block-group alignfull ipcn-hero has-base-color has-navy-background-color has-text-color has-background" style="padding-top:96px;padding-bottom:96px">
-  <!-- wp:heading {"textAlign":"center","level":1,"style":{"typography":{"fontFamily":"var:preset|font-family|oswald","fontSize":"48px","fontWeight":"700","lineHeight":"1.1"}},"textColor":"base"} -->
-  <h1 class="wp-block-heading has-text-align-center has-base-color has-text-color" style="font-family:var(--wp--preset--font-family--oswald);font-size:48px;font-weight:700;line-height:1.1;color:var(--wp--preset--color--base)">Pesquisa, memória e cultura negra</h1>
-  <!-- /wp:heading -->
-  <!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"18px"}},"textColor":"base"} -->
-  <p class="has-text-align-center has-base-color has-text-color" style="font-size:18px;color:var(--wp--preset--color--base)">O acervo vivo do IPCN — artigos, pesquisas e história para quem estuda, ensina e transforma.</p>
+<!-- ============ HERO (ancestralidade: serif grande + 2 CTAs) ============ -->
+<!-- wp:group {"align":"full","className":"ipcn-hero","style":{"spacing":{"padding":{"top":"120px","bottom":"120px"},"margin":{"top":"0","bottom":"0"}}},"backgroundColor":"navy","textColor":"base","layout":{"type":"constrained","contentSize":"760px"}} -->
+<div class="wp-block-group alignfull ipcn-hero has-base-color has-navy-background-color has-text-color has-background" style="padding-top:120px;padding-bottom:120px">
+  <!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"12px","fontWeight":"600","letterSpacing":"0.25em","textTransform":"uppercase"},"color":{"text":"#c9a86a"}}} -->
+  <p class="has-text-align-center" style="color:#c9a86a;font-size:12px;font-weight:600;letter-spacing:0.25em;text-transform:uppercase">Desde 1975 · Lapa, Rio de Janeiro</p>
   <!-- /wp:paragraph -->
-  <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"},"style":{"spacing":{"blockGap":"12px","margin":{"top":"24px"}}}} -->
-  <div class="wp-block-buttons" style="margin-top:24px"><!-- wp:button {"backgroundColor":"ocre","textColor":"ink","style":{"border":{"radius":"999px"},"typography":{"fontWeight":"700"}}} -->
-  <div class="wp-block-button"><a class="wp-block-button__link has-ink-color has-ocre-background-color has-text-color has-background wp-element-button" style="border-radius:999px;font-weight:700" href="/noticias">Explorar notícias</a></div>
-  <!-- /wp:button --><!-- wp:button {"backgroundColor":"base","textColor":"navy","style":{"border":{"radius":"999px"},"typography":{"fontWeight":"700"}}} -->
-  <div class="wp-block-button"><a class="wp-block-button__link has-navy-color has-base-background-color has-text-color has-background wp-element-button" style="border-radius:999px;font-weight:700" href="/associe-se">Associe-se</a></div>
-  <!-- /wp:button --></div>
+  <!-- wp:heading {"textAlign":"center","level":1,"style":{"typography":{"fontFamily":"var:preset|font-family|oswald","fontSize":"clamp(32px, 6vw, 56px)","fontWeight":"700","lineHeight":"1.08"}},"textColor":"base"} -->
+  <h1 class="wp-block-heading has-text-align-center has-base-color has-text-color" style="font-family:var(--wp--preset--font-family--oswald);font-size:clamp(32px,6vw,56px);font-weight:700;line-height:1.08;color:var(--wp--preset--color--base)">Pesquisa, memória e cultura negra há 50 anos</h1>
+  <!-- /wp:heading -->
+  <!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"18px","lineHeight":"1.7"},"spacing":{"margin":{"top":"18px","bottom":"0"}}},"textColor":"base"} -->
+  <p class="has-text-align-center has-base-color has-text-color" style="margin-top:18px;font-size:18px;line-height:1.7;color:var(--wp--preset--color--base)">O acervo vivo do IPCN: artigos, pesquisas e história para quem estuda, ensina e transforma.</p>
+  <!-- /wp:paragraph -->
+  <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"},"style":{"spacing":{"blockGap":"14px","margin":{"top":"32px"}}}} -->
+  <div class="wp-block-buttons" style="margin-top:32px">
+    <!-- wp:button {"className":"ipcn-cta-secundario","style":{"border":{"radius":"6px"}}} -->
+    <div class="wp-block-button ipcn-cta-secundario"><a class="wp-block-button__link wp-element-button" style="border-radius:6px" href="/acervo">Explorar Acervo</a></div>
+    <!-- /wp:button -->
+    <!-- wp:button {"className":"ipcn-cta-primario","style":{"border":{"radius":"6px"}}} -->
+    <div class="wp-block-button ipcn-cta-primario"><a class="wp-block-button__link wp-element-button" style="border-radius:6px" href="/associe-se">Associe-se</a></div>
+    <!-- /wp:button -->
+  </div>
   <!-- /wp:buttons -->
 </div>
 <!-- /wp:group -->
 
-<!-- wp:group {"style":{"spacing":{"padding":{"top":"32px","bottom":"32px"}}},"layout":{"type":"constrained","contentSize":"1100px"}} -->
-<div class="wp-block-group" style="padding-top:32px;padding-bottom:32px">
-  <!-- wp:paragraph {"style":{"typography":{"fontSize":"11px","letterSpacing":"0.08em","textTransform":"uppercase"}},"textColor":"body"} -->
-  <p style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--wp--preset--color--body)">Eixo · Destaques</p>
-  <!-- /wp:paragraph -->
-  <!-- wp:heading {"style":{"typography":{"fontFamily":"var:preset|font-family|oswald","fontSize":"24px"}}} -->
-  <h2 class="wp-block-heading" style="font-family:var(--wp--preset--font-family--oswald);font-size:24px">Destaques</h2>
-  <!-- /wp:heading -->
-  <!-- wp:query {"query":{"perPage":4,"postType":"post","order":"desc","orderBy":"date","inherit":false}} -->
-  <div class="wp-block-query"><!-- wp:post-template {"layout":{"type":"grid","columnCount":4}} -->
-  <!-- wp:group {"style":{"border":{"radius":"14px","width":"1px"},"spacing":{"padding":{"top":"14px","right":"14px","bottom":"14px","left":"14px"}}},"borderColor":"muted","backgroundColor":"base","layout":{"type":"constrained"}} -->
-  <div class="wp-block-group has-border-color has-muted-border-color has-base-background-color has-background" style="border-radius:14px;border-width:1px;padding-top:14px;padding-right:14px;padding-bottom:14px;padding-left:14px"><!-- wp:post-featured-image {"isLink":true,"aspectRatio":"16/9","style":{"border":{"radius":"10px"}}} /--><!-- wp:post-title {"isLink":true,"style":{"typography":{"fontSize":"16px","fontWeight":"600","lineHeight":"1.35"}}} /--><!-- wp:post-date {"style":{"typography":{"fontSize":"11px","letterSpacing":"0.05em","textTransform":"uppercase"}},"textColor":"body"} /--></div>
+<!-- ============ SECTION: Últimas notícias ============ -->
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"96px","bottom":"64px","left":"20px","right":"20px"}}},"layout":{"type":"constrained","contentSize":"1100px"}} -->
+<div class="wp-block-group alignfull" style="padding-top:96px;padding-bottom:64px;padding-left:20px;padding-right:20px">
+  <!-- wp:group {"style":{"spacing":{"blockGap":"6px"}},"layout":{"type":"constrained","contentSize":"100%"}} -->
+  <div class="wp-block-group">
+    <!-- wp:paragraph {"style":{"typography":{"fontSize":"12px","fontWeight":"600","letterSpacing":"0.2em","textTransform":"uppercase"},"color":{"text":"#a85a32"}}} -->
+    <p style="color:#a85a32;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase">Notícias</p>
+    <!-- /wp:paragraph -->
+    <!-- wp:heading {"style":{"typography":{"fontFamily":"var:preset|font-family|oswald","fontSize":"clamp(26px, 3vw, 34px)","fontWeight":"700"}}} -->
+    <h2 class="wp-block-heading" style="font-family:var(--wp--preset--font-family--oswald);font-size:clamp(26px,3vw,34px);font-weight:700">Últimas notícias</h2>
+    <!-- /wp:heading -->
+  </div>
   <!-- /wp:group -->
-  <!-- /wp:post-template --></div>
-  <!-- /wp:query -->
-</div>
-<!-- /wp:group -->
-
-<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"28px","bottom":"28px"}}},"backgroundColor":"subtle","layout":{"type":"constrained","contentSize":"1100px"}} -->
-<div class="wp-block-group alignfull has-subtle-background-color has-background" style="padding-top:28px;padding-bottom:28px">
-  <!-- wp:paragraph {"style":{"typography":{"fontSize":"11px","letterSpacing":"0.08em","textTransform":"uppercase"}},"textColor":"body"} -->
-  <p style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--wp--preset--color--body)">Acervo IPCN · em destaque</p>
-  <!-- /wp:paragraph -->
-  <!-- wp:heading {"style":{"typography":{"fontFamily":"var:preset|font-family|oswald","fontSize":"24px"}}} -->
-  <h2 class="wp-block-heading" style="font-family:var(--wp--preset--font-family--oswald);font-size:24px">Acervo em destaque</h2>
-  <!-- /wp:heading -->
-  <!-- wp:query {"query":{"perPage":3,"postType":"post","order":"desc","orderBy":"date","inherit":false}} -->
+  <!-- wp:query {"queryId":0,"query":{"perPage":3,"postType":"post","order":"desc","orderBy":"date","inherit":false,"taxQuery":{"category":[1]},"sticky":""}} -->
   <div class="wp-block-query"><!-- wp:post-template {"layout":{"type":"grid","columnCount":3}} -->
-  <!-- wp:group {"style":{"border":{"radius":"14px","width":"1px"},"spacing":{"padding":{"top":"14px","right":"14px","bottom":"14px","left":"14px"}}},"borderColor":"muted","backgroundColor":"base"} -->
-  <div class="wp-block-group has-border-color has-muted-border-color has-base-background-color has-background" style="border-radius:14px;border-width:1px;padding-top:14px;padding-right:14px;padding-bottom:14px;padding-left:14px"><!-- wp:post-featured-image {"isLink":true,"aspectRatio":"16/9","style":{"border":{"radius":"10px"}}} /--><!-- wp:post-title {"isLink":true,"style":{"typography":{"fontSize":"16px","fontWeight":"600"}}} /--><!-- wp:post-excerpt {"moreText":"Ler mais","showMoreOnNewLine":false,"style":{"typography":{"fontSize":"13px"}},"textColor":"body"} /--></div>
+  <!-- wp:group {"className":"ipcn-card-v2","style":{"border":{"radius":"12px","width":"1px"},"spacing":{"padding":{"top":"0","right":"0","bottom":"20px","left":"0"}}},"borderColor":"muted","backgroundColor":"base","layout":{"type":"constrained"}} -->
+  <div class="wp-block-group ipcn-card-v2 has-border-color has-muted-border-color has-base-background-color has-background" style="border-radius:12px;border-width:1px;padding-right:0;padding-bottom:20px;padding-left:0"><!-- wp:post-featured-image {"isLink":true,"aspectRatio":"16/9","style":{"border":{"radius":{"topLeft":"12px","topRight":"12px","bottomLeft":"0px","bottomRight":"0px"}}}} /-->
+  <!-- wp:group {"style":{"spacing":{"padding":{"top":"18px","right":"20px","left":"20px"}}},"layout":{"type":"constrained"}} -->
+  <div class="wp-block-group" style="padding-top:18px;padding-right:20px;padding-left:20px">
+  <!-- wp:post-terms {"term":"category","separator":" · ","style":{"typography":{"fontSize":"11px","fontWeight":"600","letterSpacing":"0.06em","textTransform":"uppercase"},"color":{"text":"#a85a32"}}} /-->
+  <!-- wp:post-title {"isLink":true,"style":{"typography":{"fontFamily":"var:preset|font-family|oswald","fontSize":"19px","fontWeight":"600","lineHeight":"1.35"},"spacing":{"margin":{"top":"10px"}}}} /-->
+  <!-- wp:post-date {"style":{"typography":{"fontSize":"13px"},"color":{"text":"#64748b"}},"format":"j \\d\\e M \\d\\e Y"} /-->
+  </div>
+  <!-- /wp:group --></div>
   <!-- /wp:group -->
-  <!-- /wp:post-template --></div>
+  <!-- /wp:post-template -->
+  <!-- wp:query-no-results --><!-- wp:paragraph -->
+  <p>Em breve, novidades por aqui.</p>
+  <!-- /wp:paragraph --><!-- /wp:query-no-results -->
+  <!-- wp:paragraph {"style":{"spacing":{"margin":{"top":"32px"}}}} -->
+  <p style="margin-top:32px"><a href="/noticias/">Ver todas as notícias →</a></p>
+  <!-- /wp:paragraph --></div>
   <!-- /wp:query -->
 </div>
 <!-- /wp:group -->
 
-<!-- wp:group {"style":{"spacing":{"padding":{"top":"28px","bottom":"32px"}}},"layout":{"type":"constrained","contentSize":"1100px"}} -->
-<div class="wp-block-group" style="padding-top:28px;padding-bottom:32px">
-  <!-- wp:paragraph {"style":{"typography":{"fontSize":"11px","letterSpacing":"0.08em","textTransform":"uppercase"}},"textColor":"body"} -->
-  <p style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--wp--preset--color--body)">Agenda IPCN</p>
-  <!-- /wp:paragraph -->
-  <!-- wp:heading {"style":{"typography":{"fontFamily":"var:preset|font-family|oswald","fontSize":"24px"}}} -->
-  <h2 class="wp-block-heading" style="font-family:var(--wp--preset--font-family--oswald);font-size:24px">Próximos encontros</h2>
-  <!-- /wp:heading -->
-  <!-- wp:query {"query":{"perPage":3,"postType":"post","order":"desc","orderBy":"date","inherit":false,"taxQuery":{"category":[90]}}} -->
+<!-- ============ SECTION: Acervo em destaque (CPT acervo_ipcn - IDs diferentes das noticias) ============ -->
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"32px","bottom":"96px","left":"20px","right":"20px"}}},"backgroundColor":"subtle","layout":{"type":"constrained","contentSize":"1100px"}} -->
+<div class="wp-block-group alignfull has-subtle-background-color has-background" style="padding-top:32px;padding-bottom:96px;padding-left:20px;padding-right:20px">
+  <!-- wp:group {"style":{"spacing":{"blockGap":"6px"}},"layout":{"type":"constrained"}} -->
+  <div class="wp-block-group">
+    <!-- wp:paragraph {"style":{"typography":{"fontSize":"12px","fontWeight":"600","letterSpacing":"0.2em","textTransform":"uppercase"},"color":{"text":"#a85a32"}}} -->
+    <p style="color:#a85a32;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase">Acervo</p>
+    <!-- /wp:paragraph -->
+    <!-- wp:heading {"style":{"typography":{"fontFamily":"var:preset|font-family|oswald","fontSize":"clamp(26px, 3vw, 34px)","fontWeight":"700"}}} -->
+    <h2 class="wp-block-heading" style="font-family:var(--wp--preset--font-family--oswald);font-size:clamp(26px,3vw,34px);font-weight:700">Vozes do IPCN</h2>
+    <!-- /wp:heading -->
+    <!-- wp:paragraph {"style":{"typography":{"fontSize":"15px"},"color":{"text":"#64748b"}}} -->
+    <p style="color:#64748b;font-size:15px">Depoimentos, registros e documentos preservados pelo instituto.</p>
+    <!-- /wp:paragraph -->
+  </div>
+  <!-- /wp:group -->
+  <!-- wp:query {"queryId":1,"query":{"perPage":3,"postType":"acervo_ipcn","order":"desc","orderBy":"date","inherit":false}} -->
   <div class="wp-block-query"><!-- wp:post-template {"layout":{"type":"grid","columnCount":3}} -->
-  <!-- wp:group {"style":{"border":{"radius":"14px","width":"1px"},"spacing":{"padding":{"top":"14px","right":"14px","bottom":"14px","left":"14px"}}},"borderColor":"muted","backgroundColor":"base"} -->
-  <div class="wp-block-group has-border-color has-muted-border-color has-base-background-color has-background" style="border-radius:14px;border-width:1px;padding-top:14px;padding-right:14px;padding-bottom:14px;padding-left:14px"><!-- wp:post-date {"style":{"typography":{"fontSize":"11px","letterSpacing":"0.05em","textTransform":"uppercase"}},"textColor":"body"} /--><!-- wp:post-title {"isLink":true,"style":{"typography":{"fontSize":"16px"}}} /--><!-- wp:post-excerpt {"moreText":"","style":{"typography":{"fontSize":"13px"}},"textColor":"body"} /--></div>
+  <!-- wp:group {"className":"ipcn-card-v2","style":{"border":{"radius":"12px","width":"1px"},"spacing":{"padding":{"top":"0","right":"0","bottom":"20px","left":"0"}}},"borderColor":"muted","backgroundColor":"base"} -->
+  <div class="wp-block-group ipcn-card-v2 has-border-color has-muted-border-color has-base-background-color has-background" style="border-radius:12px;border-width:1px;padding-right:0;padding-bottom:20px;padding-left:0"><!-- wp:post-featured-image {"isLink":true,"aspectRatio":"16/9","style":{"border":{"radius":{"topLeft":"12px","topRight":"12px","bottomLeft":"0px","bottomRight":"0px"}}}} /-->
+  <!-- wp:group {"style":{"spacing":{"padding":{"top":"18px","right":"20px","left":"20px"}}}} -->
+  <div class="wp-block-group" style="padding-top:18px;padding-right:20px;padding-left:20px">
+  <!-- wp:post-terms {"term":"tema_acervo","separator":" · ","style":{"typography":{"fontSize":"11px","fontWeight":"600","letterSpacing":"0.06em","textTransform":"uppercase"},"color":{"text":"#a85a32"}}} /-->
+  <!-- wp:post-title {"isLink":true,"style":{"typography":{"fontFamily":"var:preset|font-family|oswald","fontSize":"19px","fontWeight":"600","lineHeight":"1.35"},"spacing":{"margin":{"top":"10px"}}}} /-->
+  <!-- wp:post-date {"style":{"typography":{"fontSize":"13px"},"color":{"text":"#64748b"}},"format":"j \\d\\e M \\d\\e Y"} /-->
+  </div>
+  <!-- /wp:group --></div>
   <!-- /wp:group -->
-  <!-- /wp:post-template --></div>
+  <!-- /wp:post-template -->
+  <!-- wp:query-no-results --><!-- wp:paragraph --><p>Em breve, novos itens do acervo.</p><!-- /wp:paragraph --><!-- /wp:query-no-results -->
+  <!-- wp:paragraph {"style":{"spacing":{"margin":{"top":"32px"}}}} -->
+  <p style="margin-top:32px"><a href="/acervo/">Explorar acervo completo →</a></p>
+  <!-- /wp:paragraph --></div>
   <!-- /wp:query -->
 </div>
 <!-- /wp:group -->
 
-<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"56px","bottom":"56px"}}},"backgroundColor":"ocre","layout":{"type":"constrained","contentSize":"720px"}} -->
-<div class="wp-block-group alignfull has-ocre-background-color has-background" style="padding-top:56px;padding-bottom:56px">
-  <!-- wp:heading {"textAlign":"center","style":{"typography":{"fontFamily":"var:preset|font-family|oswald","fontSize":"32px","fontWeight":"700"}},"textColor":"ink"} -->
-  <h2 class="wp-block-heading has-text-align-center has-ink-color has-text-color" style="font-family:var(--wp--preset--font-family--oswald);font-size:32px;font-weight:700;color:var(--wp--preset--color--ink)">Fale conosco</h2>
+<!-- ============ SECTION: Agenda (query com filtro data futura + estado vazio elegante) ============ -->
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"32px","bottom":"96px","left":"20px","right":"20px"}}},"layout":{"type":"constrained","contentSize":"1100px"}} -->
+<div class="wp-block-group" style="padding-top:32px;padding-bottom:96px;padding-left:20px;padding-right:20px">
+  <!-- wp:group {"style":{"spacing":{"blockGap":"6px"}}} -->
+  <div class="wp-block-group">
+    <!-- wp:paragraph {"style":{"typography":{"fontSize":"12px","fontWeight":"600","letterSpacing":"0.2em","textTransform":"uppercase"},"color":{"text":"#a85a32"}}} -->
+    <p style="color:#a85a32;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase">Agenda</p>
+    <!-- /wp:paragraph -->
+    <!-- wp:heading {"style":{"typography":{"fontFamily":"var:preset|font-family|oswald","fontSize":"clamp(26px, 3vw, 34px)","fontWeight":"700"}}} -->
+    <h2 class="wp-block-heading" style="font-family:var(--wp--preset--font-family--oswald);font-size:clamp(26px,3vw,34px);font-weight:700">Próximos encontros</h2>
+    <!-- /wp:heading -->
+  </div>
+  <!-- /wp:group -->
+  [ipcn_home_agenda]
+</div>
+<!-- /wp:group -->
+
+<!-- ============ Contato (mantido, foco conversao) ============ -->
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"64px","bottom":"64px"}}},"backgroundColor":"ocre","textColor":"ink","layout":{"type":"constrained","contentSize":"720px"}} -->
+<div class="wp-block-group alignfull has-ink-color has-ocre-background-color has-text-color has-background" style="padding-top:64px;padding-bottom:64px">
+  <!-- wp:heading {"textAlign":"center","style":{"typography":{"fontFamily":"var:preset|font-family|oswald","fontSize":"30px","fontWeight":"700"}}} -->
+  <h2 class="wp-block-heading has-text-align-center" style="font-family:var(--wp--preset--font-family--oswald);font-size:30px;font-weight:700">Fale conosco</h2>
   <!-- /wp:heading -->
-  <!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"16px","lineHeight":"1.7"}},"textColor":"ink"} -->
-  <p class="has-text-align-center has-ink-color has-text-color" style="font-size:16px;line-height:1.7;color:var(--wp--preset--color--ink)"><strong>contato@ipcnbrasil.org</strong> · <strong>(21) 97285-9639</strong><br>Av. Mem de Sá, 208, Centro, Rio de Janeiro</p>
+  <!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"16px","lineHeight":"1.8"}}} -->
+  <p class="has-text-align-center" style="font-size:16px;line-height:1.8"><strong>contato@ipcnbrasil.org</strong> · <strong>(21) 97285-9639</strong><br>Av. Mem de Sá, 208, Centro, Rio de Janeiro</p>
   <!-- /wp:paragraph -->
-  <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"},"style":{"spacing":{"margin":{"top":"20px"}}}} -->
-  <div class="wp-block-buttons" style="margin-top:20px"><!-- wp:button {"backgroundColor":"navy","textColor":"base","style":{"border":{"radius":"999px"},"typography":{"fontWeight":"700"}}} -->
-  <div class="wp-block-button"><a class="wp-block-button__link has-base-color has-navy-background-color has-text-color has-background wp-element-button" style="border-radius:999px;font-weight:700" href="/fale-conosco">Página de contato</a></div>
+  <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"},"style":{"spacing":{"margin":{"top":"24px"}}}} -->
+  <div class="wp-block-buttons" style="margin-top:24px"><!-- wp:button {"backgroundColor":"navy","textColor":"base","style":{"border":{"radius":"6px"}}} -->
+  <div class="wp-block-button"><a class="wp-block-button__link has-base-color has-navy-background-color has-text-color has-background wp-element-button" style="border-radius:6px" href="/fale-conosco">Página de contato</a></div>
   <!-- /wp:button --></div>
   <!-- /wp:buttons -->
 </div>

@@ -17,7 +17,8 @@
     },
     "typography": {
       "fontFamilies": [
-        { "fontFamily": "\"Oswald\", sans-serif", "slug": "oswald", "name": "Oswald" },
+        { "fontFamily": "\"Oswald\", \"Playfair Display\", serif", "slug": "oswald", "name": "Titulo" },
+        { "fontFamily": "\"Playfair Display\", Georgia, serif", "slug": "serif", "name": "Serif (memoria)" },
         { "fontFamily": "\"Inter\", \"Open Sans\", sans-serif", "slug": "body", "name": "Body" }
       ],
       "fluid": true

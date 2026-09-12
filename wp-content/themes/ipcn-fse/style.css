@@ -422,3 +422,185 @@ footer .wp-block-list li {
 .ipcn-page:hover {
 	border-color: var(--wp--preset--color--navy);
 }
+
+/* ============================================================
+   Home v2 — ancestralidade contemporanea
+   ============================================================ */
+
+/* background creme suave na base do site (conforto de leitura) */
+body.ipcn-ancestral { background: #fbf9f5; }
+.wp-site-blocks { background: transparent; }
+
+/* CTA header/hover: ocre fica mais quente, botao primario ganha peso */
+.ipcn-cta-primario .wp-block-button__link {
+	background: #c9a86a !important;
+	color: #131736 !important;
+	border: 2px solid #c9a86a;
+	padding: 12px 26px;
+	font-weight: 700;
+	transition: all 0.18s ease;
+}
+.ipcn-cta-primario .wp-block-button__link:hover {
+	background: #b08d4f !important;
+	border-color: #b08d4f;
+	transform: translateY(-1px);
+	box-shadow: 0 8px 22px rgba(176, 89, 32, 0.25);
+}
+.ipcn-cta-secundario .wp-block-button__link {
+	background: transparent !important;
+	color: #fff !important;
+	border: 2px solid rgba(255,255,255,0.65);
+	padding: 12px 26px;
+	font-weight: 600;
+	transition: all 0.18s ease;
+}
+.ipcn-cta-secundario .wp-block-button__link:hover {
+	background: rgba(255,255,255,0.12) !important;
+	border-color: #fff;
+	transform: translateY(-1px);
+}
+
+/* eyebrow terracota (substituicao do "Eixo · Destaques") */
+.wp-block-paragraph[style*="letter-spacing:0.2em"] {
+	color: #a85a32 !important;
+}
+
+/* card v2: imagem de topo full + corpo com padding, tag, ler mais claro */
+.ipcn-card-v2 {
+	box-shadow: 0 2px 12px rgba(13, 23, 107, 0.06);
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+}
+.ipcn-card-v2:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 12px 28px rgba(13, 23, 107, 0.12);
+}
+.ipcn-card-v2 .wp-block-post-featured-image img {
+	aspect-ratio: 16 / 9;
+	object-fit: cover;
+	width: 100%;
+	border-radius: 0 !important;
+}
+.ipcn-card-v2 .wp-block-post-title a {
+	color: var(--wp--preset--color--ink);
+	text-decoration: none;
+}
+.ipcn-card-v2 .wp-block-post-title a:hover {
+	color: #a85a32;
+}
+.ipcn-card-v2 .wp-block-post-date {
+	margin-top: 4px;
+}
+.ipcn-card-v2 .wp-block-post-terms {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+.ipcn-card-v2 a[data-type="link"]::after {
+	content: " →";
+	color: #a85a32;
+}
+
+/* banner de cookies minimalista: bottom bar fixo */
+#ipcn-cookie-bar {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 9998;
+	background: rgba(19, 23, 54, 0.97);
+	backdrop-filter: blur(6px);
+	color: #f4f4f4;
+	padding: 14px 20px;
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	flex-wrap: wrap;
+	font-size: 14px;
+	line-height: 1.5;
+	box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+}
+#ipcn-cookie-bar .ipcn-cookie-text {
+	flex: 1 1 auto;
+	min-width: 220px;
+	margin: 0;
+}
+#ipcn-cookie-bar a {
+	color: #c9a86a;
+	text-decoration: underline;
+	margin-left: 4px;
+}
+#ipcn-cookie-bar .ipcn-cookie-btn {
+	display: inline-block;
+	padding: 8px 20px;
+	border-radius: 6px;
+	font-size: 13px;
+	font-weight: 600;
+	cursor: pointer;
+	border: none;
+	transition: all 0.15s ease;
+}
+#ipcn-cookie-bar .ipcn-cookie-accept {
+	background: #c9a86a;
+	color: #131736;
+}
+#ipcn-cookie-bar .ipcn-cookie-accept:hover {
+	background: #b08d4f;
+}
+#ipcn-cookie-bar .ipcn-cookie-manage {
+	background: transparent;
+	color: #dfe1e6;
+	border: 1px solid rgba(255, 255, 255, 0.4);
+}
+#ipcn-cookie-bar .ipcn-cookie-manage:hover {
+	border-color: #c9a86a;
+	color: #c9a86a;
+}
+/* painel de gerenciamento (fica escondido por default) */
+#ipcn-cookie-panel {
+	display: none;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 9999;
+	background: #131736;
+	color: #e6e8ec;
+	max-height: 75vh;
+	overflow-y: auto;
+	padding: 32px 20px;
+	box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.4);
+}
+#ipcn-cookie-panel.open { display: block; }
+#ipcn-cookie-panel h3 {
+	color: #fff;
+	font-family: var(--wp--preset--font-family--oswald);
+	font-size: 18px;
+	margin: 0 0 12px;
+}
+#ipcn-cookie-panel table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 13px;
+	margin-bottom: 18px;
+}
+#ipcn-cookie-panel td, #ipcn-cookie-panel th {
+	padding: 6px 10px;
+	border: 1px solid rgba(255,255,255,0.12);
+	text-align: left;
+}
+#ipcn-cookie-panel th { background: rgba(255,255,255,0.06); color: #c9a86a; }
+#ipcn-cookie-panel .ipcn-cookie-actions {
+	display: flex;
+	gap: 10px;
+	justify-content: flex-end;
+	flex-wrap: wrap;
+}
+/* o banner antigo do CookieYes vira menos intrusivo: some a modal gigante por CSS */
+#cookie-law-info-bar .cli-bar-container {
+	padding: 8px 16px !important;
+	font-size: 13px !important;
+}
+#cookie-law-info-bar h5.cli_messagebar_head { display: none !important; }
+#cliSettingsPopup { max-height: 75vh; }
