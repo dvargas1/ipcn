@@ -683,3 +683,161 @@ body.ipcn-ancestral { background: #fbf9f5; }
 */
 #cookie-law-info-bar .cli_messagebar_head { display: none !important; } /* dependência: CookieYes (se religado) */
 #cliSettingsPopup { max-height: 75vh; }
+
+/* =========================================================
+   SINGLE (post unico) — leitura de longo formato
+   ========================================================= */
+
+/*
+   Largura de leitura e tipografia do body aplicadas com variaveis do theme.json:
+   - .ipcn-prose herda font Inter do root e aplica tamanho 18px + line-height 1.8
+   - contentSize 720px vem do markup do template (layout constrained)
+   Medida de leitura: 720px / 18px ≈ 70-75 caracteres por linha (alvo WCAG/UX).
+*/
+.ipcn-prose,
+.ipcn-prose .wp-block-post-content {
+	font-family: var(--wp--preset--font-family--body);
+	font-size: 18px;
+	line-height: 1.8;
+	color: #2d2418;
+}
+
+/* Paragrafos e listas com respiro (mb-6 vibes) */
+.ipcn-prose p:not([class*="has-text-align-center"]) {
+	margin-bottom: 1.5rem;
+}
+.ipcn-prose ul,
+.ipcn-prose ol {
+	margin: 0 0 1.5rem 1.4rem;
+	padding: 0;
+}
+.ipcn-prose li {
+	margin-bottom: 0.6rem;
+}
+
+/* H2/H3 do editor: Playfair Display, top margin generoso p/ separar secoes */
+.ipcn-prose h2 {
+	font-family: var(--wp--preset--font-family--serif);
+	font-size: clamp(24px, 3vw, 32px);
+	font-weight: 700;
+	line-height: 1.2;
+	color: #2d2418;
+	margin-top: 2.75rem;
+	margin-bottom: 1rem;
+}
+.ipcn-prose h3 {
+	font-family: var(--wp--preset--font-family--serif);
+	font-size: clamp(20px, 2.4vw, 25px);
+	font-weight: 700;
+	line-height: 1.25;
+	color: #2d2418;
+	margin-top: 2.25rem;
+	margin-bottom: 0.85rem;
+}
+
+/* Citações: borda terracota 4px, fundo creme, itálico */
+.ipcn-prose blockquote,
+.ipcn-prose .wp-block-quote {
+	border-left: 4px solid #a85a32;
+	background: #f9f7f4;
+	padding: 18px 24px;
+	margin: 2rem 0;
+	border-radius: 0 10px 10px 0;
+	font-style: italic;
+	font-family: var(--wp--preset--font-family--serif);
+	font-size: 19px;
+	line-height: 1.65;
+	color: #2d2418;
+}
+.ipcn-prose blockquote p,
+.ipcn-prose .wp-block-quote p {
+	margin-bottom: 0.6rem;
+}
+.ipcn-prose blockquote p:last-child,
+.ipcn-prose .wp-block-quote p:last-child {
+	margin-bottom: 0;
+}
+.ipcn-prose .wp-block-quote cite,
+.ipcn-prose blockquote cite {
+	display: block;
+	margin-top: 8px;
+	font-family: var(--wp--preset--font-family--body);
+	font-size: 13.5px;
+	font-style: normal;
+	color: #64748b;
+}
+
+/* Links no texto: terracota com underline elegante (nunca azul) */
+.ipcn-prose a,
+.ipcn-prose .wp-block-post-content a {
+	color: #a85a32;
+	text-decoration: underline;
+	text-decoration-thickness: 1.5px;
+	text-underline-offset: 3px;
+	transition: color 0.15s ease;
+}
+.ipcn-prose a:hover,
+.ipcn-prose .wp-block-post-content a:hover {
+	color: #7a3d1f;
+}
+
+/* Imagens soltas no conteúdo: raio suave + margem vertical */
+.ipcn-prose img,
+.ipcn-prose .wp-block-image img {
+	border-radius: 10px;
+	margin-top: 1.6rem;
+	margin-bottom: 1.6rem;
+}
+/* semanticamente figcaption com metadata discreta */
+.ipcn-prose figcaption {
+	font-family: var(--wp--preset--font-family--body);
+	font-size: 13px;
+	color: #64748b;
+	text-align: center;
+	margin-top: 0.5rem;
+}
+
+/* separating rule (hr) discreta */
+.ipcn-prose hr {
+	border: 0;
+	border-top: 1px solid var(--wp--preset--color--muted);
+	margin: 2.5rem 0;
+}
+
+/* Imagem destacada do hero: raio 14 + sombra elevada sutil */
+.ipcn-single-cover img {
+	border-radius: 14px;
+	box-shadow: 0 10px 30px rgba(13, 23, 107, 0.10);
+}
+
+/* Botão "Voltar": outline navy, hover eleva */
+.ipcn-btn-back .wp-block-button__link {
+	background: transparent !important;
+	color: var(--wp--preset--color--navy) !important;
+	border: 1.5px solid var(--wp--preset--color--muted) !important;
+	padding: 11px 22px;
+	font-size: 14px;
+	font-weight: 600;
+	transition: all 0.18s ease;
+}
+.ipcn-btn-back .wp-block-button__link:hover {
+	border-color: #a85a32 !important;
+	color: #a85a32 !important;
+	transform: translateY(-1px);
+	box-shadow: 0 6px 16px rgba(168, 90, 50, 0.14);
+}
+
+/* separador visual do footer do post (fronteira entre leitura e nav) */
+.ipcn-single-after {
+	border-top: 1px solid var(--wp--preset--color--muted);
+}
+
+/*
+   Mobile: hero do post 48px de topo, conteúdo 17px p/ quebra de linhas
+   natural em telas menores (18px/720px em telas pequenas = linhas curtas demais).
+*/
+@media (max-width: 600px) {
+	.ipcn-single-top { padding-top: 48px !important; padding-bottom: 40px !important; }
+	.ipcn-prose, .ipcn-prose .wp-block-post-content { font-size: 16.5px; line-height: 1.75; }
+	.ipcn-single-cover img { border-radius: 10px; }
+}
