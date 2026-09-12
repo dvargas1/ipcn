@@ -1,38 +1,67 @@
-# IPCN Brasil — Manutenção e evolução do site
+# IPCN Brasil — Redesign do site
 
-Repositório do projeto de estabilização e manutenção do site do **Instituto de Pesquisas das Culturas Negras** (`ipcnbrasil.org`), WordPress hospedado na Hostinger.
+Repositório do redesign do site do **Instituto de Pesquisas das Culturas Negras** (`ipcnbrasil.org`), WordPress na Hostinger. Duas linhas de trabalho:
 
-> Documento principal: [ROADMAP.md](./ROADMAP.md)
+| Linha | Ambiente | Tema | Estado |
+|---|---|---|---|
+| **staging (Divi)** | `staging.ipcnbrasil.org` | Divi nulled 4.20.2 | Consolidado (Fase 4), entregue pra cliente |
+| **redesign (FSE)** ⭕ foco | `stagingredesign.ipcnbrasil.org` | `ipcn-fse` (block theme própria) | Home v2 no ar, refinamentos de r=r |
 
-## Onde estamos
+> Documento principal do plano: [docs/plano-tema-custom-e-portal-associados.md](./docs/plano-tema-custom-e-portal-associados.md) · Status operacional: [STATUS.md](./STATUS.md) · roadmap por fase no [ROADMAP.md](./ROADMAP.md)
 
-- ✅ **Fase 0 — Estabilização**: backup, remoção de 6GB, malware, cron, `Commands out of sync`.
-- ✅ **Fase 1 — Consolidar Divi**: Elementor removido, 18 plugins limpos, deploy staging.
-- ✅ **Menus corrigidos** (bug de permalinks 404 do Really Simple SSL).
-- 🔄 **Fase 2 — Cargos + PublishPress**: limpeza + PublishPress no staging. Falta lista de usuários reais e publicação.
-- ✅ **Fase 3 — SEO + Performance + Segurança** (staging): Yoast/robots/sitemap, LiteSpeed Cache (TTFB 2.2s→16ms), Wordfence (XML-RPC 403, 2FA admin/editor). Falta publicar + purgar CDN.
-- 🔄 **Fase 4 — Consolidação visual** (no staging, sem redesign):
-  - Header mantido original (centralizado + menu embaixo) a pedido da contratante.
-  - Menu reduzido 14 → 9 itens; grid da home reestruturado (sem filtros, 4 posts); home enxuta (3 sections).
-  - Footer reformulado/compactado/centralizado (sem "Saiba Mais" nem "ON1" → "Núcleo de Tecnologia do IPCN").
-  - **Páginas vazias consertadas** (plugin `smart_post_show` ausente → The Post Grid): Editorial, Notícias (81, paginado), Agenda IPCN (52, paginado).
-  - **Apoia-se** (PIX `contato@ipcnbrasil.org`) e **Associe-se** (form Divi estilizado Nome/E-mail/Telefone → `contato@ipcnbrasil.org`) recriadas.
-  - Fonte de ícones do Divi (ETmodules) corrigida.
-  - **Pendente:** varredura das demais páginas (Destaques, Diáspora, Colunistas, Notas, Drops) + validação na tela + publicação em produção (manual, pela contratante, após aprovação).
-- 📋 **Plano de tema** criado (`docs/plano-tema-divi.md`) para a contratante decidir antes de redesign.
+---
 
-## Decisão sobre o Divi (nulled)
+## Changelog / Status Atual (v2 — Home redesign)
 
-O tema **Divi instalado é pirata (nulled, sem licença)** — foi usado pelo desenvolvedor anterior.
+### 1. Lógica de dados (queries sem duplicação)
 
-**Decisão atual:** manter o nulled por enquanto, trabalhar com o que temos, e levar à contratante a decisão de **comprar a licença** (~US$ 89/ano) ou **migrar pra tema gratuito**.
+A home (`templates/front-page.html`) usa **fonts de dados distintos por seção**:
 
-⚠️ **Risco:** temas nulled não atualizam e são o vetor mais comum de malware (foi provavelmente assim que o `filter.php` entrou). Mitigação até resolver: Wordfence + rotacionar senhas.
+- **Últimas Notícias** — `wp:query` com `postType:"post"` + `taxQuery.category:[1]` (term_id real de `noticias` no DB do redesign; **não é o ID do staging Divi**) → 3 posts mais recentes.
+- **Vozes do IPCN** (acervo) — `wp:query` com **`postType:"acervo_ipcn"`, `taxonomy:"tema_acervo"`** (CPT + taxonomia registradas em `functions.php`). Zero chance de sobrepor a notícias, pois são post types diferentes.
+- **Agenda (Próximos encontros)** — shortcode `ipcn_home_agenda` (`functions.php`): query dupla — `meta_query data_evento >= hoje` (respeitando metas que a cliente vai preencher) com **fallback `date_query after:hoje`**. Sem eventos futuros = estado vazio elegante (card "A agenda está sendo montada" + CTA Ver no Instagram) validado no browser.
 
-## Repo (privado)
+Espera-se que o editor de posts use `data_evento` como meta key de evento (documentado no código).
 
-- `ROADMAP.md` — plano e status por fase.
-- `docs/` — diagnóstico, inventários e decisões.
-- `wp-content/mu-plugins/` — código customizado (ex.: `ipcn-optimizations.php`).
+### 2. Responsividade mobile-first
 
-**Nunca** versionar `wp-config.php`, chaves de API, mídia ou backups (ver `.gitignore`).
+- **Hero**: `padding: 72px` mobile → **120px** desktop (`@media min-width 782px`), verificado via computed style no browser real (375px/1440px).
+- **Seções**: 48px/40px mobile → 96px/64px desktop.
+- **Solução do inline-style do WP**: templates FSE imprimem `style="padding-top:96px..."` inline que vence media queries comuns. O `style.css` usa **seletor de atributo** (`[style*="padding-top:96px"]`) com `!important` deliberado + comentário explicando que é seletivo só ao front-page. Se um dia essa lista de padding mudar no template, adicionar o valor novo na regra.
+
+### 3. Acessibilidade (WCAG AA)
+
+Contraste **real** (calculado com luminância WCAG):
+
+| Combinação | Ratio | Status |
+|---|---|---|
+| Ocre `#c9a86a` + branco (antes, FAIL) | 2.26:1 | FAIL |
+| **Ocre + chumbo `#2d2418`** | **6.75:1** | PASS AA |
+| Ocre hover `#e2b878` + chumbo | 8.25:1 | PASS AA |
+| Terracota `#a85a32` + branco | 5.03:1 | PASS AA |
+| Terracota eyebrow/cards sobre claro | 4.79:1 | PASS AA |
+
+Regime estético travado: **ocre é fundo de botão primário com texto chumbo escuro**, nunca texto claro | Terracota é a acento de eyebrow/tag/hover/link hover. `focus-visible` terracota com outline-offset 2px em CTAs e botões de cookie.
+
+### 4. Arquitetura de cookies (sem CSS hack)
+
+- **Banner legado do CookieYes DESLIGADO na opção nativa do plugin**: option `CookieLawInfo-0.9` → `is_on=false` + `showagain_tab=false`. Confirmado no HTML renderizado: `div#cookie-law-info-bar` nem é emitido pelo servidor.
+- **Barra própria** `#ipcn-cookie-bar` (bottom-bar fixa, navy com `backdrop-filter`): texto curto + `Aceitar Todos` (ocre sólido) + `Gerenciar Preferências` (outline) + `Só os necessários` (ghost).
+- **Painel** `#ipcn-cookie-panel` com toggles reais (Necessários sempre-on, Analytics, Marketing) mostrado apenas ao clicar em Gerenciar; técnicos mantidos pelo plugin.
+- **Persistência**: `localStorage['ipcn_cookie_consent_v1'] = {ts, necessary, analytics, marketing, all}`; banner só reaparece se consent não existe.
+- Fallback defensivo no CSS: se alguém religar o banner no hPanel, o CSS mantém o modal deles com max-height e esconde o header duplicado. Essa regra **não é a solução**, apenas proteção.
+
+---
+
+## Estrutura do repo
+
+- `wp-content/themes/ipcn-fse/` — o tema `ipcn-fse`: `theme.json` (paleta navy/ocre/terracota/ink/muted + Oswald/Playfair/Inter), `templates/*.html`, `parts/header.html` + `footer.html`, `functions.php` (fonts, forms nativos, Home v2 shortcode agenda, cookie bar, CPT acervo).
+- `wp-content/mu-plugins/` — plugins obrigatórios: `ipcn-optimizations.php` (ETmodules/form-style), `ipcn-mail-from.php` (From contato@ipcnbrasil.org — sem ele o Gmail rejeita os e-mails de form).
+- `docs/` — diagnósticos, planos, gate docs.
+- Deploy do tema: `tar -czf` + `scp` no server → `tar -xzf --strip-components=3` no tema do redesign + `litespeed-purge all` (HCDN é teimoso). Commit + **push sempre**.
+
+## Ambiente
+
+- SSH alias `ipcn` (~/.ssh/config) no Hostinger, staging DB `u654777386_DbbDB` (usuário `HsB7C`).
+- Staging: https://stagingredesign.ipcnbrasil.org · staging Divi em https://staging.ipcnbrasil.org (congelado).
+- Produção: https://ipcnbrasil.org — deploy **manual pelo Daniel** no hPanel (nunca via agent).
