@@ -10,14 +10,13 @@
         { "slug": "muted", "color": "#e2e8f0", "name": "Muted" },
         { "slug": "ocre", "color": "#c9a86a", "name": "Ocre Afro" },
         { "slug": "base", "color": "#ffffff", "name": "Base" },
-        { "slug": "navy-soft", "color": "#8e9bd0", "name": "Navy Soft" },
         { "slug": "subtle", "color": "#f8fafc", "name": "Subtle" },
         { "slug": "body", "color": "#475569", "name": "Body" }
       ]
     },
     "typography": {
       "fontFamilies": [
-        { "fontFamily": "\"Oswald\", \"Playfair Display\", serif", "slug": "oswald", "name": "Titulo" },
+        { "fontFamily": "\"Oswald\", sans-serif", "slug": "oswald", "name": "Titulo" },
         { "fontFamily": "\"Playfair Display\", Georgia, serif", "slug": "serif", "name": "Serif (memoria)" },
         { "fontFamily": "\"Inter\", \"Open Sans\", sans-serif", "slug": "body", "name": "Body" }
       ],

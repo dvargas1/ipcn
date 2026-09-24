@@ -43,9 +43,9 @@ header .wp-block-site-logo img {
 	header .wp-block-site-logo img { height: 44px !important; max-height: 44px; }
 }
 
-/* nav: alinhada a direita, sem quebrar feio */
+/* nav: centralizada (menu embaixo da marca) */
 header .wp-block-navigation {
-	justify-content: flex-end;
+	justify-content: center;
 }
 header .wp-block-navigation .wp-block-navigation-item__content {
 	padding: 6px 2px;
@@ -83,9 +83,13 @@ header .ipcn-header-cta .wp-block-button__link:hover {
 }
 /* mobile: CTA quebra de linha em vez de estourar os 375px */
 @media (max-width: 600px) {
+	header .ipcn-header-nav {
+		flex-wrap: wrap !important;
+		justify-content: center !important;
+	}
 	header .ipcn-header-cta {
 		flex-wrap: wrap !important;
-		justify-content: flex-end !important;
+		justify-content: center !important;
 	}
 	header .ipcn-header-cta .wp-block-button__link {
 		padding: 8px 14px;
@@ -93,17 +97,23 @@ header .ipcn-header-cta .wp-block-button__link:hover {
 	}
 }
 
-/* hamburger e painel do menu mobile */
+/* hamburger e painel do menu mobile: abre abaixo do header */
 header .wp-block-navigation__responsive-container-open {
 	padding: 8px;
 	border: 1px solid var(--wp--preset--color--muted);
 	border-radius: 10px;
 }
 header .wp-block-navigation__responsive-container.is-menu-open {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	right: 0;
 	background-color: var(--wp--preset--color--base);
 	padding: 24px;
 	border-radius: 0 0 14px 14px;
 	box-shadow: 0 18px 40px rgba(13, 23, 107, 0.14);
+	max-height: calc(100vh - 120px);
+	overflow-y: auto;
 }
 header .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item__content {
 	padding: 12px 4px;
@@ -154,7 +164,7 @@ header .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigat
 	position: absolute;
 	inset: 0;
 	z-index: -2;
-	background: url("https://stagingredesign.ipcnbrasil.org/wp-content/uploads/2025/03/1001617239-1080x675.jpg") center 32% / cover no-repeat;
+	background: var(--ipcn-hero-bg, none) center 32% / cover no-repeat;
 }
 .ipcn-hero::after {
 	content: "";

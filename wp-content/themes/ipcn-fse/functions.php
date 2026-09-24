@@ -57,6 +57,9 @@ add_action(
 			array(),
 			(string) filemtime( get_stylesheet_directory() . '/style.css' )
 		);
+		// Variável CSS para a imagem de fundo do hero (path dinâmico por ambiente).
+		$hero_bg = get_theme_file_uri( 'assets/hero-bg.jpg' );
+		wp_add_inline_style( 'ipcn-fse-style', ':root{--ipcn-hero-bg:url("' . esc_url( $hero_bg ) . '")}' );
 	}
 );
 
@@ -290,9 +293,9 @@ add_shortcode(
 		return '<div class="ipcn-form-card"><form class="ipcn-form" method="post" action="' . $action . '">'
 			. '<input type="hidden" name="action" value="ipcn_assoc">'
 			. '<input type="text" name="ipcn_hp" value="" style="position:absolute;left:-9999px" tabindex="-1" autocomplete="off" aria-hidden="true">'
-			. '<label>Nome completo *<input type="text" name="ipcn_nome" required></label>'
-			. '<label>E-mail *<input type="email" name="ipcn_email" required></label>'
-			. '<label>Telefone<input type="tel" name="ipcn_tel"></label>'
+			. '<label for="ipcn-nome">Nome completo *<input type="text" name="ipcn_nome" id="ipcn-nome" required></label>'
+			. '<label for="ipcn-email">E-mail *<input type="email" name="ipcn_email" id="ipcn-email" required></label>'
+			. '<label for="ipcn-tel">Telefone<input type="tel" name="ipcn_tel" id="ipcn-tel"></label>'
 			. '<button type="submit" class="ipcn-form-submit">Enviar cadastro</button>'
 			. '</form></div>';
 	}
@@ -308,9 +311,9 @@ add_shortcode(
 		return '<div class="ipcn-form-card"><form class="ipcn-form" method="post" action="' . $action . '">'
 			. '<input type="hidden" name="action" value="ipcn_contact">'
 			. '<input type="text" name="ipcn_hp" value="" style="position:absolute;left:-9999px" tabindex="-1" autocomplete="off" aria-hidden="true">'
-			. '<label>Nome *<input type="text" name="ipcn_nome" required></label>'
-			. '<label>E-mail *<input type="email" name="ipcn_email" required></label>'
-			. '<label>Mensagem *<textarea name="ipcn_msg" required></textarea></label>'
+			. '<label for="ipcn-contato-nome">Nome *<input type="text" name="ipcn_nome" id="ipcn-contato-nome" required></label>'
+			. '<label for="ipcn-contato-email">E-mail *<input type="email" name="ipcn_email" id="ipcn-contato-email" required></label>'
+			. '<label for="ipcn-contato-msg">Mensagem *<textarea name="ipcn_msg" id="ipcn-contato-msg" required></textarea></label>'
 			. '<button type="submit" class="ipcn-form-submit">Enviar mensagem</button>'
 			. '</form></div>';
 	}
@@ -354,10 +357,6 @@ add_shortcode(
  * Shortcode le a queried category e imprime eyebrow + h1 + descricao no padrao navy das outras paginas.
  * Uso no archive.html: [ipcn_archive_hero]
  */
-
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
 
 add_shortcode(
 	'ipcn_archive_hero',
@@ -416,10 +415,6 @@ add_shortcode(
  * Regra: so publicados da categoria agenda-ipcn com post_date >= hoje.
  * (Meta "data_evento" sera respeitada quando a cliente comecar a preencher.)
  */
-
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
 
 add_shortcode(
 	'ipcn_home_agenda',
@@ -536,10 +531,6 @@ add_shortcode(
  * Regra: banner some ao clicar "Aceitar Todos" (localStorage 180d);
  * "Gerenciar Preferencias" abre painel com a tabela detalhada (a mesma do plugin).
  */
-
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
 
 add_action(
 	'wp_footer',
