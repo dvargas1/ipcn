@@ -35,3 +35,6 @@ Thumbs.db
 *.swp
 .idea/
 .vscode/
+
+# ===== Config local do CLI (pessoal, por máquina) =====
+.commandcode/
