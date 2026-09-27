@@ -333,6 +333,21 @@ para confiar no instituto que o escreveu.
 **Então** todo o texto de interface está em português do Brasil e acentuado correctamente, incluindo os estados vazios e os rótulos.
 **E** a microcopy segue a tabela de voz do `EXPERIENCE.md`, sem entusiasmo de marketing.
 
+### Story 1.12: O mu-plugin deixa de servir o site FSE
+
+Como quem mantém o site,
+quero que o mu-plugin só emita os blocos Divi quando o tema Divi está activo,
+para o site FSE não receber CSS que não usa nem uma fonte que não existe.
+
+**Acceptance Criteria:**
+
+**Dado** que o mu-plugin emite três blocos `<style>` no `wp_head` — `#ipcn-etmodules-fix`, `#ipcn-form-style` e `#ipcn-footer-logo-fix` — e serve as duas instalações,
+**Quando** o guard é aplicado,
+**Então** os três blocos são emitidos apenas quando o tema activo é o Divi.
+**E** nada mais no ficheiro muda: a remoção do `generator`, o `xmlrpc_enabled` e a remoção do `X-Pingback` continuam a valer para todas as instalações.
+**E** o HTML do site FSE deixa de conter as três etiquetas, e o pedido ao ficheiro de fonte Divi desaparece.
+**E** o ficheiro é deployado no `stagingredesign` e **não** no staging Divi, onde o comportamento se mantém idêntico sem ele.
+
 ---
 
 ## Epic 2: A Agenda, do editor ao Visitante
@@ -542,6 +557,7 @@ para dar o veredicto sem depender de quem construiu.
 **Então** lista as superfícies a percorrer — Home, uma Notícia, a Agenda, o Acervo, Associe-se e Apoia-se — no telemóvel e no computador.
 **E** diz que um bloqueio de leitura no telemóvel é, por si, motivo de devolução.
 **E** inclui a verificação de desempenho: Lighthouse ≥ 90 em mobile, medido no ambiente de revisão depois da purga.
+**E** confere que nenhum endereço existente mudou: `/`, `/noticias/`, `/acervo/`, `/temas/<slug>/`, `/apoia-se/`, `/associe-se/`, `/fale-conosco/` e `/politica-de-privacidade/` respondem como antes.
 
 ---
 
