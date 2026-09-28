@@ -1,0 +1,52 @@
+<!-- wp:template-part {"slug":"header"} /-->
+
+<!-- ============ HERO: o hub de /noticias/ (navy) ============ -->
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"64px","bottom":"48px","left":"20px","right":"20px"},"margin":{"top":"0","bottom":"0"}}},"backgroundColor":"navy","textColor":"base","layout":{"type":"constrained","contentSize":"1100px"}} -->
+<div class="wp-block-group alignfull has-base-color has-navy-background-color has-text-color has-background" style="margin-top:0;margin-bottom:0;padding-top:64px;padding-bottom:48px;padding-left:20px;padding-right:20px">
+  <!-- wp:paragraph {"style":{"typography":{"fontSize":"13px","fontWeight":"600","letterSpacing":"2px","textTransform":"uppercase"}},"textColor":"base"} -->
+  <p class="has-base-color has-text-color" style="font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase">IPCN &middot; Notícias</p>
+  <!-- /wp:paragraph -->
+  <!-- wp:heading {"level":1,"style":{"typography":{"fontFamily":"var:preset|font-family|oswald","fontSize":"clamp(28px, 5vw, 44px)","fontWeight":"700","lineHeight":"1.15"}},"textColor":"base"} -->
+  <h1 class="wp-block-heading has-base-color has-text-color" style="font-family:var(--wp--preset--font-family--oswald);font-size:clamp(28px,5vw,44px);font-weight:700;line-height:1.15;color:var(--wp--preset--color--base)">Notícias do IPCN</h1>
+  <!-- /wp:heading -->
+  <!-- wp:paragraph {"style":{"typography":{"fontSize":"17px","lineHeight":"1.7"}},"textColor":"base"} -->
+  <p class="has-base-color has-text-color" style="font-size:17px;line-height:1.7">Notícias e atualidades do Instituto de Pesquisas das Culturas Negras. As seções editoriais do instituto abrem a partir daqui.</p>
+  <!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- ============ SEÇÕES: pattern curado com os endereços canónicos dos termos ============ -->
+<!-- wp:pattern {"slug":"ipcn/seccoes"} /-->
+
+<!-- ============ LISTAGEM: Notícias filtradas por slug (categoryName) ============
+     O filtro `query_loop_block_query_vars` em `inc/listings.php` mapeia `categoryName`
+     para `category_name` (o núcleo ignora `categoryName`); sem ele, esta consulta (e a da
+     Home) correria sem filtro de categoria. A paginação fecha o caminho das notícias a
+     partir da décima. ============ -->
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"24px","bottom":"56px","left":"20px","right":"20px"}}},"backgroundColor":"subtle","layout":{"type":"constrained","contentSize":"1100px"}} -->
+<div class="wp-block-group alignfull has-subtle-background-color has-background" style="padding-top:24px;padding-bottom:56px;padding-left:20px;padding-right:20px">
+  <!-- wp:group {"style":{"spacing":{"blockGap":"6px"}},"layout":{"type":"constrained","contentSize":"100%"}} -->
+  <div class="wp-block-group">
+    <!-- wp:paragraph {"style":{"typography":{"fontSize":"12px","fontWeight":"600","letterSpacing":"0.2em","textTransform":"uppercase"},"color":{"text":"#a85a32"}}} -->
+    <p style="color:#a85a32;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase">Notícias</p>
+    <!-- /wp:paragraph -->
+    <!-- wp:heading {"style":{"typography":{"fontFamily":"var:preset|font-family|oswald","fontSize":"clamp(26px, 3vw, 34px)","fontWeight":"700"}}} -->
+    <h2 class="wp-block-heading" style="font-family:var(--wp--preset--font-family--oswald);font-size:clamp(26px,3vw,34px);font-weight:700">Últimas notícias</h2>
+    <!-- /wp:heading -->
+  </div>
+  <!-- /wp:group -->
+  <!-- wp:query {"queryId":0,"query":{"perPage":9,"postType":"post","order":"desc","orderBy":"date","inherit":false,"categoryName":"noticias","sticky":""}} -->
+  <div class="wp-block-query"><!-- wp:post-template {"layout":{"type":"grid","columnCount":3}} -->
+  <!-- wp:pattern {"slug":"ipcn/card"} /-->
+  <!-- /wp:post-template --><!-- wp:query-no-results --><!-- wp:paragraph -->
+  <p>Em breve, novidades por aqui.</p>
+  <!-- /wp:paragraph --><!-- /wp:query-no-results --><!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"center"}} -->
+  <!-- wp:query-pagination-previous /-->
+  <!-- wp:query-pagination-numbers /-->
+  <!-- wp:query-pagination-next /-->
+  <!-- /wp:query-pagination --></div>
+  <!-- /wp:query -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer"} /-->

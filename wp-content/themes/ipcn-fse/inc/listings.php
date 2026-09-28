@@ -1,11 +1,50 @@
 <?php
 /**
- * IPCN FSE — listagens: shortcodes ipcn_query_posts e ipcn_archive_hero.
+ * IPCN FSE — listagens: filtro de categoria do `core/query` e shortcodes
+ * ipcn_query_posts e ipcn_archive_hero.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+/**
+ * IPCN FSE — filtro de categoria por slug para o `core/query` (AD-7).
+ *
+ * O nucleo nao le o slug de categoria de um bloco `core/query`: a funcao que constroi os
+ * argumentos do `WP_Query` copia `postType`, `sticky`, `exclude`, `perPage`, `offset`,
+ * `categoryIds`, `tagIds`, `taxQuery`, `order`, `orderBy`, `author`, `search` e `parents`
+ * — nunca o `categoryName`. Sem este filtro, um bloco com `categoryName` corre sem filtro
+ * de categoria (foi o que deixou a pauta de Agenda passar para a listagem de Noticias).
+ * Aqui o slug declarado no bloco mapeia-se para `category_name`, para o markup continuar
+ * declarativo por slug e os enderecos nunca dependerem de um id de termo (AD-7). O filtro
+ * so actua quando o atributo esta presente: um bloco sem ele fica intacto.
+ *
+ * O `$block` e a instancia de `core/post-template` (ou do `core/query-pagination`), que
+ * recebe o `query` do `core/query` pelo contexto — e onde o `categoryName` sobrevive.
+ */
+add_filter(
+	'query_loop_block_query_vars',
+	function ( $query, $block ) {
+		if ( ! ( $block instanceof WP_Block ) || ! isset( $block->context['query']['categoryName'] ) ) {
+			return $query;
+		}
+
+		$category_name = $block->context['query']['categoryName'];
+		if ( ! is_string( $category_name ) ) {
+			return $query;
+		}
+
+		$category_name = trim( $category_name );
+		if ( '' !== $category_name ) {
+			$query['category_name'] = $category_name;
+		}
+
+		return $query;
+	},
+	10,
+	2
+);
 
 /**
  * Grid de posts por categoria, com o cartao do pattern registado.
@@ -104,8 +143,9 @@ add_shortcode(
 );
 
 /**
- * IPCN FSE — hero de arquivo para categorias (Destaques, Diaspora, Colunistas, Notas).
- * Shortcode le a queried category e imprime eyebrow + h1 + descricao no padrao navy das outras paginas.
+ * IPCN FSE — hero de arquivo por termo (Seccoes: Destaques, Diaspora, Colunistas, Notas...).
+ * Shortcode le o termo consultado e imprime eyebrow + h1 + descricao no padrao navy das outras paginas.
+ * AD-8: o nome e a descricao vem do termo (a descricao vive na base de dados), nao de um mapa fixo em PHP.
  * Uso no archive.html: [ipcn_archive_hero]
  */
 
@@ -113,31 +153,24 @@ add_shortcode(
 	'ipcn_archive_hero',
 	function () {
 		$q = get_queried_object();
-		if ( ! $q || ! property_exists( $q, 'slug' ) ) {
+
+		// AD-8: o hero le o nome e a descricao do termo, nao de um mapa fixo em PHP. A guarda
+		// e `WP_Term` para um arquivo de post type (WP_Post_Type tem `name`) nao imprimir o
+		// nome de maquina como h1.
+		if ( ! ( $q instanceof WP_Term ) ) {
 			return '';
 		}
 
-		$titles = array(
-			'destaques'  => 'Destaques do IPCN',
-			'diaspora'   => 'Diaspora Afroatlantica',
-			'colunistas' => 'Colunistas do IPCN',
-			'notas'      => 'Notas IPCN',
-			'noticias'   => 'Noticias do IPCN',
-			'editorial'  => 'Editorial IPCN',
-		);
-		$descs  = array(
-			'destaques'  => 'Acoes, eventos e conquistas do instituto em destaque.',
-			'diaspora'   => 'Vozes da diaspora negra: historias, pesquisas e reflexoes.',
-			'colunistas' => 'Opiniao e analise de colaboradores do IPCN.',
-			'notas'      => 'Comentarios breves sobre atualidade e cultura negra.',
-			'noticias'   => 'Noticias e atualidades do Instituto de Pesquisas das Culturas Negras.',
-			'editorial'  => 'Conteudo editorial produzido pelo instituto.',
-		);
+		$slug = (string) $q->slug;
 
-		$slug = $q->slug;
-		$name = ( ! empty( $q->name ) ) ? $q->name : ( isset( $titles[ $slug ] ) ? $titles[ $slug ] : ucwords( str_replace( '-', ' ', $slug ) ) );
-		$t    = isset( $titles[ $slug ] ) ? $titles[ $slug ] : ( $name ?: 'Conteudo IPCN' );
-		$d    = isset( $descs[ $slug ] ) ? $descs[ $slug ] : 'Selecao de conteudo publicado pelo IPCN.';
+		// Fallbacks que nunca imprimem vazio (matriz de I/O): sem nome, deriva-se do slug;
+		// sem descricao, fica a frase institucional. `trim` para um nome/descricao so com
+		// espacos contar como ausente, e `wp_strip_all_tags` para uma descricao com markup
+		// nao sair com etiquetas literais.
+		$name        = ( '' !== trim( (string) $q->name ) ) ? (string) $q->name : ucwords( str_replace( '-', ' ', $slug ) );
+		$name        = ( '' !== trim( $name ) ) ? $name : 'Conteudo IPCN';
+		$description = wp_strip_all_tags( (string) $q->description );
+		$description = ( '' !== trim( $description ) ) ? $description : 'Selecao de conteudo publicado pelo IPCN.';
 
 		ob_start();
 		?>
@@ -148,11 +181,11 @@ add_shortcode(
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":1,"style":{"typography":{"fontFamily":"var:preset|font-family|oswald","fontSize":"clamp(22px, 4vw, 36px)","fontWeight":"700","lineHeight":"1.15"}},"textColor":"base"} -->
-<h1 class="wp-block-heading has-base-color has-text-color" style="font-family:var(--wp--preset--font-family--oswald);font-size:clamp(22px,4vw,36px);font-weight:700;line-height:1.15;color:var(--wp--preset--color--base)"><?php echo esc_html( $t ); ?></h1>
+<h1 class="wp-block-heading has-base-color has-text-color" style="font-family:var(--wp--preset--font-family--oswald);font-size:clamp(22px,4vw,36px);font-weight:700;line-height:1.15;color:var(--wp--preset--color--base)"><?php echo esc_html( $name ); ?></h1>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"style":{"typography":{"fontSize":"16px"}},"textColor":"base"} -->
-<p class="has-base-color has-text-color" style="font-size:16px"><?php echo esc_html( $d ); ?></p>
+<p class="has-base-color has-text-color" style="font-size:16px"><?php echo esc_html( $description ); ?></p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group -->

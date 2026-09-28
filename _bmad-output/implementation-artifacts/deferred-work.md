@@ -90,3 +90,27 @@
 - source_spec: `_bmad-output/implementation-artifacts/spec-1-5-a-home-em-cinco-blocos-com-a-vitrine-do-acervo.md`
   summary: Com datas de publicação empatadas, os dois `core/query` irmãos da vitrine (perPage:1 e perPage:2/offset:1, ambos `date desc` e sem desempate único) podem devolver o mesmo item e deixar outro de fora.
   evidence: Grupo H da triagem da 1.5 (#19), achado da camada de casos-limite, severidade por confirmar (`medium` se ocorrer): o `build_query_vars_from_query_block` do core não acrescenta critério de desempate ao `orderby` `date`, e dois `LIMIT`/`OFFSET` diferentes sobre datas empatadas podem ordenar as linhas de forma diversa. Não é decidível a partir deste repositório (exige WordPress e MySQL): fecha-se com uma base de teste que publique dois itens de `acervo_ipcn` com o mesmo `post_date` e verifique que a vitrine não repete nem perde peça. Não tem remédio em block markup: um desempate estável exigiria `query_loop_block_query_vars` ou um único `core/query` com variante por índice, que é decisão de desenho (AD-15).
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-6-noticias-puras-e-o-hub-das-seccoes.md`
+  summary: A lógica PHP nova da história — o filtro `query_loop_block_query_vars` que dá efeito ao `categoryName` e o hero que lê o termo — não é observada por verificação nenhuma do repositório.
+  evidence: Rodada 2 da triagem da 1.6 (#44, #54, #55; e #29 da rodada 1). O `scripts/check-php.sh` só corre `php -l` e `grep` sob `inc/`, nunca executa PHP; o `scripts/check-php.test.sh` testa o verificador, não o tema. A única prova é um harness na scratchpad da sessão (`verify-listings.php`, 16/16), que não fica no repo. Sem runner nem CI (NFR9) e sem WordPress local, fecha-se com um harness durável em `scripts/` (no estilo do `check-php.test.sh`, sem framework) ou com um caso no próprio verificador, e com a passagem no browser em `stagingredesign`.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-6-noticias-puras-e-o-hub-das-seccoes.md`
+  summary: Nada resolve as referências cruzadas do hub: o `wp:pattern {"slug":"ipcn/seccoes"}` do template contra o `Slug:` do pattern, a escolha de `templates/page-noticias.html` pela hierarquia, e as classes que o `style.css` veste no markup.
+  evidence: Rodada 2 da triagem da 1.6 (#56; e #17/#27 da rodada 1). Demonstrável por mutação: trocar um carácter no `Slug:` ou o nome do template deixa o `check-php.sh` exactamente igual (17 problemas) e o hub sem a navegação — ou a cair no `page.html`. É a mesma classe já diferida na 1.3 (`ipcn/card`) e na 1.5; fecha-se estendendo o `check-php.sh` para resolver os slugs dos patterns e as classes usadas pelo CSS, com casos no `check-php.test.sh`.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-6-noticias-puras-e-o-hub-das-seccoes.md`
+  summary: A pré-visualização do editor do Site não é filtrada por categoria: o filtro `query_loop_block_query_vars` só influencia o frontend, pelo que o editor mostra as peças que o frontend esconde.
+  evidence: Rodada 2 da triagem da 1.6 (#57), achado da camada de lacunas de verificação: a documentação do hook é explícita ("will only influence the query that will be rendered on the front-end"). É inerente ao mecanismo escolhido (o único que mantém o markup por slug, AD-7); o remédio seria outro mecanismo de filtragem, portanto não é desta história. Fecha-se se o editor do Site passar a ter uma pré-visualização fiel.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-6-noticias-puras-e-o-hub-das-seccoes.md`
+  summary: A ortografia nova está em português do Brasil acentuado ("Seções", "canônicos", "atualidades") enquanto o repositório escreve português europeu ("Secções", "canónicos"), e o vazio ao lado continua sem acento.
+  evidence: Rodada 2 da triagem da 1.6 (#40; e #15 da rodada 1). Decisão congelada da história: a acentuação é da 1.11 ("A copy acentuada em português do Brasil"), que faz a passagem global; separadamente, o `archive.html` mantém "Ainda nao ha posts nesta secao." até lá.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-6-noticias-puras-e-o-hub-das-seccoes.md`
+  summary: Duas superfícies servem listagens de Notícias quase iguais — a página `/noticias/` (que o tema passa a servir) e o arquivo da categoria `/category/noticias/` — e continuam sem canónico nem `noindex` a ligá-las ou separá-las.
+  evidence: Rodada 2 da triagem da 1.6 (#14 da rodada 1, mantido). O arquivo da categoria já respondia antes desta história, pelo que é dívida preexistente; a solução (canónico, `noindex`, ou uma ligação explícita) é decisão de SEO/arquitectura, não desta história.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-6-noticias-puras-e-o-hub-das-seccoes.md`
+  summary: O hub fica acoplado a invariantes não declarados para quem edita: o slug da página 2617 tem de continuar a ser `noticias` (senão cai no `page.html` e ressurge o conteúdo antigo) e a copy do hero vive no template, apesar de o termo `noticias` ter descrição na base de dados.
+  evidence: Rodada 2 da triagem da 1.6 (#19 da rodada 1 e #36 da rodada 2). Verificado por REST que a página 2617 tem slug `noticias`. Nada no template, no `README` ou no `AGENTS.md` avisa quem edita o site; fecha-se com uma nota de operação para editores e, se se quiser a copy no termo, com uma decisão de desenho (o hero da página ler o termo).

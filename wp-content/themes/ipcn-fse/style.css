@@ -540,6 +540,39 @@ footer .wp-block-list li {
 	border-color: var(--wp--preset--color--navy);
 }
 
+/* ——— Hub das Seções (Story 1.6): pílulas com alvo de toque ≥ 44px ———
+   O markup do pattern (`patterns/ipcn-seccoes.php`) traz um `nav` (`ipcn-seccoes`) com um
+   `core/group.ipcn-seccoes-links` a envolver a lista. As regras valem só por esse hook,
+   para não vestirem listas alheias que um dia vivam dentro do `nav`. */
+.ipcn-seccoes-links .wp-block-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	list-style: none;
+	padding-left: 0;
+	margin: 0;
+}
+.ipcn-seccoes-links .wp-block-list li {
+	margin: 0;
+}
+.ipcn-seccoes-links a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	padding: 10px 18px;
+	border: 1px solid var(--wp--preset--color--muted);
+	border-radius: 999px;
+	color: var(--wp--preset--color--navy);
+	font-weight: 600;
+	text-decoration: none;
+	transition: border-color 0.18s ease, background-color 0.18s ease, color 0.18s ease;
+}
+.ipcn-seccoes-links a:hover {
+	border-color: var(--wp--preset--color--navy);
+	background: var(--wp--preset--color--subtle);
+	color: var(--wp--preset--color--navy);
+}
+
 /* ============================================================
    Home v2 — ancestralidade contemporanea
    ============================================================ */
