@@ -18,9 +18,15 @@
 
 <!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"40px","bottom":"40px","left":"20px","right":"20px"}}},"backgroundColor":"subtle"} -->
 <div class="wp-block-group alignfull has-subtle-background-color has-background" style="padding-top:40px;padding-bottom:40px;padding-left:20px;padding-right:20px"><!-- wp:group {"layout":{"type":"constrained","contentSize":"1100px"}} -->
-<div class="wp-block-group"><!-- wp:term-list {"taxonomy":"tema_acervo","style":{"typography":{"fontSize":"14px"}},"textColor":"body"} /-->
+<div class="wp-block-group">[ipcn_tema_filter]
 
-<!-- wp:query {"query":{"perPage":12,"postType":"acervo_ipcn","order":"desc","orderBy":"date","inherit":true},"layout":{"type":"constrained","contentSize":"1100px"}} -->
+<!-- ============ LISTAGEM: o Acervo inteiro, filtrado por Tema ============
+     A filtragem vive no shortcode `[ipcn_tema_filter]` (`inc/listings.php`), que imprime as
+     pílulas dos Temas por slug — nunca por id de termo (AD-7). A consulta é a do próprio
+     archive (`inherit:true`) e não declara `perPage`: o núcleo só constrói a consulta a partir
+     dos atributos do bloco quando não há herança, pelo que o tamanho da página é o
+     `posts_per_page` do site (Definições > Leitura) — e não um "últimos N" deste ficheiro. -->
+<!-- wp:query {"query":{"postType":"acervo_ipcn","order":"desc","orderBy":"date","inherit":true},"layout":{"type":"constrained","contentSize":"1100px"}} -->
 <div class="wp-block-query"><!-- wp:post-template {"layout":{"type":"grid","columnCount":3}} -->
 <!-- wp:pattern {"slug":"ipcn/card"} /-->
 <!-- /wp:post-template --><!-- wp:query-no-results --><!-- wp:paragraph -->

@@ -26,6 +26,9 @@
 	<!-- /wp:group -->
 	<!-- wp:post-terms {"term":"category","separator":" · "} /-->
 	<!-- wp:post-terms {"term":"tema_acervo","separator":" · "} /-->
+	<!-- wp:html -->
+	<span class="ipcn-card-notema">Sem Tema</span>
+	<!-- /wp:html -->
 	<!-- wp:post-title {"isLink":true,"className":"ipcn-card-title"} /-->
 	<!-- wp:post-date {"className":"ipcn-card-date","format":"j \\d\\e M \\d\\e Y"} /-->
 </div>

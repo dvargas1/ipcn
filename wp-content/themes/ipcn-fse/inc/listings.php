@@ -1,7 +1,7 @@
 <?php
 /**
  * IPCN FSE — listagens: filtro de categoria do `core/query` e shortcodes
- * ipcn_query_posts e ipcn_archive_hero.
+ * ipcn_query_posts, ipcn_archive_hero, ipcn_tema_filter e ipcn_archive_vazio.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -191,5 +191,109 @@ add_shortcode(
 <!-- /wp:group -->
 		<?php
 		return ob_get_clean();
+	}
+);
+
+/**
+ * IPCN FSE — filtro de Temas do Acervo (componente `theme-filter` do DESIGN).
+ *
+ * Imprime as pilulas dos Temas como ligacoes reais, por slug, para `/temas/<slug>/` — o
+ * endereco muda na barra e o botao de voltar funciona, porque o filtro e navegacao e nao
+ * estado escondido. Uma ultima liberdade do AD-1 (excepcao 2): HTML simples com as classes do
+ * tema, sem comentarios de bloco, para nao crescer a contagem do `check-php.sh` (AD-5).
+ *
+ * So corre nas superficies do Acervo: `/acervo/` (arquivo do CPT) e `/temas/<slug>/` (arquivo
+ * do termo, servido deliberadamente por `templates/archive.html`, AD-8). Fora delas devolve
+ * `''`, porque o mesmo `archive.html` serve as Seccoes (categorias) e um filtro do Acervo ali
+ * seria um controlo novo numa superficie de Noticias. Sem termos devolve `''` — nada de um
+ * `nav` vazio (matriz de I/O).
+ *
+ * `hide_empty => false` de proposito: um Tema sem pecas continua alcancavel pelo filtro e
+ * explica-se no vazio, em vez de desaparecer. A ordem e por nome, ascendente (nenhum documento
+ * fixa ordem). O termo aberto leva `aria-current="page"` — a pilula preenchida do componente.
+ *
+ * Uso: [ipcn_tema_filter]
+ */
+add_shortcode(
+	'ipcn_tema_filter',
+	function () {
+		if ( ! is_tax( 'tema_acervo' ) && ! is_post_type_archive( 'acervo_ipcn' ) ) {
+			return '';
+		}
+
+		$terms = get_terms(
+			'tema_acervo',
+			array(
+				'hide_empty' => false,
+				'orderby'    => 'name',
+				'order'      => 'ASC',
+			)
+		);
+
+		if ( is_wp_error( $terms ) || empty( $terms ) ) {
+			return '';
+		}
+
+		// AD-7: quem decide o endereco e `get_term_link()`, do slug — nunca um id de termo. O id
+		// so serve para reconhecer, em memoria, qual das pilulas e a do termo consultado.
+		$queried = get_queried_object();
+		$current = ( $queried instanceof WP_Term ) ? (int) $queried->term_id : 0;
+
+		$items = '';
+		foreach ( $terms as $term ) {
+			if ( ! ( $term instanceof WP_Term ) ) {
+				continue;
+			}
+
+			$link = get_term_link( $term );
+			if ( is_wp_error( $link ) ) {
+				continue;
+			}
+
+			$is_current = ( (int) $term->term_id === $current );
+			$items     .= '<li><a href="' . esc_url( $link ) . '"' . ( $is_current ? ' aria-current="page"' : '' ) . '>' . esc_html( $term->name ) . '</a></li>';
+		}
+
+		// Sem nenhuma ligacao valida nao ha filtro: melhor nada do que um `nav` sem itens.
+		if ( '' === $items ) {
+			return '';
+		}
+
+		return '<nav class="ipcn-tema-filter" aria-label="Temas do Acervo"><ul class="ipcn-tema-filter-links">' . $items . '</ul></nav>';
+	}
+);
+
+/**
+ * IPCN FSE — frase do vazio do arquivo, escolhida pelo objecto consultado.
+ *
+ * O `core/query-no-results` e estatico e o `templates/archive.html` serve tanto as Seccoes
+ * (categorias) como os Temas. Em `/temas/<slug>/` sem pecas explica que o Tema ainda nao tem
+ * pecas e oferece o Acervo inteiro (o estado vazio nomeado do par de UX); nos restantes
+ * archives devolve a frase actual verbatim — uma segunda mensagem ao lado da do Tema seria o
+ * defeito obvio. A copy da Seccao continua a ser decidida na 1.10; o que muda e o ficheiro onde
+ * se edita.
+ *
+ * O Tema sem pecas nao vira 404: `WP::handle_404()` nao marca 404 quando `is_tax()` e ha
+ * objecto consultado, logo o template corre e o estado vazio e conteudo do template.
+ *
+ * Uso (dentro do `core/query-no-results` de `templates/archive.html`): [ipcn_archive_vazio]
+ */
+add_shortcode(
+	'ipcn_archive_vazio',
+	function () {
+		if ( ! is_tax( 'tema_acervo' ) ) {
+			return '<p>Ainda nao ha posts nesta secao.</p>';
+		}
+
+		$out = '<p>Ainda nao ha pecas publicadas neste Tema.';
+
+		// O caminho de volta e o arquivo do CPT, pelo mesmo motivo do filtro: o endereco e do
+		// sistema, nao um caminho escrito a mao que um dia muda de sitio.
+		$acervo = get_post_type_archive_link( 'acervo_ipcn' );
+		if ( is_string( $acervo ) && '' !== $acervo ) {
+			$out .= ' <a href="' . esc_url( $acervo ) . '">Ver o Acervo inteiro</a>';
+		}
+
+		return $out . '</p>';
 	}
 );

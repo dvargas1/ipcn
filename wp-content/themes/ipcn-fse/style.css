@@ -487,6 +487,38 @@ footer .wp-block-list li {
 	line-height: 1.15;
 }
 
+/* ——— Marcador de ausência de Tema (Story 1.7) ———
+   O mesmo idioma do `ipcn-card-noimg` para a imagem (AD-3): o marcador vive sempre no markup
+   dos dois cartões e do hero do Item, mas só se revela onde a ausência se lê. Escondido por
+   omissão; num cartão do Acervo aparece quando não sai etiqueta nenhuma — o `core/post-terms`
+   do `tema_acervo` devolve string vazia quando o item não tem Tema, pelo que a ausência de
+   `.wp-block-post-terms` é a ausência da casa. O `type-acervo_ipcn` que o `core/post-template`
+   põe no `<li>` de cada item (por `get_post_class()`) é o que mantém o marcador no Acervo: um
+   `post` sem categoria nenhuma leria "Sem Tema" num cartão de Notícias, onde a ausência se
+   chamaria "Sem categoria". Não é ligação nem terracota: é metadado. No hero do Item a casa é
+   `.ipcn-single-tema` e o marcador `.ipcn-single-notema`, com a cor do rótulo ao lado. */
+.ipcn-card .ipcn-card-notema,
+.ipcn-single-tema .ipcn-single-notema {
+	display: none;
+}
+.type-acervo_ipcn .ipcn-card:not(:has(.wp-block-post-terms)) .ipcn-card-notema {
+	display: inline-block;
+	padding: 0 14px;
+	color: #64748b; /* text-muted do DESIGN — deliberadamente não é slug de theme.json */
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+.ipcn-single-tema:not(:has(.wp-block-post-terms)) .ipcn-single-notema {
+	display: block;
+	margin-top: 14px;
+	color: #c9d2f5; /* o rótulo do hero do Item, como o post-terms ao lado */
+	font-family: var(--wp--preset--font-family--body);
+	font-size: 14px;
+	line-height: 1.4;
+}
+
 /* ——— Vitrine do Acervo (Story 1.5): uma peça em destaque + duas secundárias ———
    O wrapper `.ipcn-vitrine` é um `wp:group` sem `layout` explícito e resolve a layout de
    fluxo; cada `post-template` lá dentro fica a uma coluna (columnCount:1) e o `gap:16px`
@@ -571,6 +603,56 @@ footer .wp-block-list li {
 	border-color: var(--wp--preset--color--navy);
 	background: var(--wp--preset--color--subtle);
 	color: var(--wp--preset--color--navy);
+}
+
+/* ——— Filtro de Temas do Acervo (Story 1.7): componente `theme-filter` do DESIGN ———
+   O markup vive no shortcode `[ipcn_tema_filter]` (`inc/listings.php`): um `nav.ipcn-tema-filter`
+   com uma lista de ligações por slug. Contorno muted, raio `rounded.full` (9999px), rótulo em
+   maiúsculas e alvo de toque de 44px; o termo aberto leva `aria-current="page"` e é o único
+   preenchido — navy com texto base, como o `selected*` do componente. As regras valem só pelo
+   hook `.ipcn-tema-filter`, para não vestirem listas alheias que um dia vivam dentro do `nav`.
+   O `margin` inferior repete o `blockGap` do `theme.json` (1.5rem): os dois colapsam, logo a
+   cadência até à grelha é a de hoje e continua a haver separação se o layout do `core` mudar. */
+.ipcn-tema-filter {
+	margin: 0 0 24px;
+}
+.ipcn-tema-filter-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	list-style: none;
+	padding-left: 0;
+	margin: 0;
+}
+.ipcn-tema-filter-links li {
+	margin: 0;
+}
+.ipcn-tema-filter-links a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	padding: 10px 18px;
+	border: 1px solid var(--wp--preset--color--muted);
+	border-radius: 9999px;
+	color: var(--wp--preset--color--navy);
+	font-family: var(--wp--preset--font-family--body);
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 1.4;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	text-decoration: none;
+	transition: border-color 0.18s ease, background-color 0.18s ease, color 0.18s ease;
+}
+.ipcn-tema-filter-links a:hover {
+	border-color: var(--wp--preset--color--navy);
+	background: var(--wp--preset--color--subtle);
+	color: var(--wp--preset--color--navy);
+}
+.ipcn-tema-filter-links a[aria-current="page"] {
+	background: var(--wp--preset--color--navy);
+	border-color: var(--wp--preset--color--navy);
+	color: var(--wp--preset--color--base);
 }
 
 /* ============================================================
