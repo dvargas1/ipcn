@@ -47,3 +47,9 @@ Redesign do site do Instituto de Pesquisas das Culturas Negras. WordPress FSE, t
 - CookieYes é opção na BD do servidor, não um ficheiro. A barra visível é `#ipcn-cookie-bar` no tema.
 
 <!-- /bmad:context -->
+
+## Preferências de trabalho (fora do bloco gerido — não é substituído num refresh)
+
+- Nos fluxos BMAD (`bmad-build`, revisão), seguir sempre a opção **recomendada** e não parar para perguntar: resolver os checkpoints e as Open Questions por conta própria, escolhendo a recomendada, e registar a decisão na spec.
+- Só parar quando a acção for irreversível ou destrutiva (apagar ficheiros ou dados, `push --force`, deploy, alterações na base de dados) ou quando nenhuma opção estiver recomendada.
+- Ainda assim, mostrar as decisões tomadas por conta própria no resumo final, para poderem ser contestadas depois.
