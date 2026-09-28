@@ -8,7 +8,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Grid de posts por categoria (cards no padrao da home).
+ * Grid de posts por categoria, com o cartao do pattern registado.
+ *
+ * Wrapper fino: o markup do cartao vive so em `patterns/` (pattern `ipcn/card`). Este
+ * shortcode le o `content` desse pattern no `WP_Block_Patterns_Registry` e entrega-o ao
+ * API de blocos com `do_blocks()` — o que a excepcao 1 do AD-1 autoriza. Nenhum markup de
+ * cartao e escrito a mao aqui. O `WP_Query` legado e a paginacao manual ficam como excepcao
+ * tolerada (AD-2); nenhuma superficie nova nasce assim.
+ *
  * Uso: [ipcn_query_posts category="noticias" per_page="6"]
  */
 add_shortcode(
@@ -43,19 +50,36 @@ add_shortcode(
 			return '<p>Nenhum conteudo publicado nesta secao ainda.</p>';
 		}
 
+		$registry     = WP_Block_Patterns_Registry::get_instance();
+		$card_pattern = $registry->is_registered( 'ipcn/card' ) ? $registry->get_registered( 'ipcn/card' ) : null;
+		$card_markup  = ( is_array( $card_pattern ) && isset( $card_pattern['content'] ) ) ? $card_pattern['content'] : '';
+
+		// Sem pattern nao ha cartao: sem esta guarda sairia uma grelha vazia, com paginacao,
+		// e nada o diria (o modo de falha silenciosa do AD-14).
+		if ( '' === $card_markup ) {
+			_doing_it_wrong( 'ipcn_query_posts', 'O pattern ipcn/card nao esta registado; o cartao nao pode ser renderizado.', '1.3.0' );
+			return '<p>Nenhum conteudo publicado nesta secao ainda.</p>';
+		}
+
 		$out = '<div class="ipcn-grid">';
 		while ( $q->have_posts() ) {
 			$q->the_post();
-			$img = get_the_post_thumbnail( get_the_ID(), 'medium_large', array( 'class' => 'ipcn-card-img' ) );
-			$out .= '<a class="ipcn-card" href="' . esc_url( get_permalink() ) . '">';
-			if ( $img ) {
-				$out .= '<span class="ipcn-card-media">' . $img . '</span>';
-			} else {
-				$out .= '<span class="ipcn-card-media ipcn-card-noimg" aria-hidden="true">IPCN</span>';
-			}
-			$out .= '<span class="ipcn-card-title">' . esc_html( get_the_title() ) . '</span>';
-			$out .= '<span class="ipcn-card-date">' . esc_html( get_the_date() ) . '</span>';
-			$out .= '</a>';
+
+			// Sem `postId` no contexto, o `core/post-title`, o `post-date`, o `post-terms` e o
+			// `post-featured-image` devolvem string vazia (o modo de falha silenciosa do AD-14).
+			// Quem o injecta e o `core/post-template`, pelo filtro `render_block_context`; aqui,
+			// fora dele, faz-se o mesmo a volta do `do_blocks()`. O `the_post()` sozinho nao chega.
+			$post_id   = get_the_ID();
+			$post_type = get_post_type( $post_id );
+			$context   = static function ( $block_context ) use ( $post_id, $post_type ) {
+				$block_context['postType'] = $post_type;
+				$block_context['postId']   = $post_id;
+				return $block_context;
+			};
+
+			add_filter( 'render_block_context', $context, 1 );
+			$out .= do_blocks( $card_markup );
+			remove_filter( 'render_block_context', $context, 1 );
 		}
 
 		$total = (int) $q->max_num_pages;

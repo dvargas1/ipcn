@@ -38,7 +38,8 @@ Redesign do site do Instituto de Pesquisas das Culturas Negras. WordPress FSE, t
 - Forms não levam nonce (LiteSpeed serve HTML velho). Protecção é honeypot `ipcn_hp` + validação + referer. Destino: `contato@ipcnbrasil.org`.
 - Se mudares padding inline da home, actualiza o selector `[style*="padding-top:…"]` em `style.css` — o inline vence media queries normais.
 - Imagem do hero vem de `assets/hero-bg.jpg` via `--ipcn-hero-bg` em `inc/setup.php`. Não reintroduzir URL absoluto de ambiente.
-- Portal de associados, paywall e `patterns/` não existem. Não os tratar como código actual.
+- Portal de associados e paywall não existem. Não os tratar como código actual.
+- O cartão vive em `patterns/` (`ipcn/card` 16:9 e `ipcn/card-feature` 4:3, ambos `Inserter: false`); as listagens usam-no dentro de `core/post-template` e o shortcode `ipcn_query_posts` entrega-o por `do_blocks()`. Nenhum markup de cartão é escrito à mão em PHP.
 
 ## Known pitfalls
 

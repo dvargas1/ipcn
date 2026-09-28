@@ -26,6 +26,26 @@
   summary: O campo `context:` do spec devia nomear o `epic-1-context.md` criado pela própria história.
   evidence: O `context:` está vazio, e o `epic-1-context.md` foi compilado no passo 1 exactamente para ser lido por quem implementa. O spec diz que o implementador deve carregar os ficheiros do `context:` antes de começar, e o documento que mais lhe interessa não está lá. Vale para as histórias 1.2 a 1.12, que devem listá-lo.
 
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-3-um-cartao-so-com-as-casas-fixadas.md`
+  summary: Nada resolve o slug `ipcn/card` que as quatro listagens, o wrapper `ipcn_query_posts` e os patterns declaram em sítios diferentes — um desalinhamento renderiza cartões vazios em silêncio e nada fica vermelho.
+  evidence: Achados #21, #31, #32 e #17 da triagem da 1.3. O `scripts/check-php.sh` nunca lê um `.html` e as suas verificações estruturais limitam-se a `inc/`; o `scripts/check-php.test.sh` não carrega o tema. Demonstração reproduzida: trocar o slug em `inc/listings.php` ou o `Slug:` do cabeçalho de `patterns/ipcn-card.php` deixa os testes exactamente como estão e as páginas sem cartões (a grelha fica com a paginação e o título de secção). O contexto do post no wrapper tem a mesma forma: mudar o nome do hook `render_block_context` não faz falhar nada e esvazia cada cartão. Fecha-se com uma verificação no `scripts/check-php.sh` que resolva cada `Slug:` de `patterns/` contra os `<!-- wp:pattern {"slug":…} -->` dos templates e contra o literal do wrapper, com um caso no `scripts/check-php.test.sh`, mais a passagem no browser dos ecrãs que chamam `[ipcn_query_posts]`.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-3-um-cartao-so-com-as-casas-fixadas.md`
+  summary: O cartão novo não tem ajuste de largura estreita, e as duas grelhas que o mostram colapsam em pontos diferentes — 900/600px no `.ipcn-grid` do shortcode e 768px no `is-layout-grid` dos blocos.
+  evidence: Achado #18 da triagem da 1.3. As duas regras de colapso são pré-existentes, mas a 1.3 passa a mostrar o mesmo cartão por ambas, o que torna a divergência visível; a tipografia do cartão (título 19px, `clamp(26px,3vw,34px)` no destaque) também não tem ajuste abaixo dos 768px. A passagem de leitura no telemóvel até 320px é a história 1.9, que é onde isto se fecha.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-3-um-cartao-so-com-as-casas-fixadas.md`
+  summary: O bullet novo do `AGENTS.md` sobre o cartão está incompleto e um dos seus juízos é falso para o repositório: afirma que nenhum markup de cartão é escrito à mão em PHP quando `inc/agenda-block.php` ainda o escreve, e não nomeia o contrato de classes, a armadilha do contexto do post fora de um loop, nem a dívida viva do `.ipcn-card-v2`.
+  evidence: Achados #15, #29 e #33 da triagem da 1.3. O remédio edita o bloco gerido do `AGENTS.md`, que um refresh do `bmad-project-context` substitui — o mesmo bloco tem ainda o selo «Verified 2026-09-24» e a enumeração de `inc/` incompleta, já diferidos pela 1.2. Nota cruzada: o `epics.md` (AR3) diz que «`ipcn-card-v2` está retirada», mas o repo ainda o usa na agenda; a 2.2 fecha essa contradição ao migrar a agenda para o cartão.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-3-um-cartao-so-com-as-casas-fixadas.md`
+  summary: A regra genérica `.wp-block-post-template.is-layout-grid .wp-block-group.has-background` continua a vestir qualquer grupo com fundo dentro de uma grelha (agora excepto `.ipcn-card`), sem se saber quem mais depende dela.
+  evidence: Achado #6 da triagem da 1.3. A 1.3 tirou-lhe o cartão (`:not(.ipcn-card)`), pelo que deixa de haver dois donos do mesmo chrome, mas a regra continua a ser um segundo dono para grupos alheios; apagá-la exige auditar templates e conteúdo guardados na base de dados, que este repositório não vê. A história 1.4 (identidade e foco) é dona do `style.css` e é onde isto se fecha.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-3-um-cartao-so-com-as-casas-fixadas.md`
+  summary: O pattern `ipcn/card-feature` nasce sem consumidor, logo a linha «Destaque» da matriz da 1.3 não é exercitável antes da 1.5.
+  evidence: Achado #14 da triagem da 1.3. O AD-15 atribui-lhe a vitrine do Acervo na Home (dois `core/query` irmãos, um com `perPage: 1`), que é a história 1.5; até lá a linha só se cobre por inspecção do markup (4:3 e escala de headline declaradas). Fecha-se quando a 1.5 montar a vitrine e a linha for vista no browser em `stagingredesign`.
+
 - source_spec: `_bmad-output/implementation-artifacts/spec-1-1-verificacao-de-sintaxe-antes-de-mexer-no-tema.md`
   summary: O `epic-1-context.md` tem imprecisões de conteúdo e unidades que a próxima compilação deve corrigir.
   evidence: A linha "Paleta (13 tokens)" afirma uma contagem sem enumerar os tokens, pelo que não é conferível contra o `theme.json`; unidades inconsistentes ("medida 720, grelhas 1100" sem `px`, contra "margem de 20px"); "reflow" sem glosa num documento em português corrente; o rótulo do rodapé aparece como "Contacto" e como "Contato" em bullets vizinhos, quando o markup do tema diz "Contato"; e o documento não tem `created`/`updated`, dono, nem ligações aos artefactos irmãos. É artefacto gerado — corrige-se na fonte de planeamento, não à mão.

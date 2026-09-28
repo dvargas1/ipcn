@@ -124,14 +124,16 @@ header .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigat
 .wp-block-post-template.is-layout-grid {
 	gap: 16px;
 }
-.wp-block-post-template.is-layout-grid .wp-block-group.has-background {
+/* O cartão do pattern traz o seu próprio chrome em `.ipcn-card`; esta regra serve só os
+   grupos com fundo que não são cartões. */
+.wp-block-post-template.is-layout-grid .wp-block-group.has-background:not(.ipcn-card) {
 	border: 1px solid var(--wp--preset--color--muted) !important;
 	border-radius: 14px !important;
 	overflow: hidden;
 	box-shadow: 0 6px 20px rgba(13, 23, 107, 0.08);
 	transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
-.wp-block-post-template.is-layout-grid .wp-block-group.has-background:hover {
+.wp-block-post-template.is-layout-grid .wp-block-group.has-background:not(.ipcn-card):hover {
 	transform: translateY(-2px);
 	box-shadow: 0 12px 32px rgba(13, 23, 107, 0.14);
 }
@@ -356,15 +358,20 @@ footer .wp-block-list li {
 @media (max-width: 600px) {
 	.ipcn-grid { grid-template-columns: 1fr; }
 }
+/* ——— Cartão único (patterns/ipcn-card.php e patterns/ipcn-card-feature.php) ———
+   O markup vive só em `patterns/`; o contrato de classes é .ipcn-card, .ipcn-card-media,
+   .ipcn-card-noimg, .ipcn-card-title e .ipcn-card-date. O cartão é um wp:group (não o <a>
+   do shortcode antigo), o título é o h2 do core/post-title e a data o time do core/post-date.
+   As regras .ipcn-card-v2 mais abaixo mantêm-se para a agenda (história 2.2). */
 .ipcn-card {
+	position: relative;
+	isolation: isolate;
 	display: flex;
 	flex-direction: column;
-	gap: 8px;
 	background: #fff;
 	border: 1px solid var(--wp--preset--color--muted);
 	border-radius: 14px;
 	overflow: hidden;
-	text-decoration: none;
 	box-shadow: 0 6px 20px rgba(13, 23, 107, 0.08);
 	transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
@@ -372,20 +379,37 @@ footer .wp-block-list li {
 	transform: translateY(-2px);
 	box-shadow: 0 12px 32px rgba(13, 23, 107, 0.14);
 }
-.ipcn-card-media {
-	display: block;
-	line-height: 0;
-}
-.ipcn-card-media img {
-	width: 100%;
+/* media: grelha de uma célula. O marcador e a imagem partilham a célula (grid-area 1/1) e a
+   imagem, por vir depois no DOM, cobre o marcador. O aspect-ratio vive no contentor para a
+   altura existir mesmo sem imagem — é isso que mantém a altura dos vizinhos. */
+.ipcn-card .ipcn-card-media {
+	display: grid;
+	grid-template: 1fr / 1fr;
 	aspect-ratio: 16 / 9;
-	object-fit: cover;
+	overflow: hidden;
 }
-.ipcn-card-noimg {
+.ipcn-card .ipcn-card-media > * {
+	grid-area: 1 / 1;
+	margin: 0;
+	min-width: 0;
+}
+.ipcn-card .ipcn-card-media figure,
+.ipcn-card .ipcn-card-media a {
+	display: block;
+	height: 100%;
+	margin: 0;
+}
+.ipcn-card .ipcn-card-media img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 0;
+}
+.ipcn-card .ipcn-card-noimg {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	aspect-ratio: 16 / 9;
 	background: var(--wp--preset--color--navy);
 	color: var(--wp--preset--color--ocre);
 	font-family: var(--wp--preset--font-family--oswald);
@@ -393,19 +417,74 @@ footer .wp-block-list li {
 	font-weight: 700;
 	letter-spacing: 0.08em;
 }
-.ipcn-card-title {
-	color: var(--wp--preset--color--ink);
-	font-weight: 600;
-	font-size: 15px;
-	line-height: 1.35;
-	padding: 0 14px;
+/* Com imagem, o marcador esconde-se: um PNG transparente deixaria o IPCN ver-se por baixo. */
+.ipcn-card:has(.wp-block-post-featured-image img) .ipcn-card-noimg {
+	display: none;
 }
-.ipcn-card-date {
+/* Primeiro slot de texto: o mesmo afastamento quer saia a etiqueta, quer não. */
+.ipcn-card .ipcn-card-media + * {
+	margin-top: 16px;
+}
+/* etiqueta por superfície: só sai a taxonomia que o post tem (o core/post-terms devolve vazio
+   quando não há termos). z-index 2 para continuar clicável por cima do alvo do título. */
+.ipcn-card .wp-block-post-terms {
+	position: relative;
+	z-index: 2;
+	margin: 0;
+	padding: 0 14px;
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+.ipcn-card .wp-block-post-terms a {
+	color: #a85a32; /* terracota do DESIGN — deliberadamente não é slug de theme.json */
+	text-decoration: none;
+}
+.ipcn-card .wp-block-post-terms a:hover {
+	text-decoration: underline;
+}
+.ipcn-card .ipcn-card-title {
+	margin: 10px 0 0;
+	padding: 0 14px;
+	font-family: var(--wp--preset--font-family--oswald);
+	font-size: 19px;
+	font-weight: 600;
+	line-height: 1.35;
+}
+.ipcn-card .ipcn-card-title a {
+	color: var(--wp--preset--color--ink);
+	text-decoration: none;
+}
+.ipcn-card .ipcn-card-title a:hover {
+	color: #a85a32;
+}
+/* um cartão, um alvo de toque: o link do título estende-se por todo o cartão */
+.ipcn-card .ipcn-card-title a::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+}
+.ipcn-card .ipcn-card-date {
+	margin: 4px 0 0;
+	padding: 0 14px 14px;
 	color: var(--wp--preset--color--body);
 	font-size: 11px;
 	text-transform: uppercase;
 	letter-spacing: 0.05em;
-	padding: 0 14px 14px;
+}
+.ipcn-card .ipcn-card-date time {
+	font: inherit;
+}
+/* Destaque (ipcn-card-feature): imagem 4:3 e título em escala de headline. O hook é o modifier
+   .ipcn-card-feature no wp:group — a tabela do AD-3 não nomeia classe para a escala de destaque. */
+.ipcn-card.ipcn-card-feature .ipcn-card-media {
+	aspect-ratio: 4 / 3;
+}
+.ipcn-card.ipcn-card-feature .ipcn-card-title {
+	font-size: clamp(26px, 3vw, 34px);
+	line-height: 1.15;
 }
 
 /* ——— Paginacao do grid shortcode ——— */
@@ -675,6 +754,7 @@ body.ipcn-ancestral { background: #fbf9f5; }
 
 /* link "Ler mais" com foco visível (a11y keyboard) */
 .ipcn-card-v2 a:focus-visible,
+.ipcn-card a:focus-visible,
 .ipcn-cta-primario a:focus-visible,
 .ipcn-cta-secundario a:focus-visible,
 #ipcn-cookie-bar button:focus-visible {
