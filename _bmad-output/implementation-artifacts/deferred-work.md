@@ -49,3 +49,36 @@
 - source_spec: `_bmad-output/implementation-artifacts/spec-1-1-verificacao-de-sintaxe-antes-de-mexer-no-tema.md`
   summary: O `epic-1-context.md` tem imprecisões de conteúdo e unidades que a próxima compilação deve corrigir.
   evidence: A linha "Paleta (13 tokens)" afirma uma contagem sem enumerar os tokens, pelo que não é conferível contra o `theme.json`; unidades inconsistentes ("medida 720, grelhas 1100" sem `px`, contra "margem de 20px"); "reflow" sem glosa num documento em português corrente; o rótulo do rodapé aparece como "Contacto" e como "Contato" em bullets vizinhos, quando o markup do tema diz "Contato"; e o documento não tem `created`/`updated`, dono, nem ligações aos artefactos irmãos. É artefacto gerado — corrige-se na fonte de planeamento, não à mão.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-4-a-identidade-e-o-foco.md`
+  summary: Pares de cor que carregam texto no `style.css` não têm razão de contraste declarada no `DESIGN.md` — estados de formulário e de cookies, `#991b1b`/`#166534`/`#94a3b8`/`#131736` e o ocre do marcador `.ipcn-card-noimg` sobre navy.
+  evidence: O AC da história 1.4 no `epics.md` pede que «cada par que carrega texto tenha a razão de contraste declarada no `DESIGN.md`», e o `DESIGN.md` declara `error`/`success` com hex próprios (`#b3261e`, `#1b5e20`), diferentes dos que o `style.css` usa (`#991b1b`, `#166534`), e não declara o placeholder `#94a3b8` nem o ocre sobre navy. Decisão de âmbito da 1.4 (secção *Decisions* da spec): limitar a história aos tokens declarados e ao foco. Os pares de formulário pertencem à 3.x, o da barra de cookies à 3.6 e o do marcador `.ipcn-card-noimg` ao cartão, que é da 2.2.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-4-a-identidade-e-o-foco.md`
+  summary: Documentação do regime de foco desactualizada depois da 1.4: `README.md:44` e `docs/auditoria-redesign-fse-2026-09-17.md:15` continuam a dizer «focus-visible terracota», e o comentário órfão de `style.css:753` fica a parecer o rótulo da regra global.
+  evidence: Achados da camada de lacunas de verificação (#33) e da revisão cega (#20). A 1.4 trocou o anel terracota pelo anel duplo `base`+`navy`, mas o `README.md` — que o `AGENTS.md` nomeia como autoridade quando discorda do `STATUS.md` — e a auditoria datada descrevem o regime antigo. O comentário de `style.css:753` já precedia o bloco de foco em `b773cf9` (desarrumação pré-existente), mas a regra nova passa a viver debaixo dele. Fecha-se numa passagem de documentação e na decisão de mover ou apagar esse comentário.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-4-a-identidade-e-o-foco.md`
+  summary: O nome de ficheiro `spec-1-4-a-identidade-e-o-foco.md` não coincide com a chave do ledger (`1-4-a-identidade-e-o-foco`), pelo que o `sprint_plan.py` não resolve a história a partir do disco.
+  evidence: Achado da revisão cega, real mas não nascido desta história: é a mesma incompatibilidade entre o passo 1 do `bmad-build` (que escreve `spec-{slug}.md`) e o `bmad-sprint-planning` já registada para a 1-1 neste ficheiro. O prefixo é imposto pelo método e a 1.4 não o pode fechar nem agravar; repete-se aqui só para não se perder a contagem de ocorrências. Reconciliação a montante.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-4-a-identidade-e-o-foco.md`
+  summary: `style.css:524-530` repete o chrome do CTA primário com declarações mortas (`background: #c9a86a !important` e `color: #131736 !important`), sobrepostas por `style.css:738-741`.
+  evidence: Achado da revisão cega (#10), pré-existente: a 1.4 não tocou nessas linhas. O bloco `REFINAMENTO v2.1` reescreve o mesmo selector com chumbo `#2d2418` e vence por ordem de ficheiro, pelo que o `#131736` e o `#c9a86a` de `524-526` nunca pintam. Não é texto claro sobre ocre (é escuro), logo não toca o AC da 1.4. Fecha-se numa limpeza do `style.css`, que a 1.8 ou a 1.10 podem fazer.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-4-a-identidade-e-o-foco.md`
+  summary: A regra global `:focus-visible` chega também ao editor do site, porque `inc/setup.php:69-78` enfileira o mesmo `style.css` em `enqueue_block_editor_assets`; se o efeito deixar o editor aceitável não se sabe sem browser.
+  evidence: Achado da camada de casos-limite (#27), com severidade por confirmar — seria `medium`, porque o `:focus-visible` nu com `!important` em `outline` e `box-shadow` se sobrepõe ao foco nativo dos controlos do editor e o parágrafo editável casa `:focus-visible`. O que o fecha é a passagem no browser em `stagingredesign` pelo editor, a par da do site; se for preciso corrigir, o remédio é limitar a regra ao frontend, verificado para não perder a cobertura de lá.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-4-a-identidade-e-o-foco.md`
+  summary: O par `ocre-hover` `#e2b878` com texto chumbo `#2d2418` (`.ipcn-cta-primario:hover`, `style.css:744-748`) não tem razão declarada no `DESIGN.md`; a razão (8.25:1) só aparece no `README.md:40`.
+  evidence: Achado da camada de casos-limite (#30). O `DESIGN.md` declara `hoverBackgroundColor: {colors.ocre-hover}` em `button-primary` mas só dá a razão do repouso (6.75:1). Faz parte da mesma dívida dos pares de texto sem razão declarada registada acima; fecha-se quando o `DESIGN.md` ganhar a linha, ou quando a 3.x alinhar as cores dos CTAs com os tokens.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-4-a-identidade-e-o-foco.md`
+  summary: O anel de foco não tem verificação executável — o `check-php.sh` nunca lê um `.css` e o `check-php.test.sh` não carrega o tema, pelo que trocar a regra global por uma lista fechada, que é o defeito que a 1.4 corrige, passa no mesmo verde.
+  evidence: Achado da camada de lacunas de verificação (#31), com disposição `defer`: o projecto não tem runner nem CI (NFR9) e a verificação sancionada (AD-13) é o `check-php.sh` mais o browser, com a passagem em `stagingredesign` por fazer neste passo. Fecha-se com essa passagem; tornar o passo mecânico seria infraestrutura de verificação (uma verificação de CSS no `scripts/check-php.sh`), não esta história.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-4-a-identidade-e-o-foco.md`
+  summary: A regra genérica `.wp-block-post-template.is-layout-grid .wp-block-group.has-background` continua sem dono — a 1-3 mandou-a fechar na 1.4 e a 1.4 não lhe tocou.
+  evidence: Achado da revisão cega (#19). O registo da 1-3 neste ficheiro diz «A história 1.4 (identidade e foco) é dona do `style.css` e é onde isto se fecha», mas o âmbito congelado da 1.4 é o anel de foco; a regra segue a servir grupos com fundo alheios, já sem o cartão (`:not(.ipcn-card)`). Reatribui-se a 1.8 ou 1.10, que arrumam as superfícies públicas.
+

@@ -279,11 +279,11 @@ footer .wp-block-list li {
 }
 .ipcn-form input::placeholder,
 .ipcn-form textarea::placeholder { color: #94a3b8; opacity: 1; }
+/* Campo focado: a borda navy reforça o controlo; o anel duplo (base + navy) vem da regra
+   global `:focus-visible` mais abaixo, que vence o box-shadow do campo. */
 .ipcn-form input:focus,
 .ipcn-form textarea:focus {
 	border-color: var(--wp--preset--color--navy);
-	box-shadow: 0 0 0 4px rgba(13, 23, 107, 0.10);
-	outline: none;
 }
 .ipcn-form-submit {
 	display: inline-block;
@@ -752,14 +752,13 @@ body.ipcn-ancestral { background: #fbf9f5; }
 }
 /* Estado vazio / tags com bg ocre (nosso caso: botões outline CTA e eyebrow terracota já passam 4.7:1) */
 
-/* link "Ler mais" com foco visível (a11y keyboard) */
-.ipcn-card-v2 a:focus-visible,
-.ipcn-card a:focus-visible,
-.ipcn-cta-primario a:focus-visible,
-.ipcn-cta-secundario a:focus-visible,
-#ipcn-cookie-bar button:focus-visible {
-	outline: 2px solid #a85a32;
-	outline-offset: 2px;
+/* Foco visível global (a11y teclado): anel duplo do DESIGN — `base` 2px por dentro,
+   `navy` 2px por fora, com 2px de afastamento. Os `!important` só existem para o anel
+   vencer os `box-shadow` de repouso/hover do tema (cartão, CTAs, campos). */
+:focus-visible {
+	outline: 2px solid var(--wp--preset--color--navy) !important;
+	outline-offset: 2px !important;
+	box-shadow: 0 0 0 2px var(--wp--preset--color--base) !important;
 }
 
 /*

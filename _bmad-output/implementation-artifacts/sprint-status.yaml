@@ -29,7 +29,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 # - Retrospective appends its action items to action_items; the status view surfaces open ones
 generated: 09-26-2026 23:20
-last_updated: 09-28-2026 12:29
+last_updated: 09-28-2026 12:54
 project: ipcn
 project_key: NOKEY
 tracking_system: file-system
@@ -39,7 +39,7 @@ development_status:
   1-1-verificação-de-sintaxe-antes-de-mexer-no-tema: review
   1-2-o-comportamento-sai-de-functions-php-para-inc: review
   1-3-um-cartão-só-com-as-casas-fixadas: review
-  1-4-a-identidade-e-o-foco: backlog
+  1-4-a-identidade-e-o-foco: review
   1-5-a-home-em-cinco-blocos-com-a-vitrine-do-acervo: backlog
   1-6-notícias-puras-e-o-hub-das-secções: backlog
   1-7-o-acervo-e-os-temas-públicos-e-filtráveis: backlog
