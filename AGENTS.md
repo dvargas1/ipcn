@@ -23,7 +23,7 @@ Redesign do site do Instituto de Pesquisas das Culturas Negras. WordPress FSE, t
 
 ## Running and verifying
 
-- Não há test runner, lint nem CI. Verificar com `php -l` em PHP alterado e no browser em stagingredesign depois do purge (`?nocache=1`).
+- Não há test runner nem CI. Antes de mexer no tema, correr `bash scripts/check-php.sh` — verifica a sintaxe do PHP do tema `ipcn-fse` e dos mu-plugins e falha com block markup (`<!-- wp:`) ou `<style>` emitido de PHP sob `inc/`; com caminhos só verifica esses ficheiros. Verificar também no browser em stagingredesign depois do purge (`?nocache=1`).
 - Tema exige PHP >= 8.1 e WordPress >= 6.4 (`style.css`). Não assumir a versão do host a partir do ROADMAP.
 
 ## Conventions that differ from defaults
