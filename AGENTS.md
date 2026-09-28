@@ -18,7 +18,7 @@ Redesign do site do Instituto de Pesquisas das Culturas Negras. WordPress FSE, t
 
 - Home: `wp-content/themes/ipcn-fse/templates/front-page.html`. Single post: `templates/single.html`. Acervo: `templates/archive-acervo_ipcn.html`, `templates/single-acervo_ipcn.html`. Não existe template de taxonomia — `/temas/<slug>` cai no template do archive.
 - Header e footer: `parts/header.html`, `parts/footer.html`. O menu é o navigation post `ref:5358` na BD do redesign — editar o HTML não muda os itens. `5358` no staging Divi é outro objecto.
-- CPT, taxonomia, forms, agenda e cookie bar: `functions.php`. Tokens: `theme.json`. Overrides que vencem inline styles: `style.css`.
+- CPT, taxonomia, forms, agenda e cookie bar: `inc/` (`content-model.php`, `forms.php`, `agenda-block.php`, `cookie-bar.php`). `functions.php` é só o carregador que inclui `inc/` por ordem explícita. Tokens: `theme.json`. Overrides que vencem inline styles: `style.css`.
 - From dos e-mails: `wp-content/mu-plugins/ipcn-mail-from.php`. Sem este ficheiro no servidor, o Gmail rejeita os forms.
 
 ## Running and verifying
@@ -28,8 +28,8 @@ Redesign do site do Instituto de Pesquisas das Culturas Negras. WordPress FSE, t
 
 ## Conventions that differ from defaults
 
-- Block theme não carrega `style.css` sozinho — já está enqueued em `functions.php`. Não remover esse enqueue.
-- Fontes vêm do Google via `functions.php`. Declarar família só no `theme.json` deixa o site no fallback.
+- Block theme não carrega `style.css` sozinho — já está enqueued em `inc/setup.php`. Não remover esse enqueue.
+- Fontes vêm do Google via `inc/setup.php`. Declarar família só no `theme.json` deixa o site no fallback.
 - Usar slugs de `theme.json` (navy, ocre, ink, muted, subtle, body, oswald, serif). Terracota `#a85a32` e chumbo `#2d2418` não são tokens — não os inventar como slugs.
 - Ocre `#c9a86a` é fundo de botão com texto chumbo, nunca texto claro sobre ocre.
 - Queries filtram por slug de categoria (`categoryName` na home, `[ipcn_query_posts category="…"]` nas páginas internas). Nunca usar term_id — muda entre ambientes.
@@ -37,7 +37,7 @@ Redesign do site do Instituto de Pesquisas das Culturas Negras. WordPress FSE, t
 - Agenda não é CPT: posts da categoria `agenda-ipcn`, meta `data_evento`, shortcode `[ipcn_home_agenda]`.
 - Forms não levam nonce (LiteSpeed serve HTML velho). Protecção é honeypot `ipcn_hp` + validação + referer. Destino: `contato@ipcnbrasil.org`.
 - Se mudares padding inline da home, actualiza o selector `[style*="padding-top:…"]` em `style.css` — o inline vence media queries normais.
-- Imagem do hero vem de `assets/hero-bg.jpg` via `--ipcn-hero-bg` em `functions.php`. Não reintroduzir URL absoluto de ambiente.
+- Imagem do hero vem de `assets/hero-bg.jpg` via `--ipcn-hero-bg` em `inc/setup.php`. Não reintroduzir URL absoluto de ambiente.
 - Portal de associados, paywall e `patterns/` não existem. Não os tratar como código actual.
 
 ## Known pitfalls
