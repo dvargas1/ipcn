@@ -487,6 +487,34 @@ footer .wp-block-list li {
 	line-height: 1.15;
 }
 
+/* ——— Vitrine do Acervo (Story 1.5): uma peça em destaque + duas secundárias ———
+   O wrapper `.ipcn-vitrine` é um `wp:group` sem `layout` explícito e resolve a layout de
+   fluxo; cada `post-template` lá dentro fica a uma coluna (columnCount:1) e o `gap:16px`
+   de `.wp-block-post-template.is-layout-grid` separa as duas secundárias entre si. O
+   `gap:16px` daqui separa as duas colunas, com a cadência da grelha de cartões. */
+.ipcn-vitrine {
+	display: grid;
+	grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+	gap: 16px;
+	align-items: start;
+}
+/* Com menos de três itens não há coluna de secundárias: a grelha colapsa para uma coluna,
+   para o destaque (ou a frase de vazio) não ficar a meia largura com uma coluna morta. */
+.ipcn-vitrine:not(:has(> .wp-block-query:last-child > *)) {
+	grid-template-columns: 1fr;
+}
+/* O layout de fluxo do core põe `margin-block-start` a partir do segundo filho; com o
+   wrapper em grelha, isso desalinharia a coluna das secundárias. Escopado ao segundo
+   `core/query`, a especificidade vence sem `!important`. */
+.ipcn-vitrine > .wp-block-query + .wp-block-query {
+	margin-block-start: 0;
+}
+@media (max-width: 781px) {
+	.ipcn-vitrine {
+		grid-template-columns: 1fr;
+	}
+}
+
 /* ——— Paginacao do grid shortcode ——— */
 .ipcn-pagination {
 	display: flex;

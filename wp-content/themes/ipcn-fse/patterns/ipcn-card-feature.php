@@ -7,7 +7,9 @@
  *
  * Mesmas casas do `ipcn/card` (imagem, marcador de ausência, etiqueta por superfície,
  * título e data), com dois desvios fixados pela tabela do AD-3: imagem 4:3 e título em
- * escala de headline. Sem consumidor nesta história — a vitrine da Home é a 1.5 (AD-15).
+ * escala de headline. Consumido pela vitrine do Acervo na Home (Story 1.5, AD-15): a
+ * query `perPage:1` da peça em destaque usa este pattern; as duas secundárias usam o
+ * `ipcn/card`.
  * A escala de headline não tem classe própria no AD-3: o hook é o modifier
  * `.ipcn-card-feature` no `wp:group`, definido em `style.css`.
  *
