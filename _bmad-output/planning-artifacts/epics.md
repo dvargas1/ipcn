@@ -89,7 +89,7 @@ Do par `DESIGN.md` + `EXPERIENCE.md`.
 UX-DR1: Tokens de cor em `theme.json` — navy, ink, body, muted, subtle, base, ocre, ocre-hover, terracota, chumbo, text-muted, error, success — com a razão de contraste declarada por par usado.
 UX-DR2: Escala tipográfica de onze papéis (display, headline, card-title, wordmark, reading, body, body-small, eyebrow, label, caption, button) em três famílias, carregadas do Google por PHP.
 UX-DR3: Tokens de raio (`sm` 6px, `md` 12px, `lg` 14px, `full` 9999px) e de espaçamento (margem 20px, secção 96/48, hero 120/72, rodapé 56, medida 720, largura 1100).
-UX-DR4: Componentes visuais especificados: `button-primary`, `button-secondary`, `button-pill`, `button-pill-outline`, `cookie-action`, `link`, `card`, `card-feature`, `card-agenda`, `contact-band`, `eyebrow`, `tag`, `theme-filter`, `pagination`, `accordion`, `input`, `error-text`, `success-text`, `header`, `footer`, `cookie-bar`, `focus-ring`.
+UX-DR4: Componentes visuais especificados: `button-primary`, `button-secondary`, `button-pill`, `button-pill-outline`, `cookie-action`, `link`, `card`, `card-feature`, `card-agenda`, `contact-band`, `eyebrow`, `tag`, `theme-filter`, `pagination`, `accordion`, `input`, `error-text`, `success-text`, `header`, `page-hero`, `footer`, `cookie-bar`, `focus-ring`.
 UX-DR5: A barra de cookies passa a **opaca**, e a terceira acção deixa de ser um fantasma sobre navy — usa `cookie-action`, ocre com contorno base.
 UX-DR6: A borda dos campos passa a `text-muted` (4.76:1); `muted` fica só para cartões.
 UX-DR7: O foco passa a **anel duplo** — `base` interior de 2px e `navy` exterior de 2px, com 2px de afastamento — visível sobre base, subtle, ocre, navy, terracota e rodapé.
@@ -105,12 +105,13 @@ UX-DR16: Estado do QR de PIX vencido ou em falta: diz que o código está em act
 UX-DR17: Escolha de cookies pendente: nada de analítica ou marketing dispara antes dela, e as três acções têm igual proeminência.
 UX-DR18: Estado de foco sob a barra de cookies: afastamento de scroll reservado, o conteúdo focado nunca fica escondido.
 UX-DR19: 404 com uma frase e um caminho de volta ao início.
-UX-DR20: Piso de acessibilidade: skip link como primeiro elemento focável, `autocomplete` nos campos, `aria-invalid` e `aria-describedby` nos erros, anúncio do resultado do envio, texto alternativo, movimento reduzido, ordem de foco sem armadilhas, reflow a 320px.
+UX-DR20: Piso de acessibilidade: skip link como primeiro elemento focável, `autocomplete` nos campos, `aria-invalid` e `aria-describedby` nos erros, anúncio do resultado do envio, texto alternativo, movimento reduzido, ordem de foco sem armadilhas, reflow a 320px, e um só `h1` por página, verificado no HTML servido e não no template.
 UX-DR21: Primitivas de interação: tocar para agir, filtros e paginação como ligações reais, navegação mobile que não sequestra o ecrã.
 UX-DR22: Superfícies banidas: carrossel automático, animação na abertura, contador de artigos, pop-up a pedir subscrição, auto-play de vídeo.
 UX-DR23: Microcopy em português do Brasil, com a tabela de voz: "A agenda está sendo montada", "Recebemos seu pedido", "Não foi possível enviar agora", sem entusiasmo de marketing.
 UX-DR24: Pontos de viragem: 320px piso, 375px revisão, 782px viragem, 1440px computador; grelhas de três colunas no computador e uma no telemóvel.
 UX-DR25: As cinco jornadas UJ-1 a UJ-5 como narrativas com protagonista nomeado e batida de clímax, cada uma com o seu caminho de falha.
+UX-DR26: Cabeçalho de página uniforme: as superfícies de entrada abrem com a `page-hero` — navy, a imagem de `assets/hero-bg.jpg` por trás, eyebrow, título e linha de apoio quando existe — e é ela que carrega o `h1`; o conteúdo retoma no `h2` e nunca repete o título. As leituras (Notícia, Item de Acervo) mantêm o título editorial sobre base.
 
 ### FR Coverage Map
 
@@ -347,6 +348,23 @@ para o site FSE não receber CSS que não usa nem uma fonte que não existe.
 **E** nada mais no ficheiro muda: a remoção do `generator`, o `xmlrpc_enabled` e a remoção do `X-Pingback` continuam a valer para todas as instalações.
 **E** o HTML do site FSE deixa de conter as três etiquetas, e o pedido ao ficheiro de fonte Divi desaparece.
 **E** o ficheiro é deployado no `stagingredesign` e **não** no staging Divi, onde o comportamento se mantém idêntico sem ele.
+
+### Story 1.13: Um só cabeçalho de página
+
+Como Visitante,
+quero que cada página abra com um só título, no mesmo tratamento,
+para não ler o nome da mesma página duas vezes nem duvidar de que estou no sítio certo.
+
+**Acceptance Criteria:**
+
+**Dado** qualquer superfície de entrada — Notícias, Secção, Tema, Acervo, Agenda, as Páginas institucionais e a 404 —
+**Quando** a página é servida no ambiente de revisão, depois da purga,
+**Então** o HTML servido tem exactamente um `h1`, e é o da `page-hero`.
+**E** o hero que hoje vive dentro do conteúdo das páginas institucionais é removido, não substituído por outro.
+**E** o eyebrow nomeia a superfície, e a linha de apoio vem da descrição do termo quando existe.
+**E** o eyebrow assenta num navy com alfa >= 0.88 e usa `base`: o ocre a 0.68 dá 2.57:1 e falha os 4.5:1 de `typography.eyebrow`.
+**E** as leituras mantêm o título editorial sobre base, sem tarja.
+**E** a contagem de `h1` é medida na página renderizada, não no template.
 
 ---
 
