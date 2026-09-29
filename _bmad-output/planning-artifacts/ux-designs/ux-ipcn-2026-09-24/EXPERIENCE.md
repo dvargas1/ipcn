@@ -5,7 +5,7 @@ sources:
   - {planning_artifacts}/prds/prd-ipcn-2026-09-24/prd.md
   - DESIGN.md
 created: 2026-09-24
-updated: 2026-09-24
+updated: 2026-09-29
 ---
 
 # IPCN — Experience Spine
@@ -58,6 +58,8 @@ Notícias e Acervo usam composições diferentes de propósito — cartão compa
 
 **Temas não têm ecrã próprio.** `/temas/<slug>` responde com a lista do Acervo filtrada; não há template de taxonomia separado.
 
+**Um só cabeçalho de página.** As superfícies de entrada — tudo o que não é a Home nem uma leitura (Notícia, Item de Acervo) — abrem com a mesma `page-hero`: Notícias, Secção, Tema, Acervo, Agenda, Quem somos, Projetos, Fale conosco, Associe-se, Apoia-se, Política de privacidade e 404. As três formas que coexistiam a 2026-09-29 — o `post-title` nu do `page.html`, o hero próprio de `/noticias/` e o `[ipcn_archive_hero]` das Secções e Temas — convergem nela. Uma página nunca abre com dois títulos: o `h1` é da `page-hero` e o conteúdo retoma no primeiro `h2`. Nas leituras o título continua editorial, sobre base.
+
 **O rodapé atual não serve esta arquitectura.** Tem três colunas (Instituto · Contato · Redes sociais) e não inclui a Política de privacidade nem uma ligação directa a Fale conosco. A Política de privacidade passa a ser obrigatória no rodapé (FR-9, §15).
 
 ## Voice and Tone
@@ -72,6 +74,7 @@ Microcopy. A voz da marca vive em `DESIGN.md` → *Brand & Style*. Português do
 | "Em breve, novos itens do acervo." | "Nenhum resultado." |
 | "Código PIX em atualização. Fale conosco para apoiar agora." | mostrar um QR vencido |
 | "Próximos encontros" · "Explorar Acervo" · "Associe-se" | "Desbloqueie o acervo" · "Saiba mais" |
+| "IPCN · Quem somos" no eyebrow da `page-hero` | "Instituto · Desde 1975" fora da Home |
 | Frases completas, voz institucional. | Entusiasmo de marketing, pontos de exclamação, emoji. |
 
 ## Component Patterns
@@ -81,6 +84,7 @@ Comportamento. A especificação visual de cada um vive em `DESIGN.md` → *Comp
 | Componente | Onde | Regras de comportamento |
 |---|---|---|
 | `header` | todas | Marca em cima, navegação por baixo, centrado. No telemóvel a navegação colapsa e não empurra o conteúdo de forma permanente. É o primeiro destino do skip link. |
+| `page-hero` | superfícies de entrada (Home, Notícia e Item de fora) | Abre a página e carrega o `h1`. O eyebrow nomeia a superfície; a linha de apoio sai só quando existe (o `description` do termo, nas Secções e Temas). O conteúdo retoma no primeiro `h2` e nunca repete o título da página. |
 | `footer` | todas | Três colunas e uma linha final. O contacto e a liberdade de sair têm de estar alcançáveis de qualquer página, em posição estável. |
 | `link` | todas | Navegável por teclado, com foco visível. Distinguido por mais do que cor. |
 | `button-primary` | hero, Item de Acervo | Leva a `Associe-se`. É o gesto principal onde aparece. |
@@ -106,6 +110,7 @@ Comportamento. A especificação visual de cada um vive em `DESIGN.md` → *Comp
 | Estado | Superfície | Tratamento |
 |---|---|---|
 | Abertura | Home | O primeiro ecrã mostra o que o IPCN é, sem depender de imagem carregada. |
+| Página sem linha de apoio | `page-hero` | Eyebrow e título apenas; a faixa encolhe, não reserva o espaço da linha. |
 | Home sem Notícias | Home | "Em breve, novidades por aqui." A secção mantém-se, não colapsa. |
 | Notícias vazias | Notícias, Secção | Explica que ainda não há conteúdo e oferece as restantes Secções. |
 | Acervo vazio | Acervo | "Em breve, novos itens do acervo." |
@@ -138,6 +143,7 @@ Comportamento. O contraste vive em `DESIGN.md`, declarado por par.
 - WCAG 2.2 AA em texto, controlos, foco, reflow e alvos de toque.
 - Alvo mínimo de 44px em todo o controlo: paginação, filtros, ações de cookies e cabeçalho do acordeão.
 - Skip link como primeiro elemento focável.
+- Um só `h1` por página: nas superfícies de entrada é o da `page-hero`, nas de leitura é o título do conteúdo. A hierarquia desce a partir dele e o conteúdo nunca repete o título da página.
 - Todo o campo tem etiqueta associada e, quando aplicável, `autocomplete`. Erro de campo identificado por `aria-invalid` e ligado por `aria-describedby`; um resumo de erro no topo recebe o foco.
 - O resultado do envio é anunciado a leitores de ecrã, incluindo quando falha.
 - Foco visível em todos os elementos interativos, com o anel duplo de `{components.focus-ring}`. O foco nunca fica obscurecido pela barra de cookies.

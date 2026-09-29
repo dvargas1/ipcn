@@ -7,7 +7,7 @@ sources:
   - wp-content/themes/ipcn-fse/theme.json
   - wp-content/themes/ipcn-fse/style.css
 created: 2026-09-24
-updated: 2026-09-24
+updated: 2026-09-29
 colors:
   navy: '#0d176b'
   ink: '#0f172a'
@@ -31,6 +31,11 @@ typography:
   headline:
     fontFamily: Oswald
     fontSize: clamp(26px, 3vw, 34px)
+    fontWeight: '700'
+    lineHeight: '1.15'
+  page-title:
+    fontFamily: Oswald
+    fontSize: clamp(28px, 5vw, 44px)
     fontWeight: '700'
     lineHeight: '1.15'
   card-title:
@@ -101,6 +106,16 @@ components:
     textColor: '{colors.navy}'
     controlRounded: '{rounded.full}'
     paddingInline: '{spacing.margin-mobile}'
+  page-hero:
+    backgroundColor: '{colors.navy}'
+    textColor: '{colors.base}'
+    eyebrowColor: '{colors.base}'
+    backgroundImage: 'assets/hero-bg.jpg, por var(--ipcn-hero-bg) em inc/setup.php'
+    overlay: 'gradiente navy, alfa >= 0.88'
+    titleTypography: '{typography.page-title}'
+    paddingBlock: '64px (48px no telemóvel)'
+    contentWidth: '{spacing.wide}'
+    contrastRatio: '11.24:1 (base no alfa 0.88, pior caso da imagem)'
   footer:
     backgroundColor: '{colors.navy}'
     textColor: '{colors.base}'
@@ -256,7 +271,7 @@ Navy e terracota são as únicas cores de link e de acento. Um link nunca depend
 
 ## Typography
 
-- **Oswald** (`{typography.display}`, `{typography.headline}`, `{typography.card-title}`, `{typography.wordmark}`) — títulos, wordmark e nomes de cartão. Carregada do Google por `functions.php`, nunca só declarada em `theme.json`.
+- **Oswald** (`{typography.display}`, `{typography.headline}`, `{typography.page-title}`, `{typography.card-title}`, `{typography.wordmark}`) — títulos de página e de secção, wordmark e nomes de cartão. Carregada do Google por `functions.php`, nunca só declarada em `theme.json`.
 - **Playfair Display** (`{typography.reading}`) — leitura longa de uma Notícia ou de um Item de Acervo.
 - **Inter** (`{typography.body}`, `{typography.body-small}`, `{typography.eyebrow}`, `{typography.label}`, `{typography.caption}`, `{typography.button}`) — corpo, rótulos e controlos.
 
@@ -294,6 +309,7 @@ Imagens seguem o raio do contentor. Nada de cantos mistos no mesmo cartão.
 Especificação visual. O comportamento de cada um vive em `EXPERIENCE.md` → *Component Patterns*, sob o mesmo nome.
 
 - **Cabeçalho** (`header`) — fundo base, marca em navy, controlos em pílula.
+- **Cabeçalho de página** (`page-hero`) — a tarja que abre as superfícies de entrada: tudo o que não é a Home nem uma leitura (Notícia, Item de Acervo). Navy, a imagem de `assets/hero-bg.jpg` por trás com o gradiente por cima, eyebrow, título em `{typography.page-title}` e, quando a superfície tem uma, uma linha de apoio. É a mesma família visual do hero da Home, com menos altura. Traz o seu próprio `h1`; o conteúdo da página não o repete.
 - **Rodapé** (`footer`) — navy, três colunas (Instituto · Contato · Redes sociais) com rótulos a 50% e texto a 85% de base, separador a 15%, e uma linha final com copyright e crédito. `{typography.caption}`.
 - **Botão primário** (`button-primary`) — ocre com texto chumbo.
 - **Botão secundário** (`button-secondary`) — navy com texto base.
@@ -331,6 +347,7 @@ Especificação visual. O comportamento de cada um vive em `EXPERIENCE.md` → *
 - Não usar fundo translúcido na barra de cookies nem em nada que contenha controlos.
 - Não depender só da cor para links ou estados.
 - Não inventar slugs de `theme.json` para terracota, chumbo ou ocre-hover.
+- Não usar ocre em texto pequeno sobre a imagem do hero: com o overlay a `0.68` dá **2.57:1** e o eyebrow precisa dos 4.5:1 de `{typography.eyebrow}`. O eyebrow usa `{colors.base}`, ou o overlay sobe a `0.88` em todos os stops.
 - Não reintroduzir URL absoluto de ambiente na imagem do hero; vem de `assets/hero-bg.jpg`.
 - Não usar Playfair em títulos de interface nem Oswald em leitura longa.
 - Não acrescentar tema ou plugin pago para cumprir o que os blocos nativos já fazem.
