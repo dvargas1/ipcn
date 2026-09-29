@@ -70,56 +70,42 @@ add_shortcode(
 
 		// Estado vazio elegante.
 		if ( ! $q->have_posts() ) {
-			ob_start();
-			?>
-<!-- wp:group {"style":{"border":{"radius":"12px","width":"1px"},"spacing":{"padding":{"top":"44px","right":"28px","bottom":"44px","left":"28px"}}},"borderColor":"muted","backgroundColor":"base","layout":{"type":"constrained","contentSize":"720px"}} -->
-<div class="wp-block-group has-border-color has-muted-border-color has-base-background-color has-background" style="border-radius:12px;border-width:1px;padding-top:44px;padding-right:28px;padding-bottom:44px;padding-left:28px">
-  <!-- wp:heading {"textAlign":"center","level":3,"style":{"typography":{"fontFamily":"var:preset|font-family|oswald","fontSize":"20px","fontWeight":"600"}}} -->
-  <h3 class="wp-block-heading has-text-align-center" style="font-family:var(--wp--preset--font-family--oswald);font-size:20px;font-weight:600">A agenda está sendo montada</h3>
-  <!-- /wp:heading -->
-  <!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"15px"},"color":{"text":"#64748b"}}} -->
-  <p class="has-text-align-center" style="color:#64748b;font-size:15px">Acompanhe nossas redes sociais para os próximos encontros e atividades.</p>
-  <!-- /wp:paragraph -->
-  <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"},"style":{"spacing":{"margin":{"top":"18px"}}}} -->
-  <div class="wp-block-buttons" style="margin-top:18px">
-    <!-- wp:button {"className":"is-style-outline"} -->
-    <div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( $network ); ?>" target="_blank" rel="noopener noreferrer">Ver no Instagram</a></div>
-    <!-- /wp:button -->
-  </div>
-  <!-- /wp:buttons -->
-</div>
-<!-- /wp:group -->
-			<?php
-			return ob_get_clean();
+			return '<div class="wp-block-group" style="border:1px solid var(--wp--preset--color--muted);border-radius:12px;background:#fff;padding:44px 28px">'
+				. '<h3 class="wp-block-heading" style="margin:0;text-align:center;font-family:var(--wp--preset--font-family--oswald);font-size:20px;font-weight:600">A agenda está sendo montada</h3>'
+				. '<p style="margin:14px 0 0;text-align:center;color:#64748b;font-size:15px">Acompanhe nossas redes sociais para os próximos encontros e atividades.</p>'
+				. '<p style="margin:18px 0 0;text-align:center"><a class="wp-element-button" style="display:inline-block;border:1px solid currentColor;border-radius:6px;padding:10px 18px;text-decoration:none" href="' . esc_url( $network ) . '" target="_blank" rel="noopener noreferrer">Ver no Instagram</a></p>'
+				. '</div>';
 		}
 
-		// Agenda com data futura: renderiza cards.
-		ob_start();
-		?>
-<!-- wp:query -->
-<div class="wp-block-query">
-<!-- wp:post-template {"layout":{"type":"grid","columnCount":3}} -->
-		<?php
-		while ( $q->have_posts() ) :
+		// Eventos futuros: um cartao por evento da categoria, dentro de `.ipcn-grid` (a mesma
+		// grelha que o `ipcn_query_posts` usa). O markup anterior abria um `core/query` sem
+		// atributos, que nao herdava este `$q` e servia a query global — o cartao mostrava a
+		// pagina actual. O cartao legado `.ipcn-card-v2` mantem-se ate a historia 2.2 o migrar
+		// para o pattern `ipcn/card`.
+		$items = '';
+		while ( $q->have_posts() ) {
 			$q->the_post();
-			$thumb = get_the_post_thumbnail( get_the_ID(), 'medium_large' );
-			?>
-<!-- wp:group {"className":"ipcn-card-v2"} -->
-<div class="wp-block-group ipcn-card-v2">
-<!-- wp:post-featured-image {"isLink":true,"aspectRatio":"16/9","style":{"border":{"radius":{"topLeft":"12px","topRight":"12px","bottomLeft":"0px","bottomRight":"0px"}}}} /-->
-<!-- wp:post-date {"style":{"typography":{"fontSize":"13px"},"color":{"text":"#a85a32"}},"format":"j \\d\\e M \\d\\e Y"} /-->
-<!-- wp:post-title {"isLink":true,"style":{"typography":{"fontFamily":"var:preset|font-family|oswald","fontSize":"19px","fontWeight":"600","lineHeight":"1.35"},"spacing":{"margin":{"top":"8px"}}}} /-->
-<!-- wp:post-excerpt {"moreText":"","showMoreOnNewLine":false,"style":{"typography":{"fontSize":"14px"}}} /-->
-</div>
-<!-- /wp:group -->
-			<?php
-		endwhile;
+
+			$thumb = get_the_post_thumbnail(
+				get_the_ID(),
+				'medium_large',
+				array( 'style' => 'aspect-ratio:16/9;object-fit:cover;width:100%;border-radius:0' )
+			);
+			if ( '' === $thumb ) {
+				$thumb = '<span aria-hidden="true" style="display:flex;align-items:center;justify-content:center;aspect-ratio:16/9;background:var(--wp--preset--color--navy);color:#fff;font-family:var(--wp--preset--font-family--oswald);font-size:20px;letter-spacing:2px">IPCN</span>';
+			}
+
+			$items .= '<div class="wp-block-group ipcn-card-v2">'
+				. '<div class="wp-block-post-featured-image">' . $thumb . '</div>'
+				. '<div style="padding:14px 18px 20px">'
+				. '<div class="wp-block-post-date" style="color:#a85a32;font-size:13px"><time datetime="' . esc_attr( get_the_date( 'c' ) ) . '">' . esc_html( get_the_date( 'j \d\e M \d\e Y' ) ) . '</time></div>'
+				. '<h2 class="wp-block-post-title" style="margin-top:8px;margin-bottom:0;font-family:var(--wp--preset--font-family--oswald);font-size:19px;font-weight:600;line-height:1.35"><a href="' . esc_url( get_permalink() ) . '">' . esc_html( get_the_title() ) . '</a></h2>'
+				. '<div class="wp-block-post-excerpt" style="font-size:14px"><p class="wp-block-post-excerpt__excerpt">' . esc_html( get_the_excerpt() ) . '</p></div>'
+				. '</div>'
+				. '</div>';
+		}
 		wp_reset_postdata();
-		?>
-<!-- /wp:post-template -->
-</div>
-<!-- /wp:query -->
-		<?php
-		return ob_get_clean();
+
+		return '<div class="ipcn-grid">' . $items . '</div>';
 	}
 );
