@@ -86,7 +86,7 @@ add_shortcode(
 		);
 
 		if ( ! $q->have_posts() ) {
-			return '<p>Nenhum conteudo publicado nesta secao ainda.</p>';
+			return '<p>Nenhum conteúdo publicado nesta seção ainda.</p>';
 		}
 
 		$registry     = WP_Block_Patterns_Registry::get_instance();
@@ -96,8 +96,8 @@ add_shortcode(
 		// Sem pattern nao ha cartao: sem esta guarda sairia uma grelha vazia, com paginacao,
 		// e nada o diria (o modo de falha silenciosa do AD-14).
 		if ( '' === $card_markup ) {
-			_doing_it_wrong( 'ipcn_query_posts', 'O pattern ipcn/card nao esta registado; o cartao nao pode ser renderizado.', '1.3.0' );
-			return '<p>Nenhum conteudo publicado nesta secao ainda.</p>';
+			_doing_it_wrong( 'ipcn_query_posts', 'O pattern ipcn/card não está registrado; o cartão não pode ser renderizado.', '1.3.0' );
+			return '<p>Nenhum conteúdo publicado nesta seção ainda.</p>';
 		}
 
 		$out = '<div class="ipcn-grid">';
@@ -168,9 +168,9 @@ add_shortcode(
 		// espacos contar como ausente, e `wp_strip_all_tags` para uma descricao com markup
 		// nao sair com etiquetas literais.
 		$name        = ( '' !== trim( (string) $q->name ) ) ? (string) $q->name : ucwords( str_replace( '-', ' ', $slug ) );
-		$name        = ( '' !== trim( $name ) ) ? $name : 'Conteudo IPCN';
+		$name        = ( '' !== trim( $name ) ) ? $name : 'Conteúdo IPCN';
 		$description = wp_strip_all_tags( (string) $q->description );
-		$description = ( '' !== trim( $description ) ) ? $description : 'Selecao de conteudo publicado pelo IPCN.';
+		$description = ( '' !== trim( $description ) ) ? $description : 'Seleção de conteúdo publicado pelo IPCN.';
 
 		ob_start();
 		?>
@@ -271,7 +271,7 @@ add_shortcode(
  * template de recurso. Em `/temas/<slug>/` sem pecas explica que o Tema ainda nao tem pecas e
  * oferece o Acervo inteiro; numa Seccao sem publicacoes explica a ausencia e oferece o hub das
  * Seccoes (a historia 1.10 decidiu as duas copies). Nos restantes archives devolve a frase de
- * sempre, verbatim: nao sao superficies nomeadas pelo par de UX, e uma segunda mensagem ao lado
+ * sempre (acentuada na 1.11): nao sao superficies nomeadas pelo par de UX, e uma segunda mensagem ao lado
  * da do Tema seria o defeito obvio.
  *
  * O Tema sem pecas nao vira 404: `WP::handle_404()` nao marca 404 quando `is_tax()` e ha
@@ -285,9 +285,9 @@ add_shortcode(
 		if ( ! is_tax( 'tema_acervo' ) ) {
 			// So as Seccoes (categorias) levam a copy nomeada e a oferta das restantes Seccoes:
 			// os archives de tag, autor e data caem neste mesmo template e continuam com a
-			// frase de sempre, verbatim.
+			// frase de sempre (acentuada na 1.11), sem a copy nomeada.
 			if ( ! is_category() ) {
-				return '<p>Ainda nao ha posts nesta secao.</p>';
+				return '<p>Ainda não há posts nesta seção.</p>';
 			}
 
 			$out = '<p>Ainda não há publicações nesta Seção.';
@@ -306,7 +306,7 @@ add_shortcode(
 			return $out . '</p>';
 		}
 
-		$out = '<p>Ainda nao ha pecas publicadas neste Tema.';
+		$out = '<p>Ainda não há peças publicadas neste Tema.';
 
 		// O caminho de volta e o arquivo do CPT, pelo mesmo motivo do filtro: o endereco e do
 		// sistema, nao um caminho escrito a mao que um dia muda de sitio.

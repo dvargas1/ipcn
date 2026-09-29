@@ -99,7 +99,7 @@ add_shortcode(
 			. '<label for="ipcn-nome">Nome completo *<input type="text" name="ipcn_nome" id="ipcn-nome" required></label>'
 			. '<label for="ipcn-email">E-mail *<input type="email" name="ipcn_email" id="ipcn-email" required></label>'
 			. '<label for="ipcn-tel">Telefone<input type="tel" name="ipcn_tel" id="ipcn-tel"></label>'
-			. '<button type="submit" class="ipcn-form-submit">Enviar cadastro</button>'
+			. '<button type="submit" class="ipcn-form-submit">Enviar pedido</button>'
 			. '</form></div>';
 	}
 );
@@ -130,10 +130,10 @@ add_shortcode(
 	function () {
 		$status = isset( $_GET['contato'] ) ? sanitize_key( $_GET['contato'] ) : '';
 		if ( 'ok' === $status ) {
-			return '<div class="ipcn-form-success">Mensagem enviada! Vamos responder no e-mail informado o mais breve possivel.</div>';
+			return '<div class="ipcn-form-success">Recebemos sua mensagem. Vamos responder pelo e-mail informado.</div>';
 		}
 		if ( 'erro' === $status ) {
-			return '<div class="ipcn-form-error">Ops, nao conseguimos enviar sua mensagem. Confira os campos e tente de novo, ou escreva direto para contato@ipcnbrasil.org.</div>';
+			return '<div class="ipcn-form-error">Ops, não conseguimos enviar sua mensagem. Confira os campos e tente de novo, ou escreva direto para contato@ipcnbrasil.org.</div>';
 		}
 		return '';
 	}
@@ -147,10 +147,10 @@ add_shortcode(
 	function () {
 		$status = isset( $_GET['cadastro'] ) ? sanitize_key( $_GET['cadastro'] ) : '';
 		if ( 'ok' === $status ) {
-			return '<div class="ipcn-form-success">Recebemos seu cadastro com sucesso! Nossa equipe vai entrar em contato em breve no e-mail ou telefone informado.</div>';
+			return '<div class="ipcn-form-success">Recebemos seu pedido. Vamos responder pelo e-mail informado.</div>';
 		}
 		if ( 'erro' === $status ) {
-			return '<div class="ipcn-form-error">Ops, nao conseguimos enviar seu cadastro. Confira os campos e tente de novo, ou fale com a gente em contato@ipcnbrasil.org.</div>';
+			return '<div class="ipcn-form-error">Ops, não conseguimos enviar seu pedido. Confira os campos e tente de novo, ou fale com a gente em contato@ipcnbrasil.org.</div>';
 		}
 		return '';
 	}

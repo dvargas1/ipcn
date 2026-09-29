@@ -75,10 +75,10 @@ add_shortcode(
 <!-- wp:group {"style":{"border":{"radius":"12px","width":"1px"},"spacing":{"padding":{"top":"44px","right":"28px","bottom":"44px","left":"28px"}}},"borderColor":"muted","backgroundColor":"base","layout":{"type":"constrained","contentSize":"720px"}} -->
 <div class="wp-block-group has-border-color has-muted-border-color has-base-background-color has-background" style="border-radius:12px;border-width:1px;padding-top:44px;padding-right:28px;padding-bottom:44px;padding-left:28px">
   <!-- wp:heading {"textAlign":"center","level":3,"style":{"typography":{"fontFamily":"var:preset|font-family|oswald","fontSize":"20px","fontWeight":"600"}}} -->
-  <h3 class="wp-block-heading has-text-align-center" style="font-family:var(--wp--preset--font-family--oswald);font-size:20px;font-weight:600">A agenda esta sendo montada</h3>
+  <h3 class="wp-block-heading has-text-align-center" style="font-family:var(--wp--preset--font-family--oswald);font-size:20px;font-weight:600">A agenda está sendo montada</h3>
   <!-- /wp:heading -->
   <!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"15px"},"color":{"text":"#64748b"}}} -->
-  <p class="has-text-align-center" style="color:#64748b;font-size:15px">Acompanhe nossas redes sociais para os proximos encontros e atividades.</p>
+  <p class="has-text-align-center" style="color:#64748b;font-size:15px">Acompanhe nossas redes sociais para os próximos encontros e atividades.</p>
   <!-- /wp:paragraph -->
   <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"},"style":{"spacing":{"margin":{"top":"18px"}}}} -->
   <div class="wp-block-buttons" style="margin-top:18px">

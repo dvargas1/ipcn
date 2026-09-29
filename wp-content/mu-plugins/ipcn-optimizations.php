@@ -43,6 +43,19 @@ add_filter( 'wp_headers', function ( $headers ) {
 } );
 
 /**
+ * Detecta se o tema ativo é o Divi.
+ *
+ * Os três blocos abaixo só fazem sentido no site Divi legado; no site FSE (tema
+ * ipcn-fse) são CSS morto e pedem arquivos (core/admin/fonts/ETmodules) que só
+ * existem no pacote do Divi. Usa get_template() (e não get_stylesheet()) porque
+ * um tema-filho do Divi continua a precisar destes estilos: interessa o nome do
+ * diretório do tema-pai.
+ */
+function ipcn_is_divi_active() {
+	return 'Divi' === wp_get_theme()->get_template();
+}
+
+/**
  * Corrige a fonte de ícones do Divi (ETmodules) que está ausente no tema.
  *
  * O pacote do tema (Divi 4.20.2) veio sem os arquivos ETmodules.* e sem o
@@ -52,6 +65,9 @@ add_filter( 'wp_headers', function ( $headers ) {
  * pasta core/admin/fonts/ e injetamos o @font-face aqui (reversível, versionado).
  */
 add_action( 'wp_head', function () {
+	if ( ! ipcn_is_divi_active() ) {
+		return;
+	}
 	$font_url = get_template_directory_uri() . '/core/admin/fonts/ETmodules';
 	echo "<style id=\"ipcn-etmodules-fix\">@font-face{font-family:'ETmodules';src:url('" . esc_url( $font_url . '.eot' ) . "');src:url('" . esc_url( $font_url . '.eot' ) . "#iefix') format('embedded-opentype'),url('" . esc_url( $font_url . '.woff' ) . "') format('woff'),url('" . esc_url( $font_url . '.ttf' ) . "') format('truetype'),url('" . esc_url( $font_url . '.svg#ETmodules' ) . "') format('svg');font-weight:normal;font-style:normal}</style>\n";
 }, 1 );
@@ -61,6 +77,9 @@ add_action( 'wp_head', function () {
  * Card nítido, inputs com foco navy, botão com hover e mensagens de feedback.
  */
 add_action( 'wp_head', function () {
+	if ( ! ipcn_is_divi_active() ) {
+		return;
+	}
 	$css = '
 	/* Card já vem com borda/sombra do builder — só reforço */
 	.et_pb_contact_form_container p.et_pb_contact_field {
@@ -174,6 +193,9 @@ add_action( 'wp_head', function () {
  * Limita para 180px desktop / 140px mobile, centraliza.
  */
 add_action( 'wp_head', function () {
+	if ( ! ipcn_is_divi_active() ) {
+		return;
+	}
 	$css = '
 	.et-l--footer .et_pb_image_0_tb_footer img {
 		max-width: 180px !important;
