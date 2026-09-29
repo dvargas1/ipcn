@@ -1,6 +1,20 @@
 <?php
 /**
- * IPCN FSE — shortcode ipcn_home_agenda (agenda da home).
+ * IPCN FSE — a Agenda: o bloco dinamico `ipcn/agenda` e o redirect do archive.
+ *
+ * A Agenda e a unica superficie do tema que corre a sua propria consulta (AD-9): a janela
+ * "a partir de hoje, por ordem crescente de `data_evento`" nao se exprime num `core/query`,
+ * que nao tem `meta_query`. O bloco tem um so atributo, `limite` (inteiro, por omissao `3`),
+ * e renderiza cada encontro pelo pattern registado `ipcn/card` — que, fora de um
+ * `core/post-template`, e o unico caminho de render do cartao (AD-14). A Home chama-o com
+ * `limite: 3`; a pagina da Agenda, com `limite: -1`.
+ *
+ * Este ficheiro substitui o remedio anterior da Agenda: a heuristica pela data de publicacao, o
+ * cartao legado escrito a mao e o vazio em atributos `style` saem com ele. Nenhum comentario de
+ * bloco e nenhum elemento de estilo saem daqui (AD-1, AD-5): o desenho vive no `style.css`.
+ *
+ * O archive da categoria `agenda-ipcn` deixa de ser superficie publica (AD-8): responde 301
+ * para a pagina da Agenda em vez de listar 54 publicacoes, quase todas passadas.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -8,104 +22,191 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * IPCN FSE — Agenda da home com filtro de data futura + estado vazio elegante.
- * Uso no front-page.html: [ipcn_home_agenda]
- * Regra: so publicados da categoria agenda-ipcn com post_date >= hoje.
- * (Meta "data_evento" sera respeitada quando a cliente comecar a preencher.)
+ * A consulta do bloco: publicacoes da categoria `agenda-ipcn` por slug, com `data_evento`
+ * preenchida e igual ou posterior a hoje, por ordem crescente de `data_evento`.
+ *
+ * Sem alternativa pela data de publicacao: um encontro sem `data_evento` nao conta como proximo
+ * (cai no estado vazio) em vez de aparecer com uma data que nao e a dele. A categoria vai
+ * por `category_name` — nunca por `term_id`, que muda entre ambientes (AD-7). A clausula do
+ * `meta_query` e nomeada para o `orderby` a poder usar pelo nome.
+ *
+ * @param int $limite Quantos encontros devolver; `-1` devolve todos os que estao por vir.
+ * @return WP_Query
  */
-
-add_shortcode(
-	'ipcn_home_agenda',
-	function () {
-		$cat = get_category_by_slug( 'agenda-ipcn' );
-		if ( ! $cat ) {
-			return '';
-		}
-
-		$today   = current_time( 'Y-m-d' );
-		$network = 'https://www.instagram.com/ipcnbrasil/';
-
-		$query_args = array(
-			'posts_per_page'      => 3,
-			'category_name'       => 'agenda-ipcn',
+function ipcn_agenda_query( $limite ) {
+	return new WP_Query(
+		array(
+			'post_type'           => 'post',
 			'post_status'         => 'publish',
+			'category_name'       => 'agenda-ipcn',
+			'posts_per_page'      => $limite,
 			'ignore_sticky_posts' => true,
-			'orderby'             => 'date',
-			'order'               => 'ASC',
-		);
+			'meta_query'          => array(
+				'data_evento' => array(
+					'key'     => 'data_evento',
+					'value'   => current_time( 'Y-m-d' ),
+					'compare' => '>=',
+					'type'    => 'DATE',
+				),
+			),
+			'orderby'             => array( 'data_evento' => 'ASC' ),
+		)
+	);
+}
 
-		// Estrategia: se existir meta data_evento usa ela; se nao, checa post_date.
-		$meta_check = new WP_Query(
-			array_merge(
-				$query_args,
-				array(
-					'meta_query' => array(
-						array(
-							'key'     => 'data_evento',
-							'value'   => $today,
-							'compare' => '>=',
-							'type'    => 'DATE',
-						),
-					),
-				)
-			)
-		);
+/**
+ * O estado vazio digno (FR-7): uma caixa com a copy e a ligacao ao canal publico do IPCN.
+ *
+ * O `h2` desce do `h1` da `page-hero` na pagina da Agenda e fica ao lado do `h2` da seccao
+ * na Home; um `h3` saltaria o nivel 2. As classes sao proprias do vazio e o desenho vive no
+ * `style.css` (AD-5, AD-1 excepcao 2): nenhum atributo `style` sai daqui.
+ *
+ * @return string
+ */
+function ipcn_agenda_vazio() {
+	return '<div class="ipcn-agenda-vazio">'
+		. '<h2 class="ipcn-agenda-vazio-titulo">A agenda está sendo montada</h2>'
+		. '<p class="ipcn-agenda-vazio-texto">Acompanhe nossas redes sociais para os próximos encontros e atividades.</p>'
+		. '<p class="ipcn-agenda-vazio-acao"><a class="ipcn-agenda-vazio-link" href="' . esc_url( 'https://www.instagram.com/ipcnbrasil/' ) . '" target="_blank" rel="noopener noreferrer">Ver no Instagram</a></p>'
+		. '</div>';
+}
 
-		if ( $meta_check->have_posts() ) {
-			$q = $meta_check;
-		} else {
-			$q = new WP_Query(
-				array_merge(
-					$query_args,
-					array(
-						'date_query' => array(
-							array(
-								'after' => $today . ' 00:00:00',
-							),
-						),
-					)
-				)
-			);
-		}
+/**
+ * Render do bloco `ipcn/agenda`.
+ *
+ * @param array $attributes Atributos do bloco; so `limite`.
+ * @return string
+ */
+function ipcn_agenda_render( $attributes = array() ) {
+	$limite = isset( $attributes['limite'] ) ? (int) $attributes['limite'] : 3;
 
-		// Estado vazio elegante.
-		if ( ! $q->have_posts() ) {
-			return '<div class="wp-block-group" style="border:1px solid var(--wp--preset--color--muted);border-radius:12px;background:#fff;padding:44px 28px">'
-				. '<h3 class="wp-block-heading" style="margin:0;text-align:center;font-family:var(--wp--preset--font-family--oswald);font-size:20px;font-weight:600">A agenda está sendo montada</h3>'
-				. '<p style="margin:14px 0 0;text-align:center;color:#64748b;font-size:15px">Acompanhe nossas redes sociais para os próximos encontros e atividades.</p>'
-				. '<p style="margin:18px 0 0;text-align:center"><a class="wp-element-button" style="display:inline-block;border:1px solid currentColor;border-radius:6px;padding:10px 18px;text-decoration:none" href="' . esc_url( $network ) . '" target="_blank" rel="noopener noreferrer">Ver no Instagram</a></p>'
-				. '</div>';
-		}
+	$query = ipcn_agenda_query( $limite );
 
-		// Eventos futuros: um cartao por evento da categoria, dentro de `.ipcn-grid` (a mesma
-		// grelha que o `ipcn_query_posts` usa). O markup anterior abria um `core/query` sem
-		// atributos, que nao herdava este `$q` e servia a query global — o cartao mostrava a
-		// pagina actual. O cartao legado `.ipcn-card-v2` mantem-se ate a historia 2.2 o migrar
-		// para o pattern `ipcn/card`.
-		$items = '';
-		while ( $q->have_posts() ) {
-			$q->the_post();
+	if ( ! $query->have_posts() ) {
+		return ipcn_agenda_vazio();
+	}
 
-			$thumb = get_the_post_thumbnail(
-				get_the_ID(),
-				'medium_large',
-				array( 'style' => 'aspect-ratio:16/9;object-fit:cover;width:100%;border-radius:0' )
-			);
-			if ( '' === $thumb ) {
-				$thumb = '<span aria-hidden="true" style="display:flex;align-items:center;justify-content:center;aspect-ratio:16/9;background:var(--wp--preset--color--navy);color:#fff;font-family:var(--wp--preset--font-family--oswald);font-size:20px;letter-spacing:2px">IPCN</span>';
+	// O markup do cartao vive so em `patterns/` (AD-1 excepcao 1, AD-3). Sem pattern nao ha
+	// cartao: sem esta guarda sairia uma grelha vazia e nada o diria (o modo de falha
+	// silenciosa do AD-14).
+	$registry = WP_Block_Patterns_Registry::get_instance();
+	$pattern  = $registry->is_registered( 'ipcn/card' ) ? $registry->get_registered( 'ipcn/card' ) : null;
+	$markup   = ( is_array( $pattern ) && isset( $pattern['content'] ) ) ? $pattern['content'] : '';
+
+	if ( '' === $markup ) {
+		_doing_it_wrong( 'ipcn_agenda_render', 'O pattern ipcn/card não está registrado; o cartão não pode ser renderizado.', '0.2.0' );
+		wp_reset_postdata();
+		return ipcn_agenda_vazio();
+	}
+
+	$items = '';
+	while ( $query->have_posts() ) {
+		$query->the_post();
+
+		$post_id   = get_the_ID();
+		$post_type = get_post_type( $post_id );
+
+		// Fora de um `core/post-template`, o contexto do post e injectado a mao — o mesmo
+		// idioma de `inc/listings.php`. Sem ele, o `core/post-title` do cartao mostra o
+		// titulo da propria pagina e falha em silencio com aspecto plausivel (AD-14).
+		$context = static function ( $block_context ) use ( $post_id, $post_type ) {
+			$block_context['postType'] = $post_type;
+			$block_context['postId']   = $post_id;
+			return $block_context;
+		};
+
+		// A data que o cartao mostra e a do encontro, no texto e no `datetime`: o
+		// `core/post-date` do nucleo tira os dois de `get_the_date( $format, $post_ID )` e de
+		// `get_the_date( 'c', $post_ID )`, pelo que um filtro a volta do render troca as duas
+		// coisas sem tocar no markup do pattern. A data de publicacao nao sobra em lado nenhum.
+		// O filtro responde pelo post que lhe e dado — nunca pelo `$post_id` do ciclo: se
+		// alguem pedir a data de outro post dentro desta janela, recebe a data dele.
+		$data_do_encontro = static function ( $the_date, $format, $post ) {
+			if ( ! ( $post instanceof WP_Post ) ) {
+				return $the_date;
 			}
 
-			$items .= '<div class="wp-block-group ipcn-card-v2">'
-				. '<div class="wp-block-post-featured-image">' . $thumb . '</div>'
-				. '<div style="padding:14px 18px 20px">'
-				. '<div class="wp-block-post-date" style="color:#a85a32;font-size:13px"><time datetime="' . esc_attr( get_the_date( 'c' ) ) . '">' . esc_html( get_the_date( 'j \d\e M \d\e Y' ) ) . '</time></div>'
-				. '<h2 class="wp-block-post-title" style="margin-top:8px;margin-bottom:0;font-family:var(--wp--preset--font-family--oswald);font-size:19px;font-weight:600;line-height:1.35"><a href="' . esc_url( get_permalink() ) . '">' . esc_html( get_the_title() ) . '</a></h2>'
-				. '<div class="wp-block-post-excerpt" style="font-size:14px"><p class="wp-block-post-excerpt__excerpt">' . esc_html( get_the_excerpt() ) . '</p></div>'
-				. '</div>'
-				. '</div>';
-		}
-		wp_reset_postdata();
+			$data = get_post_meta( $post->ID, 'data_evento', true );
+			if ( ! is_string( $data ) || '' === $data ) {
+				return $the_date;
+			}
 
-		return '<div class="ipcn-grid">' . $items . '</div>';
+			$timezone = wp_timezone();
+			$evento   = date_create_immutable( $data, $timezone );
+			if ( ! $evento instanceof DateTimeImmutable ) {
+				return $the_date;
+			}
+
+			if ( '' === $format ) {
+				$format = (string) get_option( 'date_format' );
+			}
+
+			return wp_date( $format, $evento->getTimestamp(), $timezone );
+		};
+
+		add_filter( 'render_block_context', $context, 1 );
+		add_filter( 'get_the_date', $data_do_encontro, 10, 3 );
+
+		foreach ( parse_blocks( $markup ) as $card_block ) {
+			if ( empty( $card_block['blockName'] ) ) {
+				continue;
+			}
+			$items .= render_block( $card_block );
+		}
+
+		remove_filter( 'get_the_date', $data_do_encontro, 10 );
+		remove_filter( 'render_block_context', $context, 1 );
+	}
+
+	wp_reset_postdata();
+
+	return '<div class="ipcn-grid">' . $items . '</div>';
+}
+
+add_action(
+	'init',
+	function () {
+		register_block_type(
+			'ipcn/agenda',
+			array(
+				'attributes'      => array(
+					'limite' => array(
+						'type'    => 'integer',
+						'default' => 3,
+					),
+				),
+				'render_callback' => 'ipcn_agenda_render',
+			)
+		);
+	}
+);
+
+/**
+ * O archive de `agenda-ipcn` redirecciona (301) para a pagina da Agenda (AD-8, historia 2.4).
+ *
+ * O endereco deixa de servir HTML de listagem: nao e superficie publica nem indexavel, e
+ * nunca lista encontros passados como se fossem a agenda. A pagina resolve-se por slug
+ * (`agenda-ipcn`), nunca por id. Sem a pagina na base de dados nao se redirecciona — melhor
+ * o archive do que um destino inexistente.
+ */
+add_action(
+	'template_redirect',
+	function () {
+		if ( ! is_category( 'agenda-ipcn' ) ) {
+			return;
+		}
+
+		$pagina = get_page_by_path( 'agenda-ipcn' );
+		if ( ! $pagina instanceof WP_Post ) {
+			return;
+		}
+
+		$destino = get_permalink( $pagina );
+		if ( ! is_string( $destino ) || '' === $destino ) {
+			return;
+		}
+
+		wp_safe_redirect( $destino, 301 );
+		exit;
 	}
 );

@@ -409,11 +409,58 @@ footer .wp-block-list li {
 @media (max-width: 768px) {
 	.ipcn-grid { grid-template-columns: 1fr; }
 }
+
+/* ——— Vazio da Agenda (bloco `ipcn/agenda`, FR-7) ———
+   O estado vazio que o bloco serve na Home e na página da Agenda, quando nenhum encontro
+   está por vir. O desenho vinha inline do shortcode antigo e passa a viver aqui (AD-5): a
+   caixa é `base` com contorno `muted`, o `h2` desce do `h1` da `page-hero` e o texto usa a
+   cor do corpo. As classes são próprias do vazio — nenhuma outra superfície as veste. */
+.ipcn-agenda-vazio {
+	background: var(--wp--preset--color--base);
+	border: 1px solid var(--wp--preset--color--muted);
+	border-radius: 12px;
+	padding: 44px 28px;
+}
+.ipcn-agenda-vazio-titulo {
+	margin: 0;
+	text-align: center;
+	font-family: var(--wp--preset--font-family--oswald);
+	font-size: 20px;
+	font-weight: 600;
+}
+.ipcn-agenda-vazio-texto {
+	margin: 14px 0 0;
+	text-align: center;
+	color: var(--wp--preset--color--body);
+	font-size: 15px;
+}
+.ipcn-agenda-vazio-acao {
+	margin: 18px 0 0;
+	text-align: center;
+}
+/* Botão de contorno, com o alvo de toque de 44px em qualquer largura. */
+.ipcn-agenda-vazio-link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 44px;
+	padding: 10px 18px;
+	border: 1px solid var(--wp--preset--color--ink);
+	border-radius: 6px;
+	color: var(--wp--preset--color--ink);
+	font-weight: 600;
+	text-decoration: none;
+}
+.ipcn-agenda-vazio-link:hover {
+	background: var(--wp--preset--color--navy);
+	border-color: var(--wp--preset--color--navy);
+	color: var(--wp--preset--color--base);
+}
+
 /* ——— Cartão único (patterns/ipcn-card.php e patterns/ipcn-card-feature.php) ———
    O markup vive só em `patterns/`; o contrato de classes é .ipcn-card, .ipcn-card-media,
    .ipcn-card-noimg, .ipcn-card-title e .ipcn-card-date. O cartão é um wp:group (não o <a>
-   do shortcode antigo), o título é o h2 do core/post-title e a data o time do core/post-date.
-   As regras .ipcn-card-v2 mais abaixo mantêm-se para a agenda (história 2.2). */
+   do shortcode antigo), o título é o h2 do core/post-title e a data o time do core/post-date. */
 .ipcn-card {
 	position: relative;
 	isolation: isolate;
@@ -752,43 +799,6 @@ body.ipcn-ancestral { background: #fbf9f5; }
 /* eyebrow terracota (substituicao do "Eixo · Destaques") */
 .wp-block-paragraph[style*="letter-spacing:0.2em"] {
 	color: #a85a32 !important;
-}
-
-/* card v2: imagem de topo full + corpo com padding, tag, ler mais claro */
-.ipcn-card-v2 {
-	box-shadow: 0 2px 12px rgba(13, 23, 107, 0.06);
-	transition: transform 0.2s ease, box-shadow 0.2s ease;
-	overflow: hidden;
-	display: flex;
-	flex-direction: column;
-}
-.ipcn-card-v2:hover {
-	transform: translateY(-3px);
-	box-shadow: 0 12px 28px rgba(13, 23, 107, 0.12);
-}
-.ipcn-card-v2 .wp-block-post-featured-image img {
-	aspect-ratio: 16 / 9;
-	object-fit: cover;
-	width: 100%;
-	border-radius: 0 !important;
-}
-.ipcn-card-v2 .wp-block-post-title a {
-	color: var(--wp--preset--color--ink);
-	text-decoration: none;
-}
-.ipcn-card-v2 .wp-block-post-title a:hover {
-	color: #a85a32;
-}
-.ipcn-card-v2 .wp-block-post-date {
-	margin-top: 4px;
-}
-.ipcn-card-v2 .wp-block-post-terms {
-	margin-top: 0;
-	margin-bottom: 0;
-}
-.ipcn-card-v2 a[data-type="link"]::after {
-	content: " →";
-	color: #a85a32;
 }
 
 /* banner de cookies minimalista: bottom bar fixo */
