@@ -239,6 +239,14 @@ footer .wp-block-list li {
 .ipcn-footer a:hover {
 	color: var(--wp--preset--color--ocre) !important;
 }
+/* linha final do rodapé: a ligação legal distingue-se do texto © por mais do que cor (FR-12) */
+.ipcn-footer-base a {
+	text-decoration: underline;
+}
+/* sem crescer, o item do meio encolhe ao texto e a sua align:center não tem efeito */
+.ipcn-footer-base .has-text-align-center {
+	flex: 1 1 auto;
+}
 
 /* ——— Formulário Associe-se (nativo) ——— */
 .ipcn-form-card {
