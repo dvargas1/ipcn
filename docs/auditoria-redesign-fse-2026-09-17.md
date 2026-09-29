@@ -25,7 +25,7 @@
 | 5 | **Footer usa cor `#8e9bd0` (navy-soft)** não presente nos sketches aprovados | Médio | Desvio visual do design system |
 | 6 | **Menu mobile usa overlay full-screen** do WP em vez de dropdown abaixo do header (conforme sketches) | Médio | UX inconsistente com o aprovado |
 | 7 | **`taxonomy-tema_acervo.html` duplica `archive-acervo_ipcn.html`** quase 100% | Baixo | Débito técnico, manutenção desnecessária |
-| 8 | **`page.html` sem identidade visual** — 7 linhas, sem hero, sem estrutura | Médio | Páginas internas ficam sem identidade |
+| 8 | **`page.html` sem identidade visual** — 7 linhas, sem hero, sem estrutura *(fechado pela 1.13: `parts/page-hero.html` + `inc/page-hero.php`)* | Médio | Páginas internas ficam sem identidade |
 | 9 | **`theme.json` mistura Playfair como fallback de Oswald** na mesma `fontFamily` | Baixo | Confusão semântica, fontes muito diferentes |
 | 10 | **Shortcodes de form sem `id` nos inputs** — labels associados implicitamente | Baixo | Acessibilidade abaixo do ideal |
 | 11 | **Front-page tem 5 sections** vs "home enxuta (3 sections)" documentado no STATUS | Médio | Desvio do escopo documentado |

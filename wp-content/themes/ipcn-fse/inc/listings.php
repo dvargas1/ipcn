@@ -1,7 +1,7 @@
 <?php
 /**
  * IPCN FSE — listagens: filtro de categoria do `core/query` e shortcodes
- * ipcn_query_posts, ipcn_archive_hero, ipcn_tema_filter e ipcn_archive_vazio.
+ * ipcn_query_posts, ipcn_tema_filter e ipcn_archive_vazio.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -139,58 +139,6 @@ add_shortcode(
 		}
 
 		return $out;
-	}
-);
-
-/**
- * IPCN FSE — hero de arquivo por termo (Seccoes: Destaques, Diaspora, Colunistas, Notas...).
- * Shortcode le o termo consultado e imprime eyebrow + h1 + descricao no padrao navy das outras paginas.
- * AD-8: o nome e a descricao vem do termo (a descricao vive na base de dados), nao de um mapa fixo em PHP.
- * Uso no archive.html: [ipcn_archive_hero]
- */
-
-add_shortcode(
-	'ipcn_archive_hero',
-	function () {
-		$q = get_queried_object();
-
-		// AD-8: o hero le o nome e a descricao do termo, nao de um mapa fixo em PHP. A guarda
-		// e `WP_Term` para um arquivo de post type (WP_Post_Type tem `name`) nao imprimir o
-		// nome de maquina como h1.
-		if ( ! ( $q instanceof WP_Term ) ) {
-			return '';
-		}
-
-		$slug = (string) $q->slug;
-
-		// Fallbacks que nunca imprimem vazio (matriz de I/O): sem nome, deriva-se do slug;
-		// sem descricao, fica a frase institucional. `trim` para um nome/descricao so com
-		// espacos contar como ausente, e `wp_strip_all_tags` para uma descricao com markup
-		// nao sair com etiquetas literais.
-		$name        = ( '' !== trim( (string) $q->name ) ) ? (string) $q->name : ucwords( str_replace( '-', ' ', $slug ) );
-		$name        = ( '' !== trim( $name ) ) ? $name : 'Conteúdo IPCN';
-		$description = wp_strip_all_tags( (string) $q->description );
-		$description = ( '' !== trim( $description ) ) ? $description : 'Seleção de conteúdo publicado pelo IPCN.';
-
-		ob_start();
-		?>
-<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"56px","bottom":"48px","left":"20px","right":"20px"}}},"backgroundColor":"navy","textColor":"base","layout":{"type":"constrained","contentSize":"1100px"}} -->
-<div class="wp-block-group alignfull has-base-color has-navy-background-color has-text-color has-background" style="padding-top:56px;padding-bottom:48px;padding-left:20px;padding-right:20px"><!-- wp:group {"layout":{"type":"constrained","contentSize":"1100px"}} -->
-<div class="wp-block-group"><!-- wp:paragraph {"style":{"typography":{"fontSize":"13px","fontWeight":"600","letterSpacing":"2px","textTransform":"uppercase"}},"textColor":"base"} -->
-<p class="has-base-color has-text-color" style="font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase">IPCN &middot; <?php echo esc_html( $name ); ?></p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading {"level":1,"style":{"typography":{"fontFamily":"var:preset|font-family|oswald","fontSize":"clamp(22px, 4vw, 36px)","fontWeight":"700","lineHeight":"1.15"}},"textColor":"base"} -->
-<h1 class="wp-block-heading has-base-color has-text-color" style="font-family:var(--wp--preset--font-family--oswald);font-size:clamp(22px,4vw,36px);font-weight:700;line-height:1.15;color:var(--wp--preset--color--base)"><?php echo esc_html( $name ); ?></h1>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph {"style":{"typography":{"fontSize":"16px"}},"textColor":"base"} -->
-<p class="has-base-color has-text-color" style="font-size:16px"><?php echo esc_html( $description ); ?></p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:group --></div>
-<!-- /wp:group -->
-		<?php
-		return ob_get_clean();
 	}
 );
 

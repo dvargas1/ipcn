@@ -109,7 +109,9 @@ deferred:
 
 ## Spec Change Log
 
-Sem alterações ao contrato.
+### 2026-09-29 — a frase de reserva do apoio fica superada (história 1.13)
+
+A matriz de I/O desta história fixa `Seleção de conteúdo publicado pelo IPCN.` como linha de apoio do hero de arquivo quando o termo não tem descrição. A história 1.13 (ver `spec-1-13-um-so-cabecalho-de-pagina.md`) entregou a `page-hero` como forma única do cabeçalho das superfícies de entrada e o AC dela manda a linha de apoio vir da descrição do termo **quando existe**, com a faixa a encolher sem ela: a frase de reserva saiu de `inc/page-hero.php` (o hero de arquivo `[ipcn_archive_hero]` foi retirado) e a linha «Hero de arquivo sem termo» lê-se por aquela spec. O fallback do **nome** (`Conteúdo IPCN`, derivado do slug) mantém-se, e as 12 strings desta passagem continuam no tema — o grep de verificação desta história continua a dar vazio. **KEEP:** a acentuação da copy institucional e as confirmações alinhadas pela tabela de voz.
 
 ## Review Triage Log
 

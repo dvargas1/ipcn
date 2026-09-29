@@ -209,6 +209,17 @@ header .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigat
 	z-index: -1;
 	background: linear-gradient(180deg, rgba(13,23,107,0.82) 0%, rgba(13,23,107,0.68) 45%, rgba(13,23,107,0.88) 100%);
 }
+/* cabeçalho de página (`parts/page-hero.html`): a sobreposição da Home fica intacta — esta
+   regra, mais fechada, vence-a por ordem de ficheiro (mesma especificidade). O eyebrow é
+   `base` sobre a imagem; a 0.68 daria 2.57:1 e falha os 4.5:1 de `typography.eyebrow`, logo
+   o alfa nunca desce de 0.88 (pior caso rgba(13,23,107,0.88)). */
+.ipcn-page-hero::after {
+	background: linear-gradient(180deg, rgba(13,23,107,0.94) 0%, rgba(13,23,107,0.88) 45%, rgba(13,23,107,0.94) 100%);
+}
+/* sem linha de apoio, a faixa encolhe: o `p` vazio não reserva o espaço do blockGap. */
+.ipcn-page-hero-apoio:empty {
+	display: none;
+}
 @media (max-width: 600px) {
 	.ipcn-hero::before { background-position: center 28%; }
 	.ipcn-hero { padding-top: 72px !important; padding-bottom: 72px !important; }
@@ -1128,8 +1139,9 @@ body.ipcn-ancestral { background: #fbf9f5; }
    1. CONTENÇÃO — nada arrasta a página para o lado.
    `overflow-wrap: break-word` deixa a palavra/URL longa quebrar dentro da coluna; sem isto
    uma cadeia sem espaços transborda o `.ipcn-prose` (720px) mesmo a 320px. O `p` cobre os
-   parágrafos que vivem fora da prosa e dos títulos: o eyebrow e a descrição do hero do
-   archive/Item (`inc/listings.php:178,186`), os parágrafos do hero da Home e os do rodapé.
+   parágrafos que vivem fora da prosa e dos títulos: o eyebrow e a linha de apoio da `page-hero`
+   (`parts/page-hero.html`), o hero do Item do Acervo (`templates/single-acervo_ipcn.html`),
+   os parágrafos do hero da Home e os do rodapé.
 */
 .ipcn-prose,
 .wp-block-post-content,
