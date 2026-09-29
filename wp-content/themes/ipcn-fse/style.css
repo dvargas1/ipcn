@@ -360,10 +360,10 @@ footer .wp-block-list li {
 	grid-template-columns: repeat(3, minmax(0, 1fr));
 	gap: 16px;
 }
-@media (max-width: 900px) {
-	.ipcn-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (max-width: 600px) {
+/* Uma grelha de cartões, um ponto de colapso: 768px, o mesmo do caminho dos blocos
+   (`.wp-block-post-template.is-layout-grid`). O degrau de 900px sai para as duas grelhas
+   concordarem em toda a gama 320–1100px (Story 1.9). */
+@media (max-width: 768px) {
 	.ipcn-grid { grid-template-columns: 1fr; }
 }
 /* ——— Cartão único (patterns/ipcn-card.php e patterns/ipcn-card-feature.php) ———
@@ -599,6 +599,9 @@ footer .wp-block-list li {
 	display: inline-flex;
 	align-items: center;
 	min-height: 44px;
+	min-width: 0;
+	max-width: 100%;
+	overflow-wrap: break-word;
 	padding: 10px 18px;
 	border: 1px solid var(--wp--preset--color--muted);
 	border-radius: 999px;
@@ -639,6 +642,9 @@ footer .wp-block-list li {
 	display: inline-flex;
 	align-items: center;
 	min-height: 44px;
+	min-width: 0;
+	max-width: 100%;
+	overflow-wrap: break-word;
 	padding: 10px 18px;
 	border: 1px solid var(--wp--preset--color--muted);
 	border-radius: 9999px;
@@ -1080,4 +1086,98 @@ body.ipcn-ancestral { background: #fbf9f5; }
 	.ipcn-single-top { padding-top: 48px !important; padding-bottom: 40px !important; }
 	.ipcn-prose, .ipcn-prose .wp-block-post-content { font-size: 16.5px; line-height: 1.75; }
 	.ipcn-single-cover img { border-radius: 10px; }
+}
+
+/* =========================================================
+   REFLOW 320px (Story 1.9) — contenção de transbordo e alvos de 44px
+   ========================================================= */
+
+/*
+   1. CONTENÇÃO — nada arrasta a página para o lado.
+   `overflow-wrap: break-word` deixa a palavra/URL longa quebrar dentro da coluna; sem isto
+   uma cadeia sem espaços transborda o `.ipcn-prose` (720px) mesmo a 320px. O `p` cobre os
+   parágrafos que vivem fora da prosa e dos títulos: o eyebrow e a descrição do hero do
+   archive/Item (`inc/listings.php:178,186`), os parágrafos do hero da Home e os do rodapé.
+*/
+.ipcn-prose,
+.wp-block-post-content,
+.wp-block-heading,
+.wp-block-post-title,
+p {
+	overflow-wrap: break-word;
+}
+/*
+   Caixas largas do conteúdo (`core/table`, `core/embed`, `core/code`): limitadas à coluna,
+   com scroll interno em vez de scroll da página. A tabela de cookies do painel não é
+   `wp-block-table` nem vive no conteúdo, por isso não é tocada por esta regra.
+*/
+figure.wp-block-table,
+figure.wp-block-embed,
+.wp-block-code {
+	max-width: 100%;
+	overflow-x: auto;
+}
+
+/*
+   2. PAGINAÇÃO — a fila quebra em linhas e cada número/alvo chega aos 44px.
+   `.wp-block-query-pagination` (caminho dos blocos) e `.ipcn-pagination` (shortcode) eram
+   filas de uma linha. O contentor dos números é `display:block` no tema e hoje só quebra
+   porque o núcleo separa os números por `\n` (`paginate_links`, type `plain`); passa a ser
+   uma fila flexível explícita para a quebra não depender desse espaço — que uma minificação
+   de HTML pode colapsar. `gap` igual ao do invólucro (style.css:341).
+*/
+.wp-block-query-pagination,
+.ipcn-pagination {
+	flex-wrap: wrap;
+}
+.wp-block-query-pagination-numbers {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 8px;
+}
+.wp-block-query-pagination a,
+.wp-block-query-pagination .page-numbers,
+.ipcn-page {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 44px;
+	min-width: 44px;
+}
+
+/*
+   3. CABEÇALHO — nav, pílulas CTA (Associe-se/Apoia-se) e botões do menu mobile com alvo
+   ≥44px. Os itens do nav e o CTA mediam ≈32px de altura. Os botões de abrir/fechar do menu
+   NÃO levam `display`: o núcleo esconde o de abrir em `@media (min-width:600px)` com
+   `.wp-block-navigation__responsive-container-open:not(.always-shown){display:none}` (0,2,0),
+   e uma regra nossa de (0,2,1) venceria, fazendo o hamburger reaparecer no computador. Aqui
+   só se garante o alvo (mediam 42px: ícone de 24px + padding e borda).
+*/
+header .wp-block-navigation .wp-block-navigation-item__content,
+header .ipcn-header-cta .wp-block-button__link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 44px;
+}
+header .wp-block-navigation__responsive-container-open,
+header .wp-block-navigation__responsive-container-close {
+	align-items: center;
+	justify-content: center;
+	min-height: 44px;
+	min-width: 44px;
+}
+
+/*
+   4. COOKIES — os botões da barra e do painel com alvo ≥44px (mediam ≈35px).
+   O interior do painel (caixas de seleção, tabela) é da história 3.6; aqui só se veste o
+   controlo `.ipcn-cookie-btn`, o mesmo na barra e no painel.
+*/
+#ipcn-cookie-bar .ipcn-cookie-btn,
+#ipcn-cookie-panel .ipcn-cookie-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 44px;
 }

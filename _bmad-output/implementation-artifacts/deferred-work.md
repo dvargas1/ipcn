@@ -166,3 +166,35 @@
 - source_spec: `_bmad-output/implementation-artifacts/spec-1-8-menu-de-primeiro-nivel-curto-e-rodape-completo.md`
   summary: Nenhum link do rodapé se distingue do texto que o rodeia: o `text-decoration: none` de `.ipcn-footer a` vence o sublinhado da regra do navy, e a cor das ligações é a mesma do texto simples (0.85 de alfa branco).
   evidence: Primeiro achado da camada de casos-limite da 1.8. `style.css:236-238` (`.ipcn-footer a`) e `:154-157` (`.has-navy-background-color a`) têm a mesma especificidade 0,1,1 e a primeira vem depois, pelo que o sublinhado das colunas não pinta; as ligações da coluna Contato e as linhas de morada partilham o mesmo `rgba(255,255,255,0.85)`, logo só o hover (ocre) e o cursor os distinguem — contra o `EXPERIENCE.md:85` e o FR-12. É pré-existente (o rodapé do Gate 4 é este) e a 1.8 só lhe acrescentou instâncias, pelo que o remédio é uma decisão sobre a affordance de todo o rodapé, não uma linha na história.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-9-leitura-no-telemovel-ate-320px.md`
+  summary: O skip link "Pular para o conteúdo" — primeiro elemento focável, exigido pelo UX-DR20 — e o `main` com `id` e o `h1` por página passam da 1.9 para a 1.10.
+  evidence: A 1.8 tinha entregado a decisão a "quem fechar as superfícies (1.9 ou 1.10)". A 1.9 é a leitura a 320px e os seus quatro AC não nomeiam o skip link, pelo que implementá-lo aqui seria âmbito inventado; é a 1.10 (estados vazios e 404, a última das superfícies) que o toma. Os documentos são o `epics.md` (UX-DR20), o `EXPERIENCE.md:131,140` e o achado F-17 (HIGH) de `review-accessibility.md:147-151`.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-9-leitura-no-telemovel-ate-320px.md`
+  summary: O cabeçalho pegajoso (pílulas visíveis ao rolar, `EXPERIENCE.md:88`) foi decidido **não fazer** na 1.9.
+  evidence: A 1.8 tinha remetido a decisão para a 1.9 por causa do reflow a 320px. A 1.9 decidiu não o fazer: não está em nenhum AC, um cabeçalho fixo consome altura vertical no telemóvel, e o `EXPERIENCE.md:88` é requisito próprio ("mantêm-se visíveis ao rolar"), não desta leitura. Fica registado para uma história que o reclame; o `style.css` continua sem `position: sticky`.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-9-leitura-no-telemovel-ate-320px.md`
+  summary: Os controlos do interior do painel de cookies (caixas de seleção de ~19px) ficam abaixo dos 44px; o painel é superfície da história 3.6.
+  evidence: Achado EC3 da camada de casos-limite da 1.9. `inc/cookie-bar.php:40-41` emite `<label><input type="checkbox" …></label>` sem estilo que lhe dê alvo; a 1.9 veste só `.ipcn-cookie-btn` (botões da barra e do painel), porque o AC nomeia "acções de cookies" (`DESIGN.md:323`) e o interior do painel pertence à 3.6 ("cookies com escolha real"), que o reconstrói. Fecha-se nessa história.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-9-leitura-no-telemovel-ate-320px.md`
+  summary: As caixas largas que a 1.9 tornou regiões com scroll (`figure.wp-block-table`, `figure.wp-block-embed`, `.wp-block-code`) não são alcançáveis por teclado nem comportam o anel de foco da 1.4 nos descendentes.
+  evidence: Achados EC4 (casos-limite) e BH9 (revisão cega) da 1.9. `overflow-x:auto` cria um contentor de scroll não focável (WCAG 2.1.1) e recorta o `outline` de 2px + 2px de afastamento de um link focado lá dentro (`style.css:913-917`). O remédio (wrapper com `tabindex="0"`/`role="region"`, ou `scroll-margin`) é decisão de componente fora do `style.css` e depende de existir conteúdo largo, que o repositório não vê.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-9-leitura-no-telemovel-ate-320px.md`
+  summary: As regras novas do `style.css` na 1.9 continuam sem verificação durável: uma mutação que apague o `display:inline-flex` ou mude os 44px deixa o repo inteiro verde.
+  evidence: Achado VG1 (lacunas de verificação) da 1.9, pré-verificado por mutação, mais BH13, VGo2, IA1 e IA8. É a mesma infraestrutura já diferida pela 1.3, 1.5, 1.6, 1.7 e 1.8: o `check-php.sh` só lê `.php` sob `inc/` e o NFR9 declara "sem build step, testes ou CI". O harness da sessão da 1.9 foi estendido (afirma `display:inline-flex`, `min-width` e o grupo inteiro da paginação) mas não fica no repositório; fecha-se com um harness durável em `scripts/`, no estilo do `check-php.test.sh`.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-9-leitura-no-telemovel-ate-320px.md`
+  summary: O componente `accordion` do `DESIGN.md` continua por implementar, embora o AC do épico nomeie "o cabeçalho do acordeão" entre os controlos de 44px.
+  evidence: Achados BH8 e IA3 da revisão da 1.9 e verificação no repositório: nenhum `wp:details`/`summary`/`.wp-block-details` em `templates/`, `patterns/` ou `inc/`. Não havia controlo a dimensionar, e construir o componente seria âmbito que nenhum AC da 1.9 pede. Fica registado como menção do AC sem alvo, a fechar quando o componente existir (ou a corrigir no AC).
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-9-leitura-no-telemovel-ate-320px.md`
+  summary: As regras de alvo do cabeçalho que a 1.9 escreveu (nav, CTA, botões do menu) pendem de um bloco de navegação que hoje não emite markup.
+  evidence: Desvio 6 do auditor de alinhamento da 1.9 (IA6), a cruzar com o diferido da 1.8: os itens vivem no navigation post `5358` da base de dados (`parts/header.html:13`) e nem a home nem uma 404 gerada no momento trazem `<nav class="wp-block-navigation">`. Enquanto o dono não corrigir os itens na BD, os selectores `header .wp-block-navigation*` não têm a quem se aplicar; a passagem no browser que os confirme fica dependente dessa correcção.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-9-leitura-no-telemovel-ate-320px.md`
+  summary: A passagem no browser que fecha os AC da leitura a 320px/375px fica pendente de deploy e purga em `stagingredesign`, que são acção do dono.
+  evidence: Riscos residuais do `## Auto Run Result` da 1.9. O AC pede geometria (sem scroll horizontal, alvos de 44px, medida mantida) e o repositório não a mede: o `check-php.sh` não lê `.css`, o harness da sessão afirma regras e não o resultado renderizado, e o ambiente não tem WordPress local. A lista do que verificar está na secção `## Verification` da spec.
