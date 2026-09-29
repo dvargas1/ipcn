@@ -198,3 +198,27 @@
 - source_spec: `_bmad-output/implementation-artifacts/spec-1-9-leitura-no-telemovel-ate-320px.md`
   summary: A passagem no browser que fecha os AC da leitura a 320px/375px fica pendente de deploy e purga em `stagingredesign`, que são acção do dono.
   evidence: Riscos residuais do `## Auto Run Result` da 1.9. O AC pede geometria (sem scroll horizontal, alvos de 44px, medida mantida) e o repositório não a mede: o `check-php.sh` não lê `.css`, o harness da sessão afirma regras e não o resultado renderizado, e o ambiente não tem WordPress local. A lista do que verificar está na secção `## Verification` da spec.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-10-os-estados-vazios-e-a-pagina-404.md`
+  summary: Os archives de autor e data servidos por `templates/archive.html` não têm `h1`: o `[ipcn_archive_hero]` devolve `''` quando o objecto consultado não é `WP_Term`.
+  evidence: Achados BH4 (revisão cega) e EC3 (casos-limite) da 1.10, confirmados na fonte — a guarda `WP_Term` de `inc/listings.php:160-162` existe para não imprimir o nome de máquina do post type como h1, mas deixa esses archives sem cabeçalho de nível 1. É pré-existente, e a 1.10 fechou o `h1` onde ele faltava por template (o hero do Acervo subiu a `h1`, o `post-title` de `page.html` passou a `level:1`); o comportamento por URL nestes archives fica por decidir. Fecha-se com uma decisão de desenho para o hero desses archives ou com a passagem no browser que os percorra.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-10-os-estados-vazios-e-a-pagina-404.md`
+  summary: A verificação durável do markup e do CSS novos continua a não existir: o `check-php.sh` não lê `.html` nem `.css`, e uma mutação no skip link, no `main#conteudo` ou no `h1` por página deixa o repositório inteiro verde.
+  evidence: Achados VG1, VG2, VG3, BH5 e BH17 da 1.10; a camada de lacunas de verificação demonstrou por mutação que apagar o bloco `ipcn-skip` do `parts/header.html`, deixar `.ipcn-skip a { top:-90px }` sem o revelar em foco, ou tirar `anchor:"conteudo"` de uma template deixa o `check-php.sh` nos mesmos 17 problemas e o `check-php.test.sh` a 14/14. É a mesma infraestrutura já diferida pela 1.3, 1.5, 1.6, 1.7, 1.8 e 1.9 (NFR9: «sem build step, testes ou CI»). Fecha-se com um harness durável em `scripts/`, no estilo do `check-php.test.sh`, que enumere `templates/*.html` e carregue `inc/listings.php` com stubs.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-10-os-estados-vazios-e-a-pagina-404.md`
+  summary: O `EXPERIENCE.md` continua a dizer «cabeçalho incluído» na ordem de leitura e não declara o contrato de landmark, apesar de o `Fix` do F-17 o pedir.
+  evidence: Achado BH8 da 1.10. `review-accessibility.md:151` pede a emenda para «cabeçalho após a ligação de salto» e o contrato do `main` com `id`; o par de UX é artefacto de planeamento congelado e corrige-se na fonte, como já ficou registado para o `epic-1-context.md` e o `AGENTS.md`. Fecha-se num refresh dos docs de planeamento.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-10-os-estados-vazios-e-a-pagina-404.md`
+  summary: Os restantes compromissos do UX-DR20 (estados de formulário com `autocomplete`/`aria-invalid`/`aria-describedby`, anúncio do envio, texto alternativo e movimento reduzido) continuam sem dono no Épico 1.
+  evidence: Achado BH10 da 1.10. A história tomou a única parcela do UX-DR20 sem dono — o skip link — e o resto pertence à superfície dos formulários (histórias 3.1-3.3) ou ao cartão (texto alternativo); nenhum AC do Épico 1 os nomeia.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-10-os-estados-vazios-e-a-pagina-404.md`
+  summary: A passagem no browser que fecha os AC da 1.10 fica pendente de deploy e purga em `stagingredesign`, que são acção do dono.
+  evidence: Riscos residuais do `## Auto Run Result` da 1.10. Os AC pedem geometria e copy renderizadas (o chip do skip link visível ao foco, o `main#conteudo` no HTML servido, o vazio das Secções com a ligação ao hub, o `h1` das institucionais e do Acervo, e a cadência full-bleed da Home com os 24px entre secções depois do novo grupo envolvente) e o repositório não as mede. A lista está na secção `## Verification` da spec.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-1-10-os-estados-vazios-e-a-pagina-404.md`
+  summary: Fecho das duas entradas que a 1.7 deixou apontadas à história 1.10 — a copy do vazio da Secção e o endereço paginado de um Tema.
+  evidence: A entrada da 1.7 que mandava editar `inc/listings.php` (ramo não-Tema) fechou-se aqui: a frase da Secção passou a explicar a ausência e a oferecer o hub das Seções, e `templates/archive-acervo_ipcn.html` recebeu a copy própria do Acervo. A entrada do endereço paginado (`/temas/<slug>/page/N/`, além da última página) fecha-se sem código: é o comportamento do núcleo para páginas fora do intervalo, e a superfície que a 1.10 entrega é exactamente essa 404 (uma frase e o caminho de volta ao início) — forçar ali o estado vazio exigiria um `pre_handle_404` que nenhum AC pede.

@@ -97,6 +97,40 @@ header .ipcn-header-cta .wp-block-button__link:hover {
 	}
 }
 
+/* ——— Skip link (Story 1.10): o primeiro focável de todas as páginas ———
+   O `p` sai do fluxo (position:absolute) para não abrir um intervalo novo acima da marca;
+   a ligação fica fora do ecrã *acima* do topo — nunca à esquerda, para não criar scroll
+   horizontal a 320px (Story 1.9) — e desce a chip visível ao receber foco. Chip em
+   `base`/`navy` com o raio do tema, como o piso do UX-DR20; o anel de foco da 1.4
+   (`:focus-visible`, mais abaixo) continua a ser o único regime de foco. */
+.ipcn-skip {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 10000;
+	margin: 0;
+}
+.ipcn-skip a {
+	position: absolute;
+	top: -90px;
+	left: 20px;
+	display: inline-block;
+	padding: 12px 20px;
+	background: var(--wp--preset--color--base);
+	color: var(--wp--preset--color--navy);
+	border: 2px solid var(--wp--preset--color--navy);
+	border-radius: var(--wp--custom--radius);
+	font-family: var(--wp--preset--font-family--body);
+	font-size: 14px;
+	font-weight: 700;
+	letter-spacing: 0.02em;
+	white-space: nowrap;
+	text-decoration: none;
+}
+.ipcn-skip a:focus-visible {
+	top: 12px;
+}
+
 /* hamburger e painel do menu mobile: abre abaixo do header */
 header .wp-block-navigation__responsive-container-open {
 	padding: 8px;
@@ -335,8 +369,6 @@ footer .wp-block-list li {
 }
 
 /* ——— Paginação ——— */
-/* paginas internas: quando o post-title fica sozinho no template (pagina sem hero navy), some */
-.wp-block-post-title.ipcn-hero-alone { display: none; }
 .wp-block-query-pagination {
 	gap: 8px;
 	justify-content: center;

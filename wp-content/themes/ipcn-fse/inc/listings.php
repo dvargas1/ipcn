@@ -267,11 +267,12 @@ add_shortcode(
  * IPCN FSE — frase do vazio do arquivo, escolhida pelo objecto consultado.
  *
  * O `core/query-no-results` e estatico e o `templates/archive.html` serve tanto as Seccoes
- * (categorias) como os Temas. Em `/temas/<slug>/` sem pecas explica que o Tema ainda nao tem
- * pecas e oferece o Acervo inteiro (o estado vazio nomeado do par de UX); nos restantes
- * archives devolve a frase actual verbatim — uma segunda mensagem ao lado da do Tema seria o
- * defeito obvio. A copy da Seccao continua a ser decidida na 1.10; o que muda e o ficheiro onde
- * se edita.
+ * (categorias) como os Temas — e ainda os archives de tag, autor e data, que caem no mesmo
+ * template de recurso. Em `/temas/<slug>/` sem pecas explica que o Tema ainda nao tem pecas e
+ * oferece o Acervo inteiro; numa Seccao sem publicacoes explica a ausencia e oferece o hub das
+ * Seccoes (a historia 1.10 decidiu as duas copies). Nos restantes archives devolve a frase de
+ * sempre, verbatim: nao sao superficies nomeadas pelo par de UX, e uma segunda mensagem ao lado
+ * da do Tema seria o defeito obvio.
  *
  * O Tema sem pecas nao vira 404: `WP::handle_404()` nao marca 404 quando `is_tax()` e ha
  * objecto consultado, logo o template corre e o estado vazio e conteudo do template.
@@ -282,7 +283,27 @@ add_shortcode(
 	'ipcn_archive_vazio',
 	function () {
 		if ( ! is_tax( 'tema_acervo' ) ) {
-			return '<p>Ainda nao ha posts nesta secao.</p>';
+			// So as Seccoes (categorias) levam a copy nomeada e a oferta das restantes Seccoes:
+			// os archives de tag, autor e data caem neste mesmo template e continuam com a
+			// frase de sempre, verbatim.
+			if ( ! is_category() ) {
+				return '<p>Ainda nao ha posts nesta secao.</p>';
+			}
+
+			$out = '<p>Ainda não há publicações nesta Seção.';
+
+			// O caminho de saida e o hub das Secoes (`/noticias/`), resolvido por slug — o
+			// endereco e do sistema, nunca um caminho escrito a mao (AD-7). O guard e o mesmo
+			// do ramo do Tema: sem a pagina, fica so a explicacao, em vez de uma ligacao morta.
+			$hub = get_page_by_path( 'noticias' );
+			if ( $hub instanceof WP_Post ) {
+				$link = get_permalink( $hub );
+				if ( is_string( $link ) && '' !== $link ) {
+					$out .= ' <a href="' . esc_url( $link ) . '">Ver as Seções</a>';
+				}
+			}
+
+			return $out . '</p>';
 		}
 
 		$out = '<p>Ainda nao ha pecas publicadas neste Tema.';
