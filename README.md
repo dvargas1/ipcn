@@ -58,10 +58,10 @@ Regime estético travado: **ocre é fundo de botão primário com texto chumbo e
 - `wp-content/themes/ipcn-fse/` — o tema `ipcn-fse`: `theme.json` (paleta navy/ocre/terracota/ink/muted + Oswald/Playfair/Inter), `templates/*.html`, `parts/header.html` + `footer.html`, `functions.php` (fonts, forms nativos, Home v2 shortcode agenda, cookie bar, CPT acervo).
 - `wp-content/mu-plugins/` — plugins obrigatórios: `ipcn-optimizations.php` (ETmodules/form-style), `ipcn-mail-from.php` (From contato@ipcnbrasil.org — sem ele o Gmail rejeita os e-mails de form).
 - `docs/` — diagnósticos, planos, gate docs.
-- Deploy do tema: `tar -czf` + `scp` no server → `tar -xzf --strip-components=3` no tema do redesign + `litespeed-purge all` (HCDN é teimoso). Commit + **push sempre**.
+- Deploy do tema: `bash scripts/deploy-staging.sh` (`tar -czf` + `scp` → `tar -xzf --strip-components=3` no tema do redesign → `wp litespeed-purge all`; não há binário `litespeed-purge` no servidor — HCDN é teimoso). Commit + **push sempre**.
 
 ## Ambiente
 
-- SSH alias `ipcn` (~/.ssh/config) no Hostinger, staging DB `u654777386_DbbDB` (usuário `HsB7C`).
+- SSH alias `ipcn` (~/.ssh/config) → `147.93.38.215:65002`, chave `~/.ssh/ipcn_staging_ed25519`; staging DB `u654777386_DbbDB` (usuário `HsB7C`).
 - Staging: https://stagingredesign.ipcnbrasil.org · staging Divi em https://staging.ipcnbrasil.org (congelado).
 - Produção: https://ipcnbrasil.org — deploy **manual pelo Daniel** no hPanel (nunca via agent).

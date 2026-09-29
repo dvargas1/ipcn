@@ -1,5 +1,5 @@
 <!-- bmad:context -->
-<!-- Verified 2026-09-24 against 57825f5. Managed by bmad-project-context; edits inside this block are replaced on refresh. Keep anything you want preserved outside the markers. -->
+<!-- Verified 2026-09-29 against d44c485. Managed by bmad-project-context; edits inside this block are replaced on refresh. Keep anything you want preserved outside the markers. -->
 
 ## ipcn
 
@@ -12,7 +12,7 @@ Redesign do site do Instituto de Pesquisas das Culturas Negras. WordPress FSE, t
 - Nunca commitar `wp-config.php`, `.env`, `*.key`, `*.pem`, `wp-content/uploads/` ou backups. Não pedir nem guardar passwords de WP, DB, SSH ou FTP.
 - Não versionar Divi nem plugins de terceiros. O checkout só leva `wp-content/themes/ipcn-fse/` e `wp-content/mu-plugins/`.
 - Não alterar `wp-content/mu-plugins/ipcn-optimizations.php` (fixes Divi) salvo pedido explícito. Não fazer deploy desse ficheiro no staging Divi.
-- Depois de alterar o tema, fazer deploy em stagingredesign (tar + scp, `tar -xzf --strip-components=3` no tema, `litespeed-purge all` via SSH `ipcn`) e commit + push. Confirmar o caminho remoto na primeira vez — o README não fixa o argv. Não tratar HTML sem purge como verdade (HCDN).
+- Depois de alterar o tema: deploy para stagingredesign (SSH `ipcn`) e commit + push na mesma passagem.
 
 ## Where things are
 
@@ -24,6 +24,7 @@ Redesign do site do Instituto de Pesquisas das Culturas Negras. WordPress FSE, t
 ## Running and verifying
 
 - Não há test runner nem CI. Antes de mexer no tema, correr `bash scripts/check-php.sh` — verifica a sintaxe do PHP do tema `ipcn-fse` e dos mu-plugins e falha com block markup (`<!-- wp:`) ou `<style>` emitido de PHP sob `inc/`; com caminhos só verifica esses ficheiros. Verificar também no browser em stagingredesign depois do purge (`?nocache=1`).
+- Deploy do tema para stagingredesign: `bash scripts/deploy-staging.sh` (tar + scp → `--strip-components=3` no tema remoto → `wp litespeed-purge all`). Não existe binário `litespeed-purge` no servidor. Sem purge o HCDN serve HTML velho — não tratar HTML sem purge como verdade.
 - Tema exige PHP >= 8.1 e WordPress >= 6.4 (`style.css`). Não assumir a versão do host a partir do ROADMAP.
 
 ## Conventions that differ from defaults
