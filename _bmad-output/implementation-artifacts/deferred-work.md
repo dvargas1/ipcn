@@ -267,4 +267,12 @@
   summary: A superfície `/apoia-se/` passa a ser servida por template de ficheiro, o que torna o slug da página (`apoia-se`) uma invariante não declarada para quem edita — como já acontecia com `noticias` e `agenda-ipcn`.
   evidence: A hierarquia `page-<slug>` do núcleo serve `/apoia-se/` por `templates/page-apoia-se.html`; se o slug da página 2382 mudar, a superfície cai no `page.html` e ressurge o conteúdo antigo da base de dados (com o QR em imagem do conteúdo, que o tema não controla). Nada no template, no `README` ou no `AGENTS.md` avisa quem edita o site. Fecha-se com uma nota de operação para editores (a mesma classe da entrada da 1.6 sobre o hub `/noticias/`). Achados BH26 e BH30 da revisão da spec-3.
 
+- source_spec: `_bmad-output/implementation-artifacts/spec-4-aprovar-e-publicar-sem-surpresas.md`
+  summary: A medição Lighthouse ≥ 90 em mobile do ambiente de revisão continua por fazer; o critério e o sítio da medição ficam escritos, o resultado não.
+  evidence: `docs/aceite-stagingredesign.md` apresenta a medição como pendente, de propósito. Nenhum valor Lighthouse está registado no repositório (procurei em `docs/`, nas specs e neste ledger) e o repositório não tem WordPress local: a medição só existe depois de deploy e purga em `stagingredesign`, que são acção do dono. Fecha-se com a passagem no browser, com `?nocache=1`, sobre as superfícies da primeira entrega, e com o registo do resultado se ele tiver de ficar no repositório.
+
+- source_spec: `_bmad-output/implementation-artifacts/spec-4-aprovar-e-publicar-sem-surpresas.md`
+  summary: O `sprint-status.yaml` continua a dizer `epic-4: backlog` com as três histórias em `backlog`, e o Épico 4 fica implementado e documentado sem que a superfície de tracking saiba.
+  evidence: Medido no ficheiro. Nenhum passo do `bmad-build-auto` escreve esse ficheiro — o `Finalize` escreve a spec e o commit — e o `Never` desta história exclui-o de propósito, como já ficou registado para os Épicos 2 e 3. A reconciliação pertence ao `bmad-sprint-planning`, não a esta passagem.
+
 

@@ -57,8 +57,8 @@ Regime estético travado: **ocre é fundo de botão primário com texto chumbo e
 
 - `wp-content/themes/ipcn-fse/` — o tema `ipcn-fse`: `theme.json` (paleta navy/ocre/terracota/ink/muted + Oswald/Playfair/Inter), `templates/*.html`, `parts/header.html` + `footer.html`, `functions.php` (fonts, forms nativos, Home v2 shortcode agenda, cookie bar, CPT acervo).
 - `wp-content/mu-plugins/` — plugins obrigatórios: `ipcn-optimizations.php` (ETmodules/form-style), `ipcn-mail-from.php` (From contato@ipcnbrasil.org — sem ele o Gmail rejeita os e-mails de form).
-- `docs/` — diagnósticos, planos, gate docs.
-- Deploy do tema: `bash scripts/deploy-staging.sh` (`tar -czf` + `scp` → `tar -xzf --strip-components=3` no tema do redesign → `wp litespeed-purge all`; não há binário `litespeed-purge` no servidor — HCDN é teimoso). Commit + **push sempre**.
+- `docs/` — diagnósticos, planos, gate docs, o procedimento de deploy (`deploy-stagingredesign.md`) e a checklist de aceite (`aceite-stagingredesign.md`).
+- Deploy do tema: `bash scripts/deploy-staging.sh` — o procedimento repetível e a fronteira de produção estão escritos em [docs/deploy-stagingredesign.md](./docs/deploy-stagingredesign.md). Commit + **push sempre**.
 
 ## Ambiente
 
