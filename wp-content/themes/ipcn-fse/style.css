@@ -319,7 +319,7 @@ footer .wp-block-list li {
 	padding: 14px 16px;
 	font-size: 16px;
 	line-height: 1.45;
-	border: 1.5px solid var(--wp--preset--color--muted);
+	border: 1.5px solid #64748b; /* text-muted do DESIGN — deliberadamente não é slug de theme.json */
 	border-radius: 10px;
 	background: #fff;
 	color: #1e293b;
@@ -360,7 +360,7 @@ footer .wp-block-list li {
 .ipcn-form-success {
 	background: #f0fdf4;
 	border: 1px solid #bbf7d0;
-	color: #166534;
+	color: #1b5e20; /* success do DESIGN — 6.9:1 sobre base */
 	border-radius: 10px;
 	padding: 14px 16px;
 	font-size: 15px;
@@ -368,11 +368,51 @@ footer .wp-block-list li {
 .ipcn-form-error {
 	background: #fef2f2;
 	border: 1px solid #fecaca;
-	color: #991b1b;
+	color: #b3261e; /* error do DESIGN — 5.94:1 sobre base */
 	border-radius: 10px;
 	padding: 12px 16px;
 	font-size: 14px;
 	margin-bottom: 16px;
+}
+.ipcn-form-error-title {
+	margin: 0;
+	font-weight: 700;
+}
+.ipcn-form-error-fields {
+	margin: 8px 0 0;
+}
+/* Mensagem de campo: acompanha sempre uma palavra, nunca só cor; ligada ao campo por
+   `aria-describedby` em `inc/forms.php`. */
+.ipcn-form-field-erro {
+	display: block;
+	margin-top: 6px;
+	color: #b3261e; /* error do DESIGN — a palavra acompanha sempre a cor */
+	font-size: 13px;
+	font-weight: 600;
+}
+/* Campo em erro: a borda reforça o estado que a mensagem já diz por palavra. Com o foco
+   dentro do campo, a borda é a navy de `components.input` — o erro fica só na palavra, e o
+   anel duplo de foco continua a marcar onde está o teclado. */
+.ipcn-form input[aria-invalid="true"]:not(:focus),
+.ipcn-form textarea[aria-invalid="true"]:not(:focus) {
+	border-color: #b3261e;
+}
+/* Honeypot: inalcançável por teclado (`tabindex="-1"`) e invisível a leitores de ecrã
+   (`aria-hidden="true"`). Sai do fluxo (`position:absolute`) em vez de `display:none`, para
+   continuar preenchível por um bot que o encontre. */
+.ipcn-hp {
+	position: absolute;
+	left: -9999px;
+	top: auto;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}
+/* Estado em envio: botão desactivado e legível, que diz que está a enviar. */
+.ipcn-form-submit:disabled {
+	opacity: 0.75;
+	cursor: progress;
+	transform: none;
 }
 @media (max-width: 480px) {
 	.ipcn-form-card { padding: 20px; }
@@ -452,6 +492,73 @@ footer .wp-block-list li {
 	text-decoration: none;
 }
 .ipcn-agenda-vazio-link:hover {
+	background: var(--wp--preset--color--navy);
+	border-color: var(--wp--preset--color--navy);
+	color: var(--wp--preset--color--base);
+}
+
+/* ——— Apoia-se: a superfície e o QR honesto (FR-10) ———
+   O QR é apresentado pelo tema a partir de `assets/qrcode-pix.jpg` (`inc/pix.php`): a figura
+   tem largura fixa de 220px e a legenda «Escaneie para apoiar». Sem QR que o tema possa
+   garantir, o estado honesto — «em atualização» com a ligação ao contacto — toma o lugar da
+   imagem, no idioma dos vazios da Agenda. A chave PIX vive no markup da página. */
+.ipcn-pix-chave {
+	display: inline-block;
+	margin: 8px 0 0;
+	padding: 10px 16px;
+	border: 1px solid var(--wp--preset--color--muted);
+	border-radius: 10px;
+	background: var(--wp--preset--color--base);
+	font-weight: 700;
+	overflow-wrap: anywhere;
+}
+.ipcn-pix-qr {
+	margin: 24px 0;
+	text-align: center;
+}
+.ipcn-pix-qr-img {
+	display: block;
+	width: 220px;
+	height: auto;
+	margin: 0 auto;
+	border: 1px solid var(--wp--preset--color--muted);
+	border-radius: 10px;
+	background: var(--wp--preset--color--base);
+}
+.ipcn-pix-qr-legenda {
+	margin-top: 12px;
+	color: var(--wp--preset--color--body);
+	font-size: 14px;
+}
+.ipcn-pix-atualizacao {
+	margin: 24px 0;
+	padding: 32px 28px;
+	border: 1px solid var(--wp--preset--color--muted);
+	border-radius: 12px;
+	background: var(--wp--preset--color--base);
+	text-align: center;
+}
+.ipcn-pix-atualizacao-texto {
+	margin: 0;
+	color: var(--wp--preset--color--body);
+	font-size: 15px;
+}
+.ipcn-pix-atualizacao-acao {
+	margin: 18px 0 0;
+}
+.ipcn-pix-atualizacao-link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 44px;
+	padding: 10px 18px;
+	border: 1px solid var(--wp--preset--color--ink);
+	border-radius: 6px;
+	color: var(--wp--preset--color--ink);
+	font-weight: 600;
+	text-decoration: none;
+}
+.ipcn-pix-atualizacao-link:hover {
 	background: var(--wp--preset--color--navy);
 	border-color: var(--wp--preset--color--navy);
 	color: var(--wp--preset--color--base);
@@ -801,62 +908,71 @@ body.ipcn-ancestral { background: #fbf9f5; }
 	color: #a85a32 !important;
 }
 
-/* banner de cookies minimalista: bottom bar fixo */
+/* ——— Barra e painel de cookies (FR-11, F-16) ———
+   Fundo navy OPACO (sem filtro de fundo), texto base, as três acções com o mesmo
+   tratamento `cookie-action` (ocre com texto chumbo e contorno base) e nenhuma categoria
+   pré-seleccionada. A barra aparece só sem escolha registada (o script decide) e cede o
+   passo ao foco do teclado: `scroll-padding-bottom` reserva a altura da barra e a barra
+   desloca-se (`transform`) enquanto um controlo por trás dela tem o foco. */
 #ipcn-cookie-bar {
 	position: fixed;
 	bottom: 0;
 	left: 0;
 	right: 0;
 	z-index: 9998;
-	background: rgba(19, 23, 54, 0.97);
-	backdrop-filter: blur(6px);
-	color: #f4f4f4;
+	display: none;
+	background: var(--wp--preset--color--navy);
+	color: var(--wp--preset--color--base);
 	padding: 14px 20px;
-	display: flex;
 	align-items: center;
 	gap: 14px;
 	flex-wrap: wrap;
 	font-size: 14px;
 	line-height: 1.5;
 	box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+	transition: transform 0.25s ease;
 }
+#ipcn-cookie-bar.is-visible { display: flex; }
+/* O foco do teclado manda: a barra sai da frente enquanto um controlo por trás dela a tem. */
+#ipcn-cookie-bar.is-yielding { transform: translateY(100%); }
+/* Afastamento de scroll reservado: a altura real da barra, medida em tempo de execução. */
+html { scroll-padding-bottom: var(--ipcn-cookie-bar-height, 0px); }
 #ipcn-cookie-bar .ipcn-cookie-text {
 	flex: 1 1 auto;
 	min-width: 220px;
 	margin: 0;
 }
 #ipcn-cookie-bar a {
-	color: #c9a86a;
+	color: var(--wp--preset--color--base);
 	text-decoration: underline;
-	margin-left: 4px;
 }
-#ipcn-cookie-bar .ipcn-cookie-btn {
-	display: inline-block;
-	padding: 8px 20px;
+#ipcn-cookie-bar .ipcn-cookie-bar-actions {
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
+}
+/* As três acções da barra (e as do painel) usam o mesmo tratamento `cookie-action`:
+   ocre com texto chumbo e contorno base, com igual proeminência e nenhuma escondida. */
+#ipcn-cookie-bar .ipcn-cookie-action,
+#ipcn-cookie-panel .ipcn-cookie-action {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 10px 20px;
+	border: 1px solid var(--wp--preset--color--base);
 	border-radius: 6px;
+	background: var(--wp--preset--color--ocre);
+	color: #2d2418; /* chumbo do DESIGN sobre ocre (6.75:1) — não é slug de theme.json */
 	font-size: 13px;
-	font-weight: 600;
+	font-weight: 700;
 	cursor: pointer;
-	border: none;
-	transition: all 0.15s ease;
+	transition: background-color 0.15s ease;
 }
-#ipcn-cookie-bar .ipcn-cookie-accept {
-	background: #c9a86a;
-	color: #131736;
+#ipcn-cookie-bar .ipcn-cookie-action:hover,
+#ipcn-cookie-panel .ipcn-cookie-action:hover {
+	background: #e2b878; /* ocre-hover do DESIGN */
 }
-#ipcn-cookie-bar .ipcn-cookie-accept:hover {
-	background: #b08d4f;
-}
-#ipcn-cookie-bar .ipcn-cookie-manage {
-	background: transparent;
-	color: #dfe1e6;
-	border: 1px solid rgba(255, 255, 255, 0.4);
-}
-#ipcn-cookie-bar .ipcn-cookie-manage:hover {
-	border-color: #c9a86a;
-	color: #c9a86a;
-}
-/* painel de gerenciamento (fica escondido por default) */
+/* Painel de gerência (escondido por omissão; o script abre com `.open`). */
 #ipcn-cookie-panel {
 	display: none;
 	position: fixed;
@@ -864,19 +980,24 @@ body.ipcn-ancestral { background: #fbf9f5; }
 	left: 0;
 	right: 0;
 	z-index: 9999;
-	background: #131736;
-	color: #e6e8ec;
+	background: var(--wp--preset--color--navy);
+	color: var(--wp--preset--color--base);
 	max-height: 75vh;
 	overflow-y: auto;
 	padding: 32px 20px;
 	box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.4);
 }
 #ipcn-cookie-panel.open { display: block; }
-#ipcn-cookie-panel h3 {
-	color: #fff;
+#ipcn-cookie-panel .ipcn-cookie-panel-title {
+	margin: 0 0 12px;
+	color: var(--wp--preset--color--base);
 	font-family: var(--wp--preset--font-family--oswald);
 	font-size: 18px;
-	margin: 0 0 12px;
+}
+#ipcn-cookie-panel .ipcn-cookie-panel-intro {
+	margin: 0 0 14px;
+	font-size: 13px;
+	color: var(--wp--preset--color--base);
 }
 #ipcn-cookie-panel table {
 	width: 100%;
@@ -884,17 +1005,53 @@ body.ipcn-ancestral { background: #fbf9f5; }
 	font-size: 13px;
 	margin-bottom: 18px;
 }
-#ipcn-cookie-panel td, #ipcn-cookie-panel th {
-	padding: 6px 10px;
-	border: 1px solid rgba(255,255,255,0.12);
+#ipcn-cookie-panel td,
+#ipcn-cookie-panel th {
+	padding: 10px;
+	border: 1px solid rgba(255, 255, 255, 0.18);
 	text-align: left;
+	vertical-align: middle;
 }
-#ipcn-cookie-panel th { background: rgba(255,255,255,0.06); color: #c9a86a; }
+#ipcn-cookie-panel th {
+	background: rgba(255, 255, 255, 0.08);
+	color: var(--wp--preset--color--base);
+}
+/* Controlos do painel: etiqueta associada (o `label` envolve a caixa) e alvo de 44px. */
+#ipcn-cookie-panel .ipcn-cookie-check {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	min-height: 44px;
+	padding: 4px 2px;
+	cursor: pointer;
+}
+#ipcn-cookie-panel .ipcn-cookie-check input[type="checkbox"] {
+	width: 20px;
+	height: 20px;
+	margin: 0;
+}
+/* Revisão da escolha pelo rodapé: um controlo, ao lado da Política de privacidade. */
+.ipcn-cookie-revisit {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: inherit;
+	font: inherit;
+	text-decoration: underline;
+	cursor: pointer;
+}
 #ipcn-cookie-panel .ipcn-cookie-actions {
 	display: flex;
 	gap: 10px;
 	justify-content: flex-end;
 	flex-wrap: wrap;
+}
+/* Movimento reduzido: a entrada e a cedência da barra tornam-se instantâneas. */
+@media (prefers-reduced-motion: reduce) {
+	#ipcn-cookie-bar { transition: none; }
 }
 /* CookieYes legado: a UI do banner é DESLIGADA na opção do plugin (CookieLawInfo-0.9
    -> is_on=false), não por CSS. Sem o CSS hack frágil aqui. Detalhes no bloco
@@ -955,10 +1112,6 @@ body.ipcn-ancestral { background: #fbf9f5; }
 	background: #e2b878 !important;  /* ocre hover mais claro mantém texto chumbo legível */
 	border-color: #e2b878;
 	color: #2d2418 !important;
-}
-.ipcn-cookie-accept,
-#ipcn-cookie-accept-all-panel {
-	color: #2d2418 !important;  /* mesma regra no banner de cookies */
 }
 /* Estado vazio / tags com bg ocre (nosso caso: botões outline CTA e eyebrow terracota já passam 4.7:1) */
 
@@ -1224,9 +1377,9 @@ header .wp-block-navigation__responsive-container-close {
 }
 
 /*
-   4. COOKIES — os botões da barra e do painel com alvo ≥44px (mediam ≈35px).
-   O interior do painel (caixas de seleção, tabela) é da história 3.6; aqui só se veste o
-   controlo `.ipcn-cookie-btn`, o mesmo na barra e no painel.
+   4. COOKIES — os botões da barra e do painel com alvo ≥44px (mediam ≈35px). O interior do
+   painel (caixas de seleção, tabela) fecha-se na história 3.6: o `label` da caixa
+   (`.ipcn-cookie-check`, no bloco da barra) e estes botões chegam aos 44px.
 */
 #ipcn-cookie-bar .ipcn-cookie-btn,
 #ipcn-cookie-panel .ipcn-cookie-btn {
