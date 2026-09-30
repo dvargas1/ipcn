@@ -131,6 +131,13 @@ header .ipcn-header-cta .wp-block-button__link:hover {
 	top: 12px;
 }
 
+/* O header é o bloco contentor do painel do menu mobile (`top: 100%` = abaixo do header).
+   Sem `position` aqui, `position: absolute` no painel resolve contra a caixa inicial — a
+   altura de um ecrã — e o `bottom: 0` do núcleo colapsa-lhe a altura a zero. */
+header {
+	position: relative;
+}
+
 /* hamburger e painel do menu mobile: abre abaixo do header */
 header .wp-block-navigation__responsive-container-open {
 	padding: 8px;
@@ -140,6 +147,10 @@ header .wp-block-navigation__responsive-container-open {
 header .wp-block-navigation__responsive-container.is-menu-open {
 	position: absolute;
 	top: 100%;
+	/* O núcleo fixa `bottom: 0` para a sobreposição em ecrã inteiro; com `top: 100%` isso
+	   obrigaria o painel a esticar-se até ao fundo e a altura cairia a zero. O `bottom: auto`
+	   devolve a altura ao conteúdo, limitada pelo `max-height`. */
+	bottom: auto;
 	left: 0;
 	right: 0;
 	background-color: var(--wp--preset--color--base);
